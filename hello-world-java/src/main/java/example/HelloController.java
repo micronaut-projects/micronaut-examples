@@ -20,7 +20,6 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.validation.Validated;
 import io.reactivex.Single;
 
-import javax.inject.Singleton;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -28,7 +27,6 @@ import javax.validation.constraints.NotBlank;
  * @since 1.0
  */
 @Controller("/")
-@Singleton
 @Validated
 public class HelloController {
 

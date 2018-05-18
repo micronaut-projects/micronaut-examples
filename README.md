@@ -51,3 +51,11 @@ $ ./gradlew run
 ```
 
 Then go to http://localhost:8080/hello/John
+
+### petstore
+
+The `petstore` example is a Micronaut petstore implementation featuring multiple Microservices and a `docker-compose.yml` file for starting the application.
+
+See the `README` in the root of the `petstore` example for usage instructions.
+
+

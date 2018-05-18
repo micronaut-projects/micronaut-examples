@@ -1,33 +1,58 @@
-plugins {
-    id 'com.github.johnrengelman.shadow' version '2.0.1'
-    id 'groovy'
-    id "application"
-}
-mainClassName = "example.Application"
-jar {
-    manifest {
-        attributes 'Main-Class': "example.Application"
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE"
+        classpath "net.ltgt.gradle:gradle-apt-plugin:0.15"
     }
 }
+
+version "0.1"
+group "example"
+
+apply plugin:"io.spring.dependency-management"
+apply plugin:"com.github.johnrengelman.shadow"
+apply plugin:"application"
+apply plugin:"groovy"
+apply plugin:"java"
+apply plugin:"net.ltgt.apt-eclipse"
+apply plugin:"net.ltgt.apt-idea"
+
+
 repositories {
     mavenLocal()
     mavenCentral()
 }
-dependencies {
-    Properties props = new Properties()
-    new File("../../gradle.properties").withReader { props.load(it) }
-    compileOnly "io.micronaut:inject-groovy:${props.projectVersion}"
-    compile "io.micronaut:runtime-groovy:${props.projectVersion}"
 
-    // use one of these servers, not both...
-    compile "io.micronaut:http-server-netty:${props.projectVersion}"
-    testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {
-        exclude module:'groovy-all'
+dependencyManagement {
+    imports {
+        mavenBom 'io.micronaut:bom:1.0.0-SNAPSHOT'
     }
-    testCompile "io.micronaut:http-client:${props.projectVersion}"
-    testCompile "io.micronaut:inject-groovy:${props.projectVersion}"
-    runtime "ch.qos.logback:logback-classic:1.2.3"
 }
+
+dependencies {
+    annotationProcessor "io.micronaut:inject-java"
+    compile "io.micronaut:http-client"
+    compile "io.micronaut:http-server-netty"
+    compile "io.micronaut:runtime-groovy"
+    compile "io.micronaut:inject"
+    compile "io.micronaut:runtime"
+    compileOnly "io.micronaut:inject-groovy"
+    compileOnly "io.micronaut:inject-java"
+    runtime "ch.qos.logback:logback-classic:1.2.3"
+    testCompile "io.micronaut:inject-groovy"
+    testCompile "junit:junit:4.12"
+    testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {
+        exclude module: 'groovy-all'
+    }
+}
+
 shadowJar {
     mergeServiceFiles()
 }
+
+
+mainClassName = "example.Application"

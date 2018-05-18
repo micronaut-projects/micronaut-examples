@@ -40,6 +40,7 @@ dependencies {
     compile "io.micronaut:runtime-groovy"
     compile "io.micronaut:inject"
     compile "io.micronaut:runtime"
+    compile 'javax.annotation:javax.annotation-api:1.3.2'
     compileOnly "io.micronaut:inject-groovy"
     compileOnly "io.micronaut:inject-java"
     runtime "ch.qos.logback:logback-classic:1.2.3"

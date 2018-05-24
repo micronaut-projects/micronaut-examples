@@ -32,7 +32,7 @@ The `hello-world-groovy` example is a simple Hello World implementation written 
 To run the application with Gradle use:
 
 ```bash
-$ cd hello-world-java
+$ cd hello-world-groovy
 $ ./gradlew run
 ```
 

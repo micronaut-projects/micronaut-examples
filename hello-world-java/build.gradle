@@ -13,6 +13,7 @@ jar {
 repositories {
     mavenLocal()
     mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 dependencies {
     compileOnly "io.micronaut:inject-java:${projectVersion}"

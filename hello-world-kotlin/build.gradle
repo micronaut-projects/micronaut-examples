@@ -15,8 +15,9 @@ apply plugin: 'kotlin-kapt'
 mainClassName = "example.Application"
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
 dependencies {

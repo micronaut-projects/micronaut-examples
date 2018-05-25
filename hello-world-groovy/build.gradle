@@ -25,6 +25,7 @@ apply plugin:"net.ltgt.apt-idea"
 repositories {
     mavenLocal()
     mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
 dependencyManagement {

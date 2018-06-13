@@ -5,8 +5,12 @@ RUN addgroup -S app && adduser -S -g app app
 WORKDIR /app
 COPY build/libs/*-all.jar /app/Handler.jar
 
-ADD https://github.com/openfaas/faas/releases/download/0.6.5/fwatchdog /usr/bin
-RUN chmod +x /usr/bin/fwatchdog
+RUN apk --no-cache add curl \
+    && echo "Pulling watchdog binary from Github." \
+    && curl -sSL https://github.com/openfaas/faas/releases/download/0.8.0/fwatchdog > /usr/bin/fwatchdog \
+    && chmod +x /usr/bin/fwatchdog \
+    && cp /usr/bin/fwatchdog /home/app \
+    && apk del curl --no-cache
 
 USER app
 

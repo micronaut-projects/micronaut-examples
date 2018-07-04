@@ -9,11 +9,19 @@
             "allowedMethods": ["POST", "GET"]
           }
         }
-
       }
     },
     "application": {
       "name":"storefront"
+    },
+    "router": {
+      "static": {
+        "resources": {
+          "enabled": true,
+          "mapping": "/**",
+          "paths": ["classpath:static"]
+        }
+      }
     }
   },
   "consul": {
@@ -22,15 +30,6 @@
           "enabled":false
       },
       "defaultZone":"${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}"
-    }
-  },
-  "router": {
-    "static": {
-      "resources": {
-        "enabled": true,
-        "mapping": "/**",
-        "paths": ["classpath:static"]
-      }
     }
   }
 }

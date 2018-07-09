@@ -29,7 +29,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom 'io.micronaut:bom:1.0.0.M1'
+        mavenBom 'io.micronaut:bom:1.0.0.M2'
     }
 }
 
@@ -53,3 +53,5 @@ shadowJar {
 mainClassName = "example.Application"
 compileJava.options.compilerArgs += '-parameters'
 compileTestJava.options.compilerArgs += '-parameters'
+
+run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')

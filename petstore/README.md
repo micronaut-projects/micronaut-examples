@@ -89,7 +89,7 @@ Wait till all the applications register with consul.
 
 Access the app at [http://localhost:3000/](http://localhost:3000/).
 
-### Windows Users
+## Windows Users
 
 > _Note that if using a windows version of docker (specifically pre Windows 10 Pro) that `localhost` will be referred to 
 as `192.168.99.100`. 

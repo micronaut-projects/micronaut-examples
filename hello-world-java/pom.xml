@@ -5,7 +5,7 @@
   <version>0.1</version>
   <properties>
     <exec.mainClass>example.Application</exec.mainClass>
-    <micronaut.version>1.0.0.M2</micronaut.version>
+    <micronaut.version>1.0.0.M3</micronaut.version>
     <jdk.version>1.8</jdk.version>
   </properties>
   <repositories>

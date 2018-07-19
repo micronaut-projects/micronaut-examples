@@ -22,7 +22,7 @@ import example.api.v1.PetOperations;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
-import io.micronaut.configurations.hystrix.annotation.HystrixCommand;
+import io.micronaut.configuration.hystrix.annotation.HystrixCommand;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.validation.Validated;
 

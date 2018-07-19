@@ -9,7 +9,6 @@
             "allowedMethods": ["POST", "GET"]
           }
         }
-
       }
     },
     "application": {
@@ -23,7 +22,7 @@
           "paths": ["classpath:static"]
         }
       }
-    }    
+    }
   },
   "consul": {
     "client": {

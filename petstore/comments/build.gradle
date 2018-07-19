@@ -20,4 +20,5 @@ dependencies {
     }
     compile "org.codehaus.groovy:groovy-json:$groovyVersion"
     testRuntime "org.neo4j.test:neo4j-harness:3.3.3"
+    testRuntime 'io.netty:netty-transport-native-epoll:4.1.25.Final'
 }

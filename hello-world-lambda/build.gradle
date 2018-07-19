@@ -5,10 +5,9 @@ import com.amazonaws.services.lambda.model.Runtime
 
 buildscript {
     repositories {
-        mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
+        mavenCentral()
         mavenLocal()
-
     }
     dependencies {
         classpath "jp.classmethod.aws:gradle-aws-plugin:0.22"
@@ -36,7 +35,7 @@ jar {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    maven { url "https://jcenter.bintray.com" }
 }
 
 dependencies {
@@ -60,6 +59,11 @@ dependencies {
 shadowJar {
     mergeServiceFiles()
 }
+
+run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
+
+compileJava.options.compilerArgs += '-parameters'
+compileTestJava.options.compilerArgs += '-parameters'
 
 task deploy(type: AWSLambdaMigrateFunctionTask, dependsOn: shadowJar) {
     functionName = "hello-world"

@@ -6,7 +6,6 @@ buildscript {
     dependencies {
         classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
         classpath "io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE"
-        classpath "net.ltgt.gradle:gradle-apt-plugin:0.15"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.31"
     }
 }
@@ -17,9 +16,6 @@ group "example"
 apply plugin:"io.spring.dependency-management"
 apply plugin:"com.github.johnrengelman.shadow"
 apply plugin:"application"
-apply plugin:"java"
-apply plugin:"net.ltgt.apt-eclipse"
-apply plugin:"net.ltgt.apt-idea"
 apply plugin:"kotlin"
 apply plugin:"kotlin-kapt"
 
@@ -32,7 +28,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom 'io.micronaut:bom:1.0.0.M1'
+        mavenBom 'io.micronaut:bom:1.0.0.M2'
     }
 }
 
@@ -60,6 +56,8 @@ shadowJar {
     mergeServiceFiles()
 }
 
+run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
+
 mainClassName = "example.Application"
 compileJava.options.compilerArgs += '-parameters'
 compileTestJava.options.compilerArgs += '-parameters'
@@ -69,9 +67,16 @@ test {
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions {
+        jvmTarget = '1.8'
+        //Will retain parameter names for Java reflection
+        javaParameters = true
+    }
 }
 
 compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions {
+        jvmTarget = '1.8'
+        javaParameters = true
+    }
 }

@@ -3,6 +3,7 @@ package example.storefront
 import example.api.v1.HealthStatus
 import example.storefront.client.v1.Comment
 import example.storefront.client.v1.CommentClient
+import groovy.transform.CompileStatic
 import io.micronaut.context.annotation.Parameter
 import io.reactivex.Single
 import io.micronaut.http.HttpStatus
@@ -20,10 +21,14 @@ import javax.inject.Singleton
  */
 @Singleton
 @Controller("/comment")
+@CompileStatic
 class CommentController {
 
-    @Inject 
-    CommentClient commentClient
+    final CommentClient commentClient
+
+    CommentController(CommentClient commentClient) {
+        this.commentClient = commentClient
+    }
 
     @Get('/health')
     Single<HealthStatus> health() {

@@ -23,9 +23,9 @@ import example.storefront.client.v1.VendorClient
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import io.micronaut.runtime.Micronaut
+import io.micronaut.runtime.event.annotation.EventListener
 import io.reactivex.Flowable
 import io.reactivex.Single
-import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.runtime.server.event.ServerStartupEvent
 
 import javax.inject.Singleton
@@ -33,7 +33,7 @@ import javax.inject.Singleton
 @Singleton
 @Slf4j
 @CompileStatic
-class Application implements ApplicationEventListener<ServerStartupEvent> {
+class Application {
 
     final PetClient petClient
     final VendorClient vendorClient
@@ -43,8 +43,8 @@ class Application implements ApplicationEventListener<ServerStartupEvent> {
         this.vendorClient = vendorClient
     }
 
-    @Override
-    void onApplicationEvent(ServerStartupEvent event) {
+    @EventListener
+    void onStartup(ServerStartupEvent event) {
         def names = ["Fred", "Arthur", "Joe"]
         List<Flowable<Vendor>> saves = []
         for (name in names) {

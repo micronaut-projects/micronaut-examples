@@ -3,13 +3,13 @@ apply plugin: 'groovy'
 mainClassName = "example.storefront.Application"
 
 dependencies {
-  compileOnly "io.micronaut:inject-groovy:${projectVersion}"
-  compileOnly "io.micronaut:inject-java:${projectVersion}"
-  compile "io.micronaut:runtime-groovy:${projectVersion}"
-  compile "io.micronaut:http-server-netty:${projectVersion}"
+  compileOnly "io.micronaut:inject-groovy"
+  compileOnly "io.micronaut:inject-java"
+  compile "io.micronaut:runtime-groovy"
+  compile "io.micronaut:http-server-netty"
   compile project(":api")
-  compile "io.micronaut:http-client:${projectVersion}"
-  compile "io.micronaut:function-client:${projectVersion}"
+  compile "io.micronaut:http-client"
+  compile "io.micronaut:function-client"
 
 
   testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {

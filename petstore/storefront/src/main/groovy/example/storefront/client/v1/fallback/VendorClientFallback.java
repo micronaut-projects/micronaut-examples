@@ -17,6 +17,7 @@ package example.storefront.client.v1.fallback;
 
 import example.api.v1.Vendor;
 import example.api.v1.VendorOperations;
+import groovy.transform.CompileStatic;
 import io.reactivex.Single;
 import io.micronaut.retry.annotation.Fallback;
 
@@ -28,6 +29,7 @@ import java.util.List;
  * @since 1.0
  */
 @Fallback
+@CompileStatic
 public class VendorClientFallback implements VendorOperations {
     @Override
     public Single<List<Vendor>> list() {

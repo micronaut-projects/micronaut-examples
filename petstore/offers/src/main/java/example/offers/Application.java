@@ -15,10 +15,11 @@
  */
 package example.offers;
 
-import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.runtime.Micronaut;
+import io.micronaut.runtime.event.annotation.EventListener;
 import io.micronaut.runtime.server.event.ServerStartupEvent;
 import io.micronaut.scheduling.TaskScheduler;
+import io.micronaut.scheduling.annotation.Async;
 
 import javax.inject.Singleton;
 import java.time.Duration;
@@ -28,7 +29,7 @@ import java.time.Duration;
  * @since 1.0
  */
 @Singleton
-public class Application implements ApplicationEventListener<ServerStartupEvent> {
+public class Application {
     private final TaskScheduler taskScheduler;
     private final OffersRepository offersRepository;
 
@@ -44,8 +45,9 @@ public class Application implements ApplicationEventListener<ServerStartupEvent>
         Micronaut.run(Application.class);
     }
 
-    @Override
-    public void onApplicationEvent(ServerStartupEvent event) {
+    @EventListener
+    @Async
+    public void onStartup(ServerStartupEvent event) {
         // this is not really representative of a real system where data would probably exist,
         // but we need this delay as pets are created on startup in pets service
         taskScheduler.schedule(Duration.ofSeconds(20), offersRepository::createInitialOffers);

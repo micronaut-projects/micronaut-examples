@@ -1,0 +1,11 @@
+micronaut:
+    application:
+        name: websocket-chat
+    router:
+        static:
+            resources:
+                enabled: true
+                mapping: /**
+                paths: classpath:public
+    server:
+        port: 8080

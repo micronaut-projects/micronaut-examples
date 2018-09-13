@@ -1,0 +1,47 @@
+plugins {
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id "com.github.johnrengelman.shadow" version "2.0.4"
+    id "net.ltgt.apt-eclipse" version "0.18"
+    id "net.ltgt.apt-idea" version "0.18"	
+}
+
+apply plugin:"application"
+apply plugin:"java"
+
+version "0.1"
+group "websocket.chat"
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'io.micronaut:bom:1.0.0.BUILD-SNAPSHOT'
+    }
+}
+
+dependencies {
+    annotationProcessor "io.micronaut:inject-java"
+    implementation "io.micronaut:inject"
+    implementation "io.micronaut:runtime"
+    implementation "io.micronaut:http-client"
+    implementation "io.micronaut:http-server-netty"
+    compileOnly "io.micronaut:inject-java"
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+    testImplementation "junit:junit:4.12"
+    testImplementation "io.micronaut:inject-java"
+    testImplementation "org.hamcrest:hamcrest-all:1.3"
+}
+
+shadowJar {
+    mergeServiceFiles()
+}
+
+run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
+
+mainClassName = "websocket.chat.Application"
+compileJava.options.compilerArgs += '-parameters'
+compileTestJava.options.compilerArgs += '-parameters'

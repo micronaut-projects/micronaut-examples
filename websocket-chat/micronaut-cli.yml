@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: websocket.chat
+---
+testFramework: junit
+sourceLanguage: java

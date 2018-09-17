@@ -1,0 +1,68 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE"
+        classpath "net.ltgt.gradle:gradle-apt-plugin:0.15"
+    }
+}
+
+version "0.1"
+group "kafka.topics.di"
+
+apply plugin:"io.spring.dependency-management"
+apply plugin:"com.github.johnrengelman.shadow"
+apply plugin:"application"
+apply plugin:"java"
+apply plugin:"groovy"
+apply plugin:"net.ltgt.apt-eclipse"
+apply plugin:"net.ltgt.apt-idea"
+
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://jcenter.bintray.com" }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'io.micronaut:bom:1.0.0.M4'
+    }
+}
+
+dependencies {
+    annotationProcessor "io.micronaut:inject-java"
+    compile "io.micronaut:http-client"
+    compile "io.micronaut:http-server-netty"
+    compile "io.micronaut:inject"
+    compile "io.micronaut:runtime"
+    compile "io.micronaut.configuration:kafka"
+
+    compileOnly "io.micronaut:inject-java"
+    runtime "ch.qos.logback:logback-classic:1.2.3"
+    testCompile "junit:junit:4.12"
+    testCompile "io.micronaut:inject-java"
+    testCompile "io.micronaut:inject-groovy"
+
+    testCompile "cglib:cglib-nodep:2.2"
+
+    //  embedded kafka for testing
+    testCompile 'org.apache.kafka:kafka-clients:1.1.0:test'
+    testCompile 'org.apache.kafka:kafka_2.12:1.1.0'
+    testCompile 'org.apache.kafka:kafka_2.12:1.1.0:test'
+
+    testCompile "org.spockframework:spock-core:1.1-groovy-2.4-rc-2"
+}
+
+shadowJar {
+    mergeServiceFiles()
+}
+
+run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
+
+compileJava.options.compilerArgs += '-parameters'
+compileTestJava.options.compilerArgs += '-parameters'

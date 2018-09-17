@@ -1,0 +1,7 @@
+micronaut:
+    application:
+        name: kafka-topics-di
+                
+#Uncomment to set server port
+#    server:
+#        port: 8080

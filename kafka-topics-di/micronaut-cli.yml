@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: kafka.topics.di
+---
+testFramework: spock
+sourceLanguage: java

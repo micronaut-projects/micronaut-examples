@@ -1,6 +1,10 @@
 mainClassName = "example.pets.Application"
 
 dependencies {
+    annotationProcessor "io.micronaut:inject-java"
+    annotationProcessor "io.micronaut.configuration:openapi"
+    compile "io.micronaut.configuration:openapi"
+
     compileOnly "io.micronaut:inject-java"
 
     compile project(":api")

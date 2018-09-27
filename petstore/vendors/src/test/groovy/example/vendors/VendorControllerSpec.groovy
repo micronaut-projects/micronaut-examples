@@ -18,7 +18,7 @@ package example.vendors
 import example.api.v1.VendorOperations
 import io.reactivex.Single
 import io.micronaut.context.ApplicationContext
-import io.micronaut.http.client.Client
+import io.micronaut.http.client.annotation.Client
 import io.micronaut.runtime.server.EmbeddedServer
 import spock.lang.AutoCleanup
 import spock.lang.Shared

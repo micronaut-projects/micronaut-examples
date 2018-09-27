@@ -4,7 +4,6 @@ import example.api.v1.HealthStatus
 import example.storefront.client.v1.Comment
 import example.storefront.client.v1.CommentClient
 import groovy.transform.CompileStatic
-import io.micronaut.context.annotation.Parameter
 import io.reactivex.Single
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Body
@@ -36,12 +35,12 @@ class CommentController {
     }
 
     @Get('/{topic}')
-    List<Comment> topics(@Parameter String topic) {
+    List<Comment> topics(String topic) {
         commentClient.list topic
     }
 
     @Get('/{topic}/{id}')
-    Map<String, Object> thread(Long id) {
+    Map<String, Object> thread(String topic, Long id) {
         commentClient.expand id
     }
 
@@ -51,7 +50,7 @@ class CommentController {
     }
 
     @Post('/{topic}/{id}')
-    HttpStatus addReply(@Parameter Long id, @Body Comment comment) {
+    HttpStatus addReply(String topic, Long id, @Body Comment comment) {
         commentClient.addReply id, comment.poster, comment.content
     }
 }

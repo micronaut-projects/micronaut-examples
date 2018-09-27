@@ -15,9 +15,8 @@
       "name":"storefront"
     },
     "router": {
-      "static": {
-        "resources": {
-          "enabled": true,
+      "static-resources": {
+        "default": {
           "mapping": "/**",
           "paths": ["classpath:static"]
         }

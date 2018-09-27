@@ -17,7 +17,7 @@ package example.comments
 
 import example.api.v1.CommentOperations
 import io.micronaut.http.HttpStatus
-import io.micronaut.http.client.Client
+import io.micronaut.http.client.annotation.Client
 
 import javax.validation.constraints.NotBlank
 

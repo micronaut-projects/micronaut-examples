@@ -35,12 +35,14 @@ dependencyManagement {
 
 dependencies {
     annotationProcessor "io.micronaut:inject-java"
+    annotationProcessor "io.micronaut:validation"
+    annotationProcessor "io.micronaut.configuration:openapi"
     compile "io.micronaut:http-client"    
     compile "io.micronaut:http-server-netty"
     compile "io.micronaut:inject"
     compile "io.micronaut:runtime"
     compile "io.micronaut.configuration:hibernate-validator"
-    annotationProcessor "io.micronaut.configuration:openapi"
+    
     compile "io.micronaut.configuration:openapi"
     compileOnly "io.micronaut:inject-java"
     runtime "ch.qos.logback:logback-classic:1.2.3"

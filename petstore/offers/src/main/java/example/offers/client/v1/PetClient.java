@@ -19,7 +19,7 @@ import example.api.v1.Pet;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.http.client.Client;
+import io.micronaut.http.client.annotation.Client;
 
 import java.util.List;
 

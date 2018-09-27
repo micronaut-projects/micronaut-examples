@@ -5,7 +5,7 @@ import example.api.v1.HealthStatusOperation
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
-import io.micronaut.http.client.Client
+import io.micronaut.http.client.annotation.Client
 
 /**
  * @author zacharyklein

@@ -16,7 +16,7 @@
 package example.pets;
 
 import example.api.v1.PetOperations;
-import io.micronaut.http.client.Client;
+import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Single;
 
 import java.util.List;

@@ -29,7 +29,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom 'io.micronaut:bom:1.0.0.BUILD-SNAPSHOT'
+        mavenBom 'io.micronaut:bom:1.0.0.RC1'
     }
 }
 
@@ -43,7 +43,7 @@ dependencies {
     compile "io.micronaut:runtime"
     compile "io.micronaut.configuration:hibernate-validator"
     
-    compile "io.micronaut.configuration:openapi"
+    compile "io.swagger.core.v3:swagger-annotations"
     compileOnly "io.micronaut:inject-java"
     runtime "ch.qos.logback:logback-classic:1.2.3"
     testCompile "junit:junit:4.12"

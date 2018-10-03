@@ -5,7 +5,7 @@
   <version>0.1</version>
   <properties>
     <exec.mainClass>example.Application</exec.mainClass>
-    <micronaut.version>1.0.0.M4</micronaut.version>
+    <micronaut.version>1.0.0.RC1</micronaut.version>
     <jdk.version>1.8</jdk.version>
   </properties>
   <repositories>
@@ -51,6 +51,11 @@
           <artifactId>hibernate-validator</artifactId>
           <scope>compile</scope>
         </dependency>        
+        <dependency>
+          <groupId>io.swagger.core.v3</groupId>
+          <artifactId>swagger-annotations</artifactId>
+          <scope>compile</scope>
+        </dependency>           
         <dependency>
           <groupId>io.micronaut</groupId>
           <artifactId>inject-java</artifactId>
@@ -124,6 +129,11 @@
                 <artifactId>inject-java</artifactId>
                 <version>${micronaut.version}</version>
               </path>
+             <path>
+                <groupId>io.micronaut.configuration</groupId>
+                <artifactId>openapi</artifactId>
+                <version>${micronaut.version}</version>
+              </path>              
             </annotationProcessorPaths>
           </configuration>
         </plugin>

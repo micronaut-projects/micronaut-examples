@@ -5,7 +5,7 @@ buildscript {
     }
     dependencies {
         classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
-        classpath "io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE"
         classpath "net.ltgt.gradle:gradle-apt-plugin:0.15"
     }
 }

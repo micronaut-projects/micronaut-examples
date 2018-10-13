@@ -50,6 +50,7 @@ dependencies {
     runtime "ch.qos.logback:logback-classic:1.2.3"
     testCompile "junit:junit:4.12"
     testCompile "io.micronaut:inject-java"
+    compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.+"
 }
 
 shadowJar {

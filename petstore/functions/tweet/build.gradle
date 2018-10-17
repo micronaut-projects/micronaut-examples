@@ -24,20 +24,20 @@ mainClassName = "example.function.tweet.UpdateStatusFunction"
 
 
 dependencies {
-    compileOnly "io.micronaut:inject-java"
+    compileOnly "io.micronaut:micronaut-inject-java"
     compile 'org.twitter4j:twitter4j-core:4.0.6'
 
-    compile "io.micronaut:inject-groovy"
-    compile "io.micronaut:function-groovy"
+    compile "io.micronaut:micronaut-inject-groovy"
+    compile "io.micronaut:micronaut-function-groovy"
 
 
     runtime "com.amazonaws:aws-lambda-java-log4j2:1.0.0"
     runtime 'org.apache.logging.log4j:log4j-slf4j-impl:2.9.1'
 
-    testCompile "io.micronaut:http-client"
-    testRuntime "io.micronaut:discovery-client"
-    testRuntime "io.micronaut:function-web"
-    testRuntime "io.micronaut:http-server-netty"
+    testCompile "io.micronaut:micronaut-http-client"
+    testRuntime "io.micronaut:micronaut-discovery-client"
+    testRuntime "io.micronaut:micronaut-function-web"
+    testRuntime "io.micronaut:micronaut-http-server-netty"
 
     testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {
         exclude module:'groovy-all'

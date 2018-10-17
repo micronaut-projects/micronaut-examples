@@ -24,15 +24,15 @@ dependencyManagement {
 }
 
 dependencies {
-    annotationProcessor "io.micronaut:inject-java"
-    implementation "io.micronaut:inject"
-    implementation "io.micronaut:runtime"
-    implementation "io.micronaut:http-client"
-    implementation "io.micronaut:http-server-netty"
-    compileOnly "io.micronaut:inject-java"
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+    implementation "io.micronaut:micronaut-inject"
+    implementation "io.micronaut:micronaut-runtime"
+    implementation "io.micronaut:micronaut-http-client"
+    implementation "io.micronaut:micronaut-http-server-netty"
+    compileOnly "io.micronaut:micronaut-inject-java"
     runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
     testImplementation "junit:junit:4.12"
-    testImplementation "io.micronaut:inject-java"
+    testImplementation "io.micronaut:micronaut-inject-java"
     testImplementation "org.hamcrest:hamcrest-all:1.3"
 }
 

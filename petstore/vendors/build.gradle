@@ -1,21 +1,21 @@
 apply plugin: 'groovy'
 mainClassName = "example.vendors.Application"
 dependencies {
-    compileOnly "io.micronaut:inject-groovy"
+    compileOnly "io.micronaut:micronaut-inject-groovy"
 
     compile project(":api")
 
-    compile "io.micronaut.configuration:hibernate-validator"
-    compile "io.micronaut.configuration:hibernate-gorm"
+    compile "io.micronaut.configuration:micronaut-hibernate-validator"
+    compile "io.micronaut.configuration:micronaut-hibernate-gorm"
 
-    compile "io.micronaut:http-server-netty"
-    compile "io.micronaut:discovery-client"
+    compile "io.micronaut:micronaut-http-server-netty"
+    compile "io.micronaut:micronaut-discovery-client"
 
-    compile "io.micronaut:runtime-groovy"
+    compile "io.micronaut:micronaut-runtime-groovy"
     runtime 'org.apache.tomcat:tomcat-jdbc:8.0.44'
     runtime 'com.h2database:h2:1.4.196'
 
-    testCompile "io.micronaut:inject-groovy"
+    testCompile "io.micronaut:micronaut-inject-groovy"
     testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {
         exclude module:'groovy-all'
     }

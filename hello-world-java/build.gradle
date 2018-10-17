@@ -29,25 +29,25 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom 'io.micronaut:bom:1.0.0.RC1'
+        mavenBom 'io.micronaut:micronaut-bom:1.0.0.RC3'
     }
 }
 
 dependencies {
-    annotationProcessor "io.micronaut:inject-java"
-    annotationProcessor "io.micronaut:validation"
-    annotationProcessor "io.micronaut.configuration:openapi"
-    compile "io.micronaut:http-client"    
-    compile "io.micronaut:http-server-netty"
-    compile "io.micronaut:inject"
-    compile "io.micronaut:runtime"
-    compile "io.micronaut.configuration:hibernate-validator"
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+    annotationProcessor "io.micronaut:micronaut-validation"
+    annotationProcessor "io.micronaut.configuration:micronaut-openapi"
+    compile "io.micronaut:micronaut-http-client"    
+    compile "io.micronaut:micronaut-http-server-netty"
+    compile "io.micronaut:micronaut-inject"
+    compile "io.micronaut:micronaut-runtime"
+    compile "io.micronaut.configuration:micronaut-hibernate-validator"
     
     compile "io.swagger.core.v3:swagger-annotations"
-    compileOnly "io.micronaut:inject-java"
+    compileOnly "io.micronaut:micronaut-inject-java"
     runtime "ch.qos.logback:logback-classic:1.2.3"
     testCompile "junit:junit:4.12"
-    testCompile "io.micronaut:inject-java"
+    testCompile "io.micronaut:micronaut-inject-java"
 }
 
 shadowJar {

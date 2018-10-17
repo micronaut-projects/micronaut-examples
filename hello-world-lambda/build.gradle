@@ -39,16 +39,16 @@ repositories {
 }
 
 dependencies {
-    compileOnly "io.micronaut:inject-java:${projectVersion}"
-    compile "io.micronaut:inject-groovy:${projectVersion}"
-    compile "io.micronaut:function-groovy:${projectVersion}"
+    compileOnly "io.micronaut:micronaut-inject-java:${projectVersion}"
+    compile "io.micronaut:micronaut-inject-groovy:${projectVersion}"
+    compile "io.micronaut:micronaut-function-groovy:${projectVersion}"
     runtime "com.amazonaws:aws-lambda-java-log4j2:1.0.0"
     runtime 'org.apache.logging.log4j:log4j-slf4j-impl:2.9.1'
 
 
-    testCompile "io.micronaut:function-client:${projectVersion}"
-    testRuntime "io.micronaut:http-server-netty:${projectVersion}"
-    testRuntime "io.micronaut:function-web:${projectVersion}"
+    testCompile "io.micronaut:micronaut-function-client:${projectVersion}"
+    testRuntime "io.micronaut:micronaut-http-server-netty:${projectVersion}"
+    testRuntime "io.micronaut:micronaut-function-web:${projectVersion}"
     testRuntime group: 'com.amazonaws', name: 'aws-java-sdk-lambda', version: '1.11.285'
 
     testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {

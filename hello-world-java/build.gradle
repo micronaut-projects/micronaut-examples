@@ -46,12 +46,18 @@ dependencies {
     compile "io.swagger.core.v3:swagger-annotations"
     compileOnly "io.micronaut:micronaut-inject-java"
     runtime "ch.qos.logback:logback-classic:1.2.3"
-    testCompile "junit:junit:4.12"
     testCompile "io.micronaut:micronaut-inject-java"
+    testCompile "io.micronaut.test:micronaut-test-junit5:1.0.0.RC1"
+    testCompile "org.mockito:mockito-junit-jupiter:2.22.0"
+    testRuntime "org.junit.jupiter:junit-jupiter-engine:5.1.0"
 }
 
 shadowJar {
     mergeServiceFiles()
+}
+
+test {
+    useJUnitPlatform()
 }
 
 run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')

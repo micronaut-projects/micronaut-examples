@@ -1,20 +1,18 @@
 package example;
 
-import io.micronaut.context.ApplicationContext;
-import io.micronaut.runtime.server.EmbeddedServer;
-import org.junit.Test;
+import io.micronaut.test.annotation.MicronautTest;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import javax.inject.*;
 
-import static org.junit.Assert.assertEquals;
-
+@MicronautTest
 public class HelloControllerTest {
+
+	@Inject
+	HelloClient helloClient;
 
     @Test
     public void testHello() throws Exception {
-        EmbeddedServer server = ApplicationContext.run(EmbeddedServer.class);
-
-        HelloClient helloClient = server.getApplicationContext().getBean(HelloClient.class);
-
         assertEquals(helloClient.hello("Fred").blockingGet(), "Hello Fred!");
-        server.stop();
     }
 }

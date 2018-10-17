@@ -12,7 +12,9 @@ public class HelloControllerTest {
 	HelloClient helloClient;
 
     @Test
-    public void testHello() throws Exception {
-        assertEquals(helloClient.hello("Fred").blockingGet(), "Hello Fred!");
+    void testHello() {
+        assertEquals(
+                "Hello Fred!",
+                helloClient.hello("Fred").blockingGet());
     }
 }

@@ -2,8 +2,8 @@ micronaut:
     application:
         name: websocket-chat
     router:
-        static:
-            resources:
+        static-resources:
+            default:
                 enabled: true
                 mapping: /**
                 paths: classpath:public

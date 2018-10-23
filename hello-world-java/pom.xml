@@ -5,7 +5,7 @@
   <version>0.1</version>
   <properties>
     <exec.mainClass>example.Application</exec.mainClass>
-    <micronaut.version>1.0.0.RC1</micronaut.version>
+    <micronaut.version>1.0.0</micronaut.version>
     <jdk.version>1.8</jdk.version>
   </properties>
   <repositories>
@@ -18,7 +18,7 @@
     <dependencies>
       <dependency>
         <groupId>io.micronaut</groupId>
-        <artifactId>bom</artifactId>
+        <artifactId>micronaut-bom</artifactId>
         <version>${micronaut.version}</version>
         <type>pom</type>
         <scope>import</scope>
@@ -28,27 +28,27 @@
   <dependencies>
         <dependency>
           <groupId>io.micronaut</groupId>
-          <artifactId>http-client</artifactId>
+          <artifactId>micronaut-http-client</artifactId>
           <scope>compile</scope>
         </dependency>
         <dependency>
           <groupId>io.micronaut</groupId>
-          <artifactId>http-server-netty</artifactId>
+          <artifactId>micronaut-http-server-netty</artifactId>
           <scope>compile</scope>
         </dependency>        
         <dependency>
           <groupId>io.micronaut</groupId>
-          <artifactId>inject</artifactId>
+          <artifactId>micronaut-inject</artifactId>
           <scope>compile</scope>
         </dependency>
         <dependency>
           <groupId>io.micronaut</groupId>
-          <artifactId>runtime</artifactId>
+          <artifactId>micronaut-runtime</artifactId>
           <scope>compile</scope>
         </dependency>
         <dependency>
           <groupId>io.micronaut.configuration</groupId>
-          <artifactId>hibernate-validator</artifactId>
+          <artifactId>micronaut-hibernate-validator</artifactId>
           <scope>compile</scope>
         </dependency>        
         <dependency>
@@ -58,7 +58,7 @@
         </dependency>           
         <dependency>
           <groupId>io.micronaut</groupId>
-          <artifactId>inject-java</artifactId>
+          <artifactId>micronaut-inject-java</artifactId>
           <scope>provided</scope>
         </dependency>
         <dependency>
@@ -68,11 +68,17 @@
           <scope>runtime</scope>
         </dependency>
         <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>4.12</version>
+          <groupId>io.micronaut.test</groupId>
+          <artifactId>micronaut-test-junit5</artifactId>
+          <version>1.0.0.RC1</version>
           <scope>test</scope>
         </dependency>
+        <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter-engine</artifactId>
+          <version>5.1.0</version>
+          <scope>test</scope>
+        </dependency>        
     </dependencies>
   <build>
     <plugins>
@@ -126,12 +132,12 @@
             <annotationProcessorPaths>
               <path>
                 <groupId>io.micronaut</groupId>
-                <artifactId>inject-java</artifactId>
+                <artifactId>micronaut-inject-java</artifactId>
                 <version>${micronaut.version}</version>
               </path>
              <path>
                 <groupId>io.micronaut.configuration</groupId>
-                <artifactId>openapi</artifactId>
+                <artifactId>micronaut-openapi</artifactId>
                 <version>${micronaut.version}</version>
               </path>              
             </annotationProcessorPaths>

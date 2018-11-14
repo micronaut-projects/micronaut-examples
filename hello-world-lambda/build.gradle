@@ -15,6 +15,7 @@ buildscript {
 }
 
 plugins {
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
     id 'com.github.johnrengelman.shadow' version '2.0.1'
     id "de.sebastianboegl.shadow.transformer.log4j" version "2.1.1"
     id 'groovy'
@@ -38,20 +39,28 @@ repositories {
     maven { url "https://jcenter.bintray.com" }
 }
 
+
+dependencyManagement {
+    imports {
+        mavenBom 'io.micronaut:micronaut-bom:1.0.1'
+    }
+}
+
 dependencies {
-    compileOnly "io.micronaut:micronaut-inject-java:${projectVersion}"
-    compile "io.micronaut:micronaut-inject-groovy:${projectVersion}"
-    compile "io.micronaut:micronaut-function-groovy:${projectVersion}"
+    compileOnly "io.micronaut:micronaut-inject-java"
+    compileOnly "io.micronaut:micronaut-inject-groovy"
+    compileOnly "io.micronaut:micronaut-inject"
+    compile "io.micronaut:micronaut-function-groovy"
     runtime "com.amazonaws:aws-lambda-java-log4j2:1.0.0"
     runtime 'org.apache.logging.log4j:log4j-slf4j-impl:2.9.1'
 
-
-    testCompile "io.micronaut:micronaut-function-client:${projectVersion}"
-    testRuntime "io.micronaut:micronaut-http-server-netty:${projectVersion}"
-    testRuntime "io.micronaut:micronaut-function-web:${projectVersion}"
+    testCompile "io.micronaut:micronaut-inject-groovy"
+    testCompile "io.micronaut:micronaut-function-client"
+    testRuntime "io.micronaut:micronaut-http-server-netty"
+    testRuntime "io.micronaut:micronaut-function-web"
     testRuntime group: 'com.amazonaws', name: 'aws-java-sdk-lambda', version: '1.11.285'
 
-    testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {
+    testCompile("org.spockframework:spock-core:1.2-groovy-2.5") {
         exclude module:'groovy-all'
     }
 

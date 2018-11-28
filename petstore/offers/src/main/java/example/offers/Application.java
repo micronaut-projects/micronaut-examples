@@ -48,8 +48,6 @@ public class Application {
     @EventListener
     @Async
     public void onStartup(ServerStartupEvent event) {
-        // this is not really representative of a real system where data would probably exist,
-        // but we need this delay as pets are created on startup in pets service
-        taskScheduler.schedule(Duration.ofSeconds(20), offersRepository::createInitialOffers);
+        offersRepository.createInitialOffers();
     }
 }

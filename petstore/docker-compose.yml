@@ -78,7 +78,6 @@ services:
     depends_on:
       - pets
       - vendors
-      - offers
       - comments
     environment:
       MICRONAUT_SERVER_HOST: storefront

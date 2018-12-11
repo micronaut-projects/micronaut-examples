@@ -132,7 +132,7 @@
         }
 		function vendorHtml(vendor) {
 			var html = "<h2>" + vendor.name + "</h2>";
-			if ( vendor.pets.length == 0 ) {
+			if ( vendor.pets === undefined || vendor.pets.length === 0 ) {
 				html += 'No pets available';	
 			} else {
 				html += petsRow(vendor.pets);

@@ -5,7 +5,4 @@ micronaut {
             nThreads = 75
         }
     }
-    server {
-        port = 8080
-    }
 }

@@ -7,5 +7,3 @@ micronaut:
                 enabled: true
                 mapping: /**
                 paths: classpath:public
-    server:
-        port: 8080

@@ -29,7 +29,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom 'io.micronaut:micronaut-bom:1.0.1'
+        mavenBom 'io.micronaut:micronaut-bom:1.0.3'
     }
 }
 
@@ -47,7 +47,7 @@ dependencies {
     compileOnly "io.micronaut:micronaut-inject-java"
     runtime "ch.qos.logback:logback-classic:1.2.3"
     testCompile "io.micronaut:micronaut-inject-java"
-    testCompile "io.micronaut.test:micronaut-test-junit5:1.0.0.RC2"
+    testCompile "io.micronaut.test:micronaut-test-junit5:1.0.1"
     testCompile "org.mockito:mockito-junit-jupiter:2.22.0"
     testRuntime "org.junit.jupiter:junit-jupiter-engine:5.1.0"
 }

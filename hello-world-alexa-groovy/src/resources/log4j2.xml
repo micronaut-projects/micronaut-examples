@@ -8,7 +8,7 @@
         </Lambda>
     </Appenders>
     <Loggers>
-        <Root level="info">
+        <Root level="debug">
             <AppenderRef ref="Lambda" />
         </Root>
         <logger name="io.micronaut.context.condition" level="DEBUG"/>

@@ -1,0 +1,102 @@
+import com.amazonaws.services.lambda.model.InvocationType
+import jp.classmethod.aws.gradle.lambda.AWSLambdaInvokeTask
+import jp.classmethod.aws.gradle.lambda.AWSLambdaMigrateFunctionTask
+import com.amazonaws.services.lambda.model.Runtime
+
+buildscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+        mavenCentral()
+        mavenLocal()
+    }
+    dependencies {
+        classpath "jp.classmethod.aws:gradle-aws-plugin:0.22"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE"
+    }
+}
+
+plugins {
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+    id "de.sebastianboegl.shadow.transformer.log4j" version "2.1.1"
+    id 'groovy'
+    id "application"
+}
+
+apply plugin: 'jp.classmethod.aws.lambda'
+apply plugin:"io.spring.dependency-management"
+
+mainClassName = "example.HelloWorldAlexaFunction"
+applicationDefaultJvmArgs = [""]
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://jcenter.bintray.com" }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'io.micronaut:micronaut-bom:1.1.0.BUILD-SNAPSHOT'
+    }
+}
+
+dependencies {
+    compileOnly "io.micronaut:micronaut-inject-java"
+    compileOnly "io.micronaut:micronaut-inject-groovy"
+    compile "io.micronaut:micronaut-function"
+    compile "io.micronaut:micronaut-function-groovy"
+    compile "io.micronaut:micronaut-function-aws"
+    compile "io.micronaut:micronaut-function-aws-alexa"
+    compile 'com.amazonaws:aws-lambda-java-core:1.2.0'
+    compile "com.amazon.alexa:ask-sdk:2.9.0"
+    runtime "com.amazonaws:aws-lambda-java-log4j2:1.0.0"
+    runtime 'org.apache.logging.log4j:log4j-slf4j-impl:2.9.1'
+
+
+    compile "io.micronaut:micronaut-function-client"
+    testRuntime "io.micronaut:micronaut-http-server-netty"
+    testRuntime "io.micronaut:micronaut-function-web"
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-lambda', version: '1.11.285'
+
+    testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {
+        exclude module:'groovy-all'
+    }
+
+}
+shadowJar {
+    mergeServiceFiles()
+}
+
+run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
+
+compileJava.options.compilerArgs += '-parameters'
+compileTestJava.options.compilerArgs += '-parameters'
+
+task deploy(type: AWSLambdaMigrateFunctionTask, dependsOn: shadowJar) {
+    functionName = "hello-world-alexa"
+    handler = "example.HelloWorldAlexaFunction::hello"
+    role = "arn:aws:iam::${aws.accountId}:role/lambda_basic_execution"
+    runtime = Runtime.Java8
+    zipFile = shadowJar.archivePath
+    memorySize = 256
+    timeout = 60
+}
+
+task invoke(type: AWSLambdaInvokeTask) {
+    functionName = "hello-world-alexa"
+    //handler = "example.HelloWorldAlexaFunction::hello"
+    invocationType = InvocationType.RequestResponse
+    //def file = new File("src/test/groovy/example/inputEnvelope.json").newInputStream()
+    payload = file("src/test/groovy/example/inputEnvelope.json")
+    doLast {
+        println "Lambda function result: " + new String(invokeResult.payload.array(), "UTF-8")
+    }
+}
+
+System.out.println("shadshadowJar.archivePath="+shadowJar.archivePath)

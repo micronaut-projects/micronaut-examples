@@ -25,15 +25,26 @@ import example.handlers.*
  * @since 1.0
  */
 
-ResponseEnvelope hello(RequestEnvelope request) {
+String hello() {
+    System.out.println("System env properties:")
+    Map<String,String> props = System.getenv()
+    props.keySet().each { String key ->
+        System.out.println("key=${key} value=${props.get(key)}")
+    }
+    System.out.println("system props end")
 
-    return Skills.standard()
-            .addRequestHandlers(
-            new CancelandStopIntentHandler(),
-            new HelloWorldIntentHandler(),
-            new HelpIntentHandler(),
-            new LaunchRequestHandler(),
-            new SessionEndedRequestHandler())
-            .withSkillId("amzn1.ask.skill.69aafd3f-1c78-4613-92a3-8588a955c7c6")
-            .build().invoke(request)
+    ClassLoader cl = ClassLoader.getSystemClassLoader();
+
+    URL[] urls = ((URLClassLoader)cl).getURLs();
+    System.out.println("system classloader:")
+    for(URL url: urls){
+        System.out.println(url.getFile());
+    }
+    System.out.println("system classloader end")
+    System.out.println("system properties begin:")
+    Properties properties = System.getProperties()
+    properties.keySet().each { def key ->
+        System.out.println("key=${key} value=${properties.get(key)}")
+    }
+    System.out.println("system properties end")
 }

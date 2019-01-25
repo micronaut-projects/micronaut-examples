@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import io.micronaut.context.annotation.Bean;
+import io.micronaut.context.annotation.Prototype;
 import java.util.List;
 import javax.inject.Inject;
 
-@Bean
+@Prototype
 public class MainActivity extends Activity {
     private static final String TAG = MainActivity.class.getSimpleName();
 

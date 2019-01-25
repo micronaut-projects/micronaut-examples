@@ -3,6 +3,7 @@ mainClassName = "example.vendors.Application"
 dependencies {
     compileOnly "io.micronaut:micronaut-inject-groovy"
 
+    compile "org.codehaus.groovy:groovy:2.5.1"
     compile project(":api")
 
     compile "io.micronaut.configuration:micronaut-hibernate-validator"

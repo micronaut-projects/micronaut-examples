@@ -16,9 +16,9 @@ services:
     ports:
       - 6379:6379
   consul:
-      image: consul
-      ports:
-        - 8500:8500
+    image: consul
+    ports:
+      - 8500:8500
   pets:
     build: ./pets
     depends_on:

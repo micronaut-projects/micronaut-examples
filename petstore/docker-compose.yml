@@ -41,6 +41,7 @@ services:
   offers:
     build: ./offers
     links:
+      - storefront
       - redis
       - pets
       - consul

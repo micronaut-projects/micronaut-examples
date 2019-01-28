@@ -1,6 +1,8 @@
 micronaut:
   application:
     name: offers
+  server:
+    port: -1
 redis:
   uri: "redis://${REDIS_HOST:localhost}:${REDIS_PORT:6379}"
 consul:

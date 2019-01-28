@@ -26,6 +26,7 @@ services:
       - consul
     environment:
       MICRONAUT_SERVER_HOST: pets
+      MICRONAUT_SERVER_PORT: 8080
       MONGO_HOST: mongodb
       MONGO_PORT: 27017
       CONSUL_HOST: consul
@@ -36,6 +37,7 @@ services:
       - consul
     environment:
       MICRONAUT_SERVER_HOST: vendors
+      MICRONAUT_SERVER_PORT: 8080
       CONSUL_HOST: consul
       CONSUL_PORT: 8500
   offers:
@@ -47,6 +49,7 @@ services:
       - consul
     environment:
       MICRONAUT_SERVER_HOST: offers
+      MICRONAUT_SERVER_PORT: 8080
       CONSUL_HOST: consul
       CONSUL_PORT: 8500
       REDIS_HOST: redis
@@ -58,6 +61,7 @@ services:
       - consul
     environment:
       MICRONAUT_SERVER_HOST: comments
+      MICRONAUT_SERVER_PORT: 8080
       NEO4J_HOST: neo4j
       NEO4J_PORT: 7687
       CONSUL_HOST: consul
@@ -68,6 +72,7 @@ services:
       - consul
     environment:
       MICRONAUT_SERVER_HOST: mail
+      MICRONAUT_SERVER_PORT: 8080
       CONSUL_HOST: consul
       CONSUL_PORT: 8500
   storefront:

@@ -61,9 +61,14 @@ The applications depend on one another so gradle builds need to be run in order:
 ./gradlew vendors:run
 ```
 
-Once those are running the rest may be started individually or as a group.
+Once those are running start the following individually or as a group.
 ```
-./gradlew comments:run mail:run offers:run storefront:run --parallel
+./gradlew comments:run mail:run offers:run --parallel
+```
+
+Then start:
+```
+./gradlew storefront:run
 ```
 
 Finally run the `frontend`, which is written with `React`
@@ -83,7 +88,11 @@ docker-compose build
 docker-compose up
 ```
 
-Wait till all the applications register with consul. 
+Wait till all the applications register with consul.  
+You may seen some errors during applications startup like `ERROR i.m.d.registration.AutoRegistration - Error reporting passing
+state to Consul: Internal Server Error`. They happen some time and they depend on the computer you're running docker-compose. They
+are due to the high CPU usage because a lot of containers are starting at the same time. The applications will try to register
+itself in Consul automatically after a moment and everything will work as expected.
 
 ## Open Petstore
 
@@ -105,5 +114,6 @@ Search for configurations that are referring to systems created in a docker cont
 * docker-compose up consul mongodb neo4j redis
 * gradlew pets:run
 * gradlew vendors:run
-* gradlew comments:run mail:run offers:run storefront:run --parallel
+* gradlew comments:run mail:run offers:run --parallel
+* gradlew storefront:run
 * gradlew frontend:react:start

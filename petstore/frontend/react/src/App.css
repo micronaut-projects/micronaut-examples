@@ -1,9 +1,9 @@
 .about {
-    max-width: 400px
+  max-width: 400px;
 }
 
 .App {
-    text-align: center;
+  text-align: center;
 }
 
 body {
@@ -13,94 +13,93 @@ body {
 }
 
 .comment-btn {
-    float: right;
-    width: 35px;
+  float: right;
+  width: 35px;
 }
 
 /* Comments */
 .comment-card {
-    text-align: left;
-    margin-bottom: 20px;
+  text-align: left;
+  margin-bottom: 20px;
 }
 
 .comment-form-item {
-    background-color: #e9ecef;
+  background-color: #e9ecef;
 }
 
 .comment-title {
-    text-align: right;
-    padding-right: 15px;
-    padding-top: 15px;
+  text-align: right;
+  padding-right: 15px;
+  padding-top: 15px;
 }
 
 /* Featured pets */
 .featured-card img {
-    height: 18rem;
-    object-fit: cover;
+  height: 18rem;
+  object-fit: cover;
 }
 
 /* About page */
 .micronaut-logo {
-    /*animation: App-logo-spin infinite 10s linear;*/
-    height: 80px;
+  /*animation: App-logo-spin infinite 10s linear;*/
+  height: 80px;
 }
 
 /* Home page offers */
 .offer-jumbotron {
-    background-position: center;
-    color: white
+  background-position: center;
+  color: white;
 }
 
 .offer-jumbotron-fallback {
-    min-height: 300px;
-    background-repeat: no-repeat;
+  min-height: 300px;
+  background-repeat: no-repeat;
 }
 
 /* Pets */
 .pet-card {
-    background: no-repeat center;
-    background-size: cover;
-    margin: 10px;
-    min-height: 300px;
-
+  background: no-repeat center;
+  background-size: cover;
+  margin: 10px;
+  min-height: 300px;
 }
 
 .pet-header {
-    position: absolute;
-    color: white;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    width: 100%;
+  position: absolute;
+  color: white;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  width: 100%;
 }
 
 .pet-link {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .replies-card {
-    width: 90%;
-    margin: 0 auto 20px;
+  width: 90%;
+  margin: 0 auto 20px;
 }
 
 .reply-item {
-    background-color: #f9f9f9
+  background-color: #f9f9f9;
 }
 
 /* Vendors */
 .vendor-card {
-    width: 18rem;
-    float: left;
-    margin: 10px
+  width: 18rem;
+  float: left;
+  margin: 10px;
 }
 
 .vendor-card img {
-    width: 18rem;
-    height: 18rem;
-    object-fit: cover;
+  width: 18rem;
+  height: 18rem;
+  object-fit: cover;
 }

@@ -103,7 +103,6 @@ class Comments extends Component {
       const json = await res.json();
 
       const {threads} = this.state;
-      console.log('Comments.js expandThreads: threads =', threads);
       const newThreads = threads.map(t => {
         t.replies = t.id === id ? json.replies : [];
         t.expanded = t.id === id;

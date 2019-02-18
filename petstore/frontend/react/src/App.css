@@ -1,34 +1,48 @@
-.App {
-    text-align: center;
-}
-
-/* About page */
-.micronaut-logo {
-    /*animation: App-logo-spin infinite 10s linear;*/
-    height: 80px;
-}
-
 .about {
     max-width: 400px
 }
 
-/* Vendors */
-.vendor-card {
-    width: 18rem;
-    float: left;
-    margin: 10px
+.App {
+    text-align: center;
 }
 
-.vendor-card img {
-    width: 18rem;
-    height: 18rem;
-    object-fit: cover;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.comment-btn {
+    float: right;
+    width: 35px;
+}
+
+/* Comments */
+.comment-card {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.comment-form-item {
+    background-color: #e9ecef;
+}
+
+.comment-title {
+    text-align: right;
+    padding-right: 15px;
+    padding-top: 15px;
 }
 
 /* Featured pets */
 .featured-card img {
     height: 18rem;
     object-fit: cover;
+}
+
+/* About page */
+.micronaut-logo {
+    /*animation: App-logo-spin infinite 10s linear;*/
+    height: 80px;
 }
 
 /* Home page offers */
@@ -69,22 +83,6 @@
     width: 100%;
 }
 
-/* Comments */
-.comment-card {
-    text-align: left;
-    margin-bottom: 20px;
-}
-
-.comment-title {
-    text-align: right;
-    padding-right: 15px;
-    padding-top: 15px;
-}
-
-.comment-form-item {
-    background-color: #e9ecef;
-}
-
 .replies-card {
     width: 90%;
     margin: 0 auto 20px;
@@ -94,20 +92,15 @@
     background-color: #f9f9f9
 }
 
-.comment-btn {
-    float: right;
-    width: 35px;
+/* Vendors */
+.vendor-card {
+    width: 18rem;
+    float: left;
+    margin: 10px
 }
 
-/* Animations */
-
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.vendor-card img {
+    width: 18rem;
+    height: 18rem;
+    object-fit: cover;
 }
-
-

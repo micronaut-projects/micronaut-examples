@@ -1,11 +1,11 @@
 import {shape, string} from 'prop-types';
 import React, {useEffect, useState} from 'react';
-import config from '../config';
 import PetsLayout from './PetsLayout';
+import config from '../config';
 
-async function loadPets(vendor, setPets) {
-  const url = `${config.SERVER_URL}/pets/vendor/${vendor}`;
+async function loadPets(setPets) {
   try {
+    const url = `${config.SERVER_URL}/pets`;
     const res = await fetch(url);
     const pets = await res.json();
     setPets(pets);
@@ -14,26 +14,22 @@ async function loadPets(vendor, setPets) {
   }
 }
 
-function VendorPets({match}) {
+function Pets({match}) {
   const [pets, setPets] = useState([]);
 
-  const {vendor} = match.params;
-
   useEffect(() => {
-    loadPets(vendor, setPets);
+    loadPets(setPets);
   }, []);
 
-  return (
-    <PetsLayout header={`Pets from ${vendor}`} match={match} pets={pets} />
-  );
+  return <PetsLayout pets={pets} match={match} />;
 }
 
-VendorPets.propTypes = {
+Pets.propTypes = {
   match: shape({
     params: shape({
-      vendor: string
+      slug: string
     })
   })
 };
 
-export default VendorPets;
+export default Pets;

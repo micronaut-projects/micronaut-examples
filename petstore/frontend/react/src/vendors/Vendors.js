@@ -1,22 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import VendorsTable from './VendorsTable';
-import {getJson} from '../fetch-util';
-
-async function loadVendors(setVendors) {
-  try {
-    const vendors = await getJson('/vendors');
-    setVendors(vendors);
-  } catch (e) {
-    console.warn(e);
-  }
-}
+import {useFetchState} from '../fetch-util';
 
 export default function Vendors() {
-  const [vendors, setVendors] = useState([]);
-
-  useEffect(() => {
-    loadVendors(setVendors);
-  }, []);
+  const [vendors] = useFetchState('/vendors', []);
 
   return (
     <div>

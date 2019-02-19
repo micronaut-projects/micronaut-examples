@@ -1,23 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import config from '../config';
-import {getJson} from '../fetch-util';
-
-const loadPet = async setPet => {
-  try {
-    const pet = await getJson('/pets/random');
-    setPet(pet);
-  } catch (e) {
-    console.warn(e);
-  }
-};
+import {useFetchState} from '../fetch-util';
 
 export default function FeaturedPet() {
-  const [pet, setPet] = useState(null);
-
-  useEffect(() => {
-    loadPet(setPet);
-  }, []);
+  const [pet] = useFetchState('/pets/random');
 
   if (!pet) return null;
 

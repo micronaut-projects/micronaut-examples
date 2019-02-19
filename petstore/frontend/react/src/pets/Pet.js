@@ -1,26 +1,13 @@
 import {shape, string} from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import Comments from '../comments/Comments';
 import config from '../config';
-import {getJson} from '../fetch-util';
+import {useFetchState} from '../fetch-util';
 import Mail from '../mail/Mail';
 
-async function loadPet(slug, setPet) {
-  try {
-    const pet = await getJson(`/pets/${slug}`);
-    setPet(pet);
-  } catch (e) {
-    console.warn(e);
-  }
-}
-
 function Pet({match}) {
-  const [pet, setPet] = useState();
-
-  useEffect(() => {
-    loadPet(match.params.slug, setPet);
-  }, []);
+  const [pet] = useFetchState(`/pets/${match.params.slug}`);
 
   if (!pet) return <span>Loading...</span>;
 

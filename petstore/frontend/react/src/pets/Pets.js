@@ -1,24 +1,10 @@
 import {shape, string} from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import PetsLayout from './PetsLayout';
-import {getJson} from '../fetch-util';
-
-async function loadPets(setPets) {
-  try {
-    const pets = await getJson('/pets');
-    setPets(pets);
-  } catch (e) {
-    console.warn(e);
-  }
-}
+import {useFetchState} from '../fetch-util';
 
 function Pets({match}) {
-  const [pets, setPets] = useState([]);
-
-  useEffect(() => {
-    loadPets(setPets);
-  }, []);
-
+  const [pets] = useFetchState('/pets', []);
   return <PetsLayout pets={pets} match={match} />;
 }
 

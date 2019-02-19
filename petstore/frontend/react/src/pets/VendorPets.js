@@ -1,25 +1,11 @@
 import {shape, string} from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import PetsLayout from './PetsLayout';
-import {getJson} from '../fetch-util';
-
-async function loadPets(vendor, setPets) {
-  try {
-    const pets = await getJson(`/pets/vendor/${vendor}`);
-    setPets(pets);
-  } catch (e) {
-    console.warn(e);
-  }
-}
+import {useFetchState} from '../fetch-util';
 
 function VendorPets({match}) {
-  const [pets, setPets] = useState([]);
-
   const {vendor} = match.params;
-
-  useEffect(() => {
-    loadPets(vendor, setPets);
-  }, []);
+  const [pets] = useFetchState(`/pets/vendor/${vendor}`, []);
 
   return (
     <PetsLayout header={`Pets from ${vendor}`} match={match} pets={pets} />

@@ -1,13 +1,11 @@
 import {shape, string} from 'prop-types';
 import React, {useEffect, useState} from 'react';
-import config from '../config';
 import PetsLayout from './PetsLayout';
+import {getJson} from '../fetch-util';
 
 async function loadPets(vendor, setPets) {
-  const url = `${config.SERVER_URL}/pets/vendor/${vendor}`;
   try {
-    const res = await fetch(url);
-    const pets = await res.json();
+    const pets = await getJson(`/pets/vendor/${vendor}`);
     setPets(pets);
   } catch (e) {
     console.warn(e);

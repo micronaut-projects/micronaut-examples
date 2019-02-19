@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import config from '../config';
 import {Link} from 'react-router-dom';
+import config from '../config';
+import {getJson} from '../fetch-util';
 
 const loadPet = async setPet => {
-  const url = `${config.SERVER_URL}/pets/random`;
   try {
-    const res = await fetch(url);
-    const pet = await res.json();
+    const pet = await getJson('/pets/random');
     setPet(pet);
   } catch (e) {
     console.warn(e);

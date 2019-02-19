@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import VendorsTable from './VendorsTable';
-import config from '../config';
+import {getJson} from '../fetch-util';
 
 async function loadVendors(setVendors) {
   try {
-    const res = await fetch(`${config.SERVER_URL}/vendors`);
-    const vendors = await res.json();
+    const vendors = await getJson('/vendors');
     setVendors(vendors);
   } catch (e) {
     console.warn(e);

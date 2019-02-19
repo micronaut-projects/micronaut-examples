@@ -3,13 +3,12 @@ import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import Comments from '../comments/Comments';
 import config from '../config';
+import {getJson} from '../fetch-util';
 import Mail from '../mail/Mail';
 
 async function loadPet(slug, setPet) {
-  const url = `${config.SERVER_URL}/pets/${slug}`;
   try {
-    const res = await fetch(url);
-    const pet = await res.json();
+    const pet = await getJson(`/pets/${slug}`);
     setPet(pet);
   } catch (e) {
     console.warn(e);

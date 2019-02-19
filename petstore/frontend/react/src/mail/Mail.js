@@ -1,14 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 import {shape, string} from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
-import config from '../config';
 import Alert from '../display/Alert';
+import {getJson, postJson} from '../fetch-util';
 
 const checkHealth = async setEnabled => {
-  const url = `${config.SERVER_URL}/mail/health`;
   try {
-    const res = await fetch(url);
-    const json = await res.json();
+    const json = await getJson('/mail/health');
     setEnabled(json.status === 'UP');
   } catch (e) {
     console.warn(e);
@@ -20,8 +18,6 @@ function Mail({pet}) {
   const [email, setEmail] = useState('');
   const [level, setLevel] = useState('');
   const [message, setMessage] = useState('');
-
-  if (!enabled) return null;
 
   useEffect(() => {
     checkHealth(setEnabled);
@@ -39,12 +35,7 @@ function Mail({pet}) {
       event.preventDefault();
 
       try {
-        const url = `${config.SERVER_URL}/mail/send`;
-        const res = await fetch(url, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({email, slug: pet.slug})
-        });
+        const res = await postJson('/mail/send', {email, slug: pet.slug});
         if (res.status === 200) {
           setEmail('');
           setLevel('success');
@@ -62,6 +53,8 @@ function Mail({pet}) {
 
   const valid =
     email.length > 0 && email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+
+  if (!enabled) return null;
 
   return (
     <div>

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {string} from 'prop-types';
 import AddComment from './AddComment';
 import Thread from './Thread';
-import config from '../config';
+import {getJson, postJson} from '../fetch-util';
 
 class Comments extends Component {
   state = {
@@ -16,9 +16,7 @@ class Comments extends Component {
 
   async componentDidMount() {
     try {
-      const url = `${config.SERVER_URL}/comment/health`;
-      const res = await fetch(url);
-      const json = await res.json();
+      const json = await getJson('/comment/health');
       const isEnabled = json.status === 'UP';
       this.setState({enabled: isEnabled});
       if (isEnabled) this.fetchThreads();
@@ -30,13 +28,8 @@ class Comments extends Component {
   addReply = async (e, id) => {
     e.preventDefault();
     const {topic, reply} = this.state;
-    const url = `${config.SERVER_URL}/comment/${topic}/${id}`;
     try {
-      const res = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(reply),
-        headers: {'Content-Type': 'application/json'}
-      });
+      const res = await postJson(`/comment/${topic}/${id}`, reply);
       if (res.status === 201) {
         this.expandThread(id);
       } else {
@@ -64,15 +57,10 @@ class Comments extends Component {
     e.preventDefault();
 
     const {topic} = this.props;
-    const thread = this.state.reply;
+    const {reply} = this.state;
 
-    const url = `${config.SERVER_URL}/comment/${topic}`;
     try {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(thread)
-      });
+      const res = await postJson(`/comment/${topic}`, reply);
       if (res.status === 201) {
         this.fetchThreads();
       } else {
@@ -97,11 +85,8 @@ class Comments extends Component {
   expandThread = async id => {
     const {topic} = this.props;
 
-    const url = `${config.SERVER_URL}/comment/${topic}/${id}`;
     try {
-      const res = await fetch(url);
-      const json = await res.json();
-
+      const json = await getJson(`/comment/${topic}/${id}`);
       const {threads} = this.state;
       const newThreads = threads.map(t => {
         t.replies = t.id === id ? json.replies : [];
@@ -118,10 +103,8 @@ class Comments extends Component {
 
   fetchThreads = async () => {
     const {topic} = this.props;
-    const url = `${config.SERVER_URL}/comment/${topic}`;
     try {
-      const res = await fetch(url);
-      const threads = await res.json();
+      const threads = await getJson(`/comment/${topic}`);
       this.setState({threads});
       this.clearReply();
     } catch (e) {

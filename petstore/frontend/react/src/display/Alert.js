@@ -1,15 +1,24 @@
-import React from 'react'
-import {string} from 'prop-types'
+import React from 'react';
+import {string} from 'prop-types';
 
-const Alert = ({message, level}) => message ? <div className={`alert alert-${level ? level: 'info'} alert-dismissible fade show`} role="alert">
-  {message}
-  <button type="button" className="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-  </button>
-</div> : null
+function Alert({message, level}) {
+  if (!message) return null;
+
+  const className = `alert alert-${level ||
+    'info'} alert-dismissible fade show`;
+  return (
+    <div className={className} role="alert">
+      {message}
+      <button className="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+  );
+}
 
 Alert.propTypes = {
-  message: string,
-  level: string.isRequired
-}
+  level: string,
+  message: string
+};
 
 export default Alert;

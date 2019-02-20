@@ -1,32 +1,23 @@
-import React, {Component} from 'react'
-import config from "../config";
-import PetsLayout from "./PetsLayout";
+import {shape, string} from 'prop-types';
+import React from 'react';
+import PetsLayout from './PetsLayout';
+import {useFetchState} from '../fetch-util';
 
-class VendorPets extends Component {
+function VendorPets({match}) {
+  const {vendor} = match.params;
+  const [pets] = useFetchState(`/pets/vendor/${vendor}`, []);
 
-  constructor() {
-    super();
-
-    this.state = {
-      pets: []
-    }
-  }
-
-  componentDidMount() {
-    fetch(`${config.SERVER_URL}/pets/vendor/${this.props.match.params.vendor}`)
-      .then(r => r.json())
-      .then(json => this.setState({pets: json}))
-      .catch(e => console.warn(e))
-  }
-
-
-  render() {
-    const {pets} = this.state;
-    const {match} = this.props;
-
-    return <PetsLayout pets={pets} match={match} header={`Pets from ${match.params.vendor}`}/>
-  }
-
+  return (
+    <PetsLayout header={`Pets from ${vendor}`} match={match} pets={pets} />
+  );
 }
 
-export default VendorPets
+VendorPets.propTypes = {
+  match: shape({
+    params: shape({
+      vendor: string
+    })
+  })
+};
+
+export default VendorPets;

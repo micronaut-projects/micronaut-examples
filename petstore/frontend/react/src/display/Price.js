@@ -1,31 +1,18 @@
-import React from 'react'
-import {number, string} from 'prop-types'
+import React from 'react';
+import {number, string} from 'prop-types';
 
-const Price = ({price, currency}) => {
+const currencyMap = {USD: '$', EUR: '€', GBP: '£'};
 
-  let localPrice = price.toFixed(2);
-
-  switch(currency) {
-    case 'USD':
-      localPrice = `$${localPrice}`;
-      break;
-    case 'EUR':
-      localPrice = `€${localPrice}`;
-      break;
-    case 'GBP':
-      localPrice = `£${localPrice}`;
-      break;
-    default:
-      localPrice = `${localPrice}`
-  }
-
-
-  return <span className="badge badge-secondary">{localPrice}</span>
-}
+const Price = ({currency, price}) => (
+  <span className="badge badge-secondary">
+    {currencyMap[currency] || ''}
+    {price.toFixed(2)}
+  </span>
+);
 
 Price.propTypes = {
-  price: number.isRequired,
-  currency: string
-}
+  currency: string,
+  price: number.isRequired
+};
 
-export default Price
+export default Price;

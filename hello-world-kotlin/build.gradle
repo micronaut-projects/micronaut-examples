@@ -45,14 +45,13 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
     compileOnly "io.micronaut:micronaut-inject-java"
     kapt "io.micronaut:micronaut-inject-java"
-    kaptTest "io.micronaut:micronaut-inject-java"
-    testCompile "org.jetbrains.spek:spek-api:$spekVersion"
-    testRuntime "org.jetbrains.spek:spek-junit-platform-engine:$spekVersion"
-    testCompile "org.junit.jupiter:junit-jupiter-api:$junitVersion"
-    testRuntime "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    kaptTest "io.micronaut:micronaut-inject-java"    
+
+    testCompile("io.micronaut.test:micronaut-test-junit5:1.0.2")
+    testCompile "org.junit.jupiter:junit-jupiter-api:5.3.0"
+    testRuntime "org.junit.jupiter:junit-jupiter-engine:5.3.0"
     runtime "ch.qos.logback:logback-classic:1.2.3"
-    testCompile "junit:junit:4.12"
-    testCompile "io.micronaut:micronaut-inject-java"
+    
 }
 
 shadowJar {

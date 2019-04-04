@@ -1,67 +1,48 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
-    dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
-        classpath "io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE"
-        classpath "net.ltgt.gradle:gradle-apt-plugin:0.15"
-    }
+plugins {
+    id "application"
+    id "eclipse"
+    id "com.github.johnrengelman.shadow" version "5.0.0"
 }
 
 version "0.1"
 group "example"
 
-apply plugin:"io.spring.dependency-management"
-apply plugin:"com.github.johnrengelman.shadow"
-apply plugin:"application"
-apply plugin:"java"
-apply plugin:"net.ltgt.apt-eclipse"
-apply plugin:"net.ltgt.apt-idea"
-
-
 repositories {
-    mavenLocal()
     mavenCentral()
-    maven { url "https://jcenter.bintray.com" }
+    jcenter()
 }
 
-dependencyManagement {
-    imports {
-        mavenBom 'io.micronaut:micronaut-bom:1.0.3'
-    }
+ext {
+    micronautVersion = "1.1.0.RC2"
 }
-
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java"
-    annotationProcessor "io.micronaut:micronaut-validation"
-    annotationProcessor "io.micronaut.configuration:micronaut-openapi"
-    compile "io.micronaut:micronaut-http-client"    
-    compile "io.micronaut:micronaut-http-server-netty"
-    compile "io.micronaut:micronaut-inject"
-    compile "io.micronaut:micronaut-runtime"
-    compile "io.micronaut.configuration:micronaut-hibernate-validator"
-    
-    compile "io.swagger.core.v3:swagger-annotations:2.0.4"
+    implementation enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
+    annotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
+    annotationProcessor "io.micronaut:micronaut-validation:$micronautVersion"
+    annotationProcessor "io.micronaut.configuration:micronaut-openapi:$micronautVersion"
+    implementation "io.swagger.core.v3:swagger-annotations:2.0.4"
+    implementation "io.micronaut:micronaut-inject"
+    implementation "io.micronaut:micronaut-validation"
+    implementation "io.micronaut:micronaut-runtime"
+    implementation "io.micronaut:micronaut-http-client"
+    implementation "io.micronaut:micronaut-http-server-netty"
     compileOnly "io.micronaut:micronaut-inject-java"
-    runtime "ch.qos.logback:logback-classic:1.2.3"
-    testCompile "io.micronaut:micronaut-inject-java"
-    testCompile "io.micronaut.test:micronaut-test-junit5:1.0.1"
-    testCompile "org.mockito:mockito-junit-jupiter:2.22.0"
-    testRuntime "org.junit.jupiter:junit-jupiter-engine:5.1.0"
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+    
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java:$micronautVersion"
+    testImplementation "io.micronaut.test:micronaut-test-junit5:1.0.2"
+    testImplementation "org.mockito:mockito-junit-jupiter:2.22.0"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:5.3.0"
 }
 
 shadowJar {
     mergeServiceFiles()
 }
 
-test {
-    useJUnitPlatform()
-}
-
 run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
 
 mainClassName = "example.Application"
-compileJava.options.compilerArgs += '-parameters'
-compileTestJava.options.compilerArgs += '-parameters'
+tasks.withType(JavaCompile){
+    options.encoding = "UTF-8"
+    options.compilerArgs.add('-parameters')
+}

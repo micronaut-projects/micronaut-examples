@@ -15,25 +15,22 @@
  */
 package example
 
-import io.micronaut.context.ApplicationContext
-import io.micronaut.runtime.server.EmbeddedServer
-import spock.lang.AutoCleanup
-import spock.lang.Shared
+
+import io.micronaut.test.annotation.MicronautTest
 import spock.lang.Specification
 
+import javax.inject.Inject
+
 /**
- * @author graemerocher
- * @since 1.0
+ * @author graemerocher* @since 1.0
  */
+@MicronautTest
 class HelloControllerSpec extends Specification {
 
-    @Shared @AutoCleanup EmbeddedServer embeddedServer =
-            ApplicationContext.run(EmbeddedServer)
+    @Inject
+    HelloClient client
 
     void "test hello world"() {
-        given:
-        HelloClient client = embeddedServer.applicationContext.getBean(HelloClient)
-
         expect:
         client.hello("Fred") == "Hello Fred!"
     }

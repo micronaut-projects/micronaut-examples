@@ -1,63 +1,53 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
-    dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
-        classpath "io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE"
-        classpath "net.ltgt.gradle:gradle-apt-plugin:0.15"
-    }
+plugins {
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id "groovy"
+    id "com.github.johnrengelman.shadow" version "4.0.2"
+    id "application"
 }
 
 version "0.1"
 group "example"
 
-apply plugin:"io.spring.dependency-management"
-apply plugin:"com.github.johnrengelman.shadow"
-apply plugin:"application"
-apply plugin:"groovy"
-apply plugin:"java"
-apply plugin:"net.ltgt.apt-eclipse"
-apply plugin:"net.ltgt.apt-idea"
-
-
 repositories {
-    mavenLocal()
     mavenCentral()
     maven { url "https://jcenter.bintray.com" }
 }
 
 dependencyManagement {
     imports {
-        mavenBom 'io.micronaut:micronaut-bom:1.0.3'
+        mavenBom 'io.micronaut:micronaut-bom:1.1.0'
     }
 }
 
+configurations {
+    // for dependencies that are needed for development only
+    developmentOnly
+}
+
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java"
+    compile "io.micronaut:micronaut-runtime-groovy"
+    compile "io.micronaut:micronaut-validation"
     compile "io.micronaut:micronaut-http-client"
     compile "io.micronaut:micronaut-http-server-netty"
-    compile "io.micronaut:micronaut-runtime-groovy"
-    compile "io.micronaut:micronaut-inject"
-    compile "io.micronaut:micronaut-runtime"
     compileOnly "io.micronaut:micronaut-inject-groovy"
-    compileOnly "io.micronaut:micronaut-inject-java"
     runtime "ch.qos.logback:logback-classic:1.2.3"
-    testCompile "io.micronaut:micronaut-inject-groovy"
-    testCompile("org.spockframework:spock-core:1.2-groovy-2.5") {
+    testCompile("org.spockframework:spock-core") {
         exclude group: "org.codehaus.groovy", module: "groovy-all"
     }
-    testCompile "junit:junit:4.12"
-    testCompile "io.micronaut:micronaut-inject-java"
+    testCompile "io.micronaut:micronaut-inject-groovy"
+    testCompile "io.micronaut.test:micronaut-test-spock:1.0.1"
+}
+
+test.classpath += configurations.developmentOnly
+
+mainClassName = "example.Application"
+tasks.withType(GroovyCompile) {
+    groovyOptions.forkOptions.jvmArgs.add('-Dgroovy.parameters=true')
 }
 
 shadowJar {
     mergeServiceFiles()
 }
 
-run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
-
-mainClassName = "example.Application"
-compileJava.options.compilerArgs += '-parameters'
-compileTestJava.options.compilerArgs += '-parameters'
+run.classpath += configurations.developmentOnly
+run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')

@@ -1,15 +1,17 @@
 package example;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import io.micronaut.test.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import javax.inject.*;
+
+import javax.inject.Inject;
 
 @MicronautTest
 public class HelloControllerTest {
 
-	@Inject
-	HelloClient helloClient;
+    @Inject
+    HelloClient helloClient;
 
     @Test
     void testHello() {

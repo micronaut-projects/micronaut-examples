@@ -8,13 +8,13 @@ import io.micronaut.context.annotation.Value;
 import javax.inject.Singleton;
 
 @Singleton
-@Requires(property = "aws.accessKeyId")
+@Requires(property = "aws.access-key-id")
 public class AWSCredentialsProviderService implements AWSCredentialsProvider {
 
-    @Value("${aws.accessKeyId}")
+    @Value("${aws.access-key-id}")
     String accessKey;
 
-    @Value("${aws.secretKey}")
+    @Value("${aws.secret-key}")
     String secretKey;
 
     @Override

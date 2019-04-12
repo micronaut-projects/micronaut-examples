@@ -13,15 +13,15 @@ import javax.inject.Singleton;
 import java.io.IOException;
 
 @Singleton
-@Requires(property = "sendgrid.apiKey")
+@Requires(property = "sendgrid.api-key")
 public class SendGridEmailService implements EmailService {
 
     private static final Logger log = LoggerFactory.getLogger(MailController.class);
 
-    @Value("${sendgrid.apiKey}")
+    @Value("${sendgrid.api-key}")
     String apiKey;
 
-    @Value("${sendgrid.fromEmail}")
+    @Value("${sendgrid.from-email}")
     String fromEmail;
 
     protected Content contentOfEmail(Email email) {

@@ -1,15 +1,6 @@
 package example.mail.ses;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import java.io.IOException;
-
-import com.amazonaws.AmazonClientException;
 import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
-import com.amazonaws.regions.Region;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
 import com.amazonaws.services.simpleemail.model.Body;
@@ -25,6 +16,9 @@ import io.micronaut.context.annotation.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 @Singleton
 @Requires(beans = AWSCredentialsProviderService.class)
 public class AWSSESMailService implements EmailService {
@@ -33,7 +27,7 @@ public class AWSSESMailService implements EmailService {
     @Value("${aws.ses.region}")
     String awsRegion;
 
-    @Value("${aws.sourceEmail}")
+    @Value("${aws.source-email}")
     String sourceEmail;
 
     @Inject

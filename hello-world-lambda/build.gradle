@@ -1,28 +1,59 @@
-import com.amazonaws.services.lambda.model.InvocationType
-import jp.classmethod.aws.gradle.lambda.AWSLambdaInvokeTask
-import jp.classmethod.aws.gradle.lambda.AWSLambdaMigrateFunctionTask
-import com.amazonaws.services.lambda.model.Runtime
-
-buildscript {
-    repositories {
-        maven { url "https://plugins.gradle.org/m2/" }
-        mavenCentral()
-        mavenLocal()
-    }
-    dependencies {
-        classpath "jp.classmethod.aws:gradle-aws-plugin:0.22"
-    }
-}
-
 plugins {
     id "io.spring.dependency-management" version "1.0.6.RELEASE"
-    id 'com.github.johnrengelman.shadow' version '2.0.1'
-    id "de.sebastianboegl.shadow.transformer.log4j" version "2.1.1"
-    id 'groovy'
+    id "com.github.johnrengelman.shadow" version "4.0.2"
+    id "jp.classmethod.aws.lambda" version "0.38"
+    id "groovy"
     id "application"
 }
 
-apply plugin: 'jp.classmethod.aws.lambda'
+repositories {
+    mavenCentral()
+    maven { url "https://jcenter.bintray.com" }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'io.micronaut:micronaut-bom:1.1.0'
+    }
+}
+
+configurations {
+    // for dependencies that are needed for development only
+    developmentOnly
+}
+
+dependencies {
+    compile "io.micronaut:micronaut-runtime-groovy"
+    compile "io.micronaut:micronaut-validation"
+    compile "io.micronaut:micronaut-function-groovy"
+    compileOnly "io.micronaut:micronaut-inject-groovy"
+    runtime "com.amazonaws:aws-lambda-java-log4j2:1.0.0"
+    runtime "org.apache.logging.log4j:log4j-slf4j-impl:2.9.1"
+    testCompile "io.micronaut:micronaut-inject-groovy"
+    testCompile("org.spockframework:spock-core") {
+        exclude group: "org.codehaus.groovy", module: "groovy-all"
+    }
+    testCompile "io.micronaut.test:micronaut-test-spock:1.0.1"
+    testCompile "io.micronaut:micronaut-function-client"
+    testRuntime "io.micronaut:micronaut-http-server-netty"
+    testRuntime "io.micronaut:micronaut-function-web"
+    testRuntime group: 'com.amazonaws', name: 'aws-java-sdk-lambda', version: '1.11.285'
+}
+
+test.classpath += configurations.developmentOnly
+shadowJar {
+    transform(com.github.jengelman.gradle.plugins.shadow.transformers.Log4j2PluginsCacheFileTransformer)
+}
+tasks.withType(GroovyCompile) {
+    groovyOptions.forkOptions.jvmArgs.add('-Dgroovy.parameters=true')
+}
+
+shadowJar {
+    mergeServiceFiles()
+}
+
+run.classpath += configurations.developmentOnly
+run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
 
 mainClassName = "example.HelloWorldFunction"
 applicationDefaultJvmArgs = [""]
@@ -33,60 +64,22 @@ jar {
     }
 }
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven { url "https://jcenter.bintray.com" }
-}
-
-
-dependencyManagement {
-    imports {
-        mavenBom 'io.micronaut:micronaut-bom:1.0.3'
-    }
-}
-
-dependencies {
-    compileOnly "io.micronaut:micronaut-inject-java"
-    compileOnly "io.micronaut:micronaut-inject-groovy"
-    compileOnly "io.micronaut:micronaut-inject"
-    compile "io.micronaut:micronaut-function-groovy"
-    runtime "com.amazonaws:aws-lambda-java-log4j2:1.0.0"
-    runtime 'org.apache.logging.log4j:log4j-slf4j-impl:2.9.1'
-
-    testCompile "io.micronaut:micronaut-inject-groovy"
-    testCompile "io.micronaut:micronaut-function-client"
-    testRuntime "io.micronaut:micronaut-http-server-netty"
-    testRuntime "io.micronaut:micronaut-function-web"
-    testRuntime group: 'com.amazonaws', name: 'aws-java-sdk-lambda', version: '1.11.285'
-
-    testCompile("org.spockframework:spock-core:1.2-groovy-2.5") {
-        exclude module:'groovy-all'
+if (new File("${System.getProperty("user.home")}/.aws/credentials").exists()) {
+    task deploy(type: jp.classmethod.aws.gradle.lambda.AWSLambdaMigrateFunctionTask, dependsOn: shadowJar) {
+        functionName = "hello-world"
+        handler = "example.HelloWorldFunction::hello"
+        role = "arn:aws:iam::${aws.accountId}:role/lambda_basic_execution"
+        runtime = com.amazonaws.services.lambda.model.Runtime.Java8
+        zipFile = shadowJar.archivePath
+        memorySize = 256
+        timeout = 60
     }
 
 }
-shadowJar {
-    mergeServiceFiles()
-}
 
-run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
-
-compileJava.options.compilerArgs += '-parameters'
-compileTestJava.options.compilerArgs += '-parameters'
-
-task deploy(type: AWSLambdaMigrateFunctionTask, dependsOn: shadowJar) {
+task invoke(type: jp.classmethod.aws.gradle.lambda.AWSLambdaInvokeTask) {
     functionName = "hello-world"
-    handler = "example.HelloWorldFunction::hello"
-    role = "arn:aws:iam::${aws.accountId}:role/lambda_basic_execution"
-    runtime = Runtime.Java8
-    zipFile = shadowJar.archivePath
-    memorySize = 256
-    timeout = 60
-}
-
-task invoke(type: AWSLambdaInvokeTask) {
-    functionName = "hello-world"
-    invocationType = InvocationType.RequestResponse
+    invocationType = com.amazonaws.services.lambda.model.InvocationType.RequestResponse
     payload = '{"name":"Fred"}'
     doLast {
         println "Lambda function result: " + new String(invokeResult.payload.array(), "UTF-8")

@@ -5,6 +5,7 @@ plugins {
     id "net.ltgt.apt-idea" version "0.21"
     id "com.github.johnrengelman.shadow" version "4.0.2"
     id "application"
+    id 'org.javamodularity.moduleplugin' version "1.5.0"
 }
 
 
@@ -44,7 +45,7 @@ dependencies {
 }
 
 test.classpath += configurations.developmentOnly
-mainClassName = "cli.app.modular.java.CliAppModularJavaCommand"
+mainClassName = "$moduleName/cli.app.modular.java.CliAppModularJavaCommand"
 
 jar {
     manifest {

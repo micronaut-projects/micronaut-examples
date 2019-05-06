@@ -45,7 +45,12 @@ dependencies {
 }
 
 test.classpath += configurations.developmentOnly
-mainClassName = "$moduleName/cli.app.modular.java.CliAppModularJavaCommand"
+//mainClassName = "$moduleName/cli.app.modular.java.CliAppModularJavaCommand"
+mainClassName = "cli.app.modular.java.CliAppModularJavaCommand"
+
+patchModules.config = [
+        "java.annotation=jsr305-3.0.2.jar"
+]
 
 jar {
     manifest {

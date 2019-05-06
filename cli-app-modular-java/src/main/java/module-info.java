@@ -5,4 +5,7 @@ module cli.app.modular.java {
     requires info.picocli;
 
     requires transitive java.sql;
+
+    exports cli.app.modular.java;
+    opens cli.app.modular.java to info.picocli;
 }

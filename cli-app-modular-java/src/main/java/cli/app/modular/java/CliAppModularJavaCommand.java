@@ -21,8 +21,9 @@ public class CliAppModularJavaCommand implements Runnable {
 
     public void run() {
         // business logic here
+        System.out.println("Hello!");
         if (verbose) {
-            System.out.println("Hi!");
+            System.out.println("And a verbose hello to you, too!");
         }
     }
 }

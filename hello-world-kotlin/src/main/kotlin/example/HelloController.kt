@@ -23,10 +23,10 @@ import io.micronaut.http.annotation.Get
  * @since 1.0
  */
 @Controller("/")
-class HelloController {
+class HelloController(val greetingService : GreetingService) {
 
     @Get("/hello/{name}")
     fun hello(name: String): String {
-        return "Hello $name"
+        return greetingService.greet(name)
     }
 }

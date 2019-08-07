@@ -1,4 +1,4 @@
-FROM java:openjdk-8u111-alpine
-RUN apk --no-cache add curl
-COPY build/libs/*-all.jar kotlin.jar
-CMD java ${JAVA_OPTS} -jar kotlin.jar
+FROM adoptopenjdk/openjdk11-openj9:jdk-11.0.1.13-alpine-slim
+COPY build/libs/example-*-all.jar example.jar
+EXPOSE 8080
+CMD java -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dcom.sun.management.jmxremote -noverify ${JAVA_OPTS} -jar example.jar

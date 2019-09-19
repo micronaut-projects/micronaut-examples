@@ -22,7 +22,6 @@ import example.storefront.client.v1.CommentClient
 import example.storefront.client.v1.PetClient
 import example.storefront.client.v1.TweetClient
 import example.storefront.client.v1.VendorClient
-import io.micronaut.context.annotation.Parameter
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -32,11 +31,10 @@ import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Produces
+import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.client.RxStreamingHttpClient
 import io.micronaut.http.sse.Event
-
-import javax.inject.Singleton
 
 /**
  * @author graemerocher
@@ -84,7 +82,7 @@ class StoreController {
     }
 
     @Get('/pets/{slug}')
-    Maybe<Pet> showPet(@Parameter('slug') String slug) {
+    Maybe<Pet> showPet(@PathVariable('slug') String slug) {
         petClient.find slug
     }
 

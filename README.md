@@ -59,6 +59,6 @@ The `petstore` example is a Micronaut petstore implementation featuring multiple
 See the `README` in the root of the `petstore` example for usage instructions.
 
 ### neo4j-musicians
-Example of `REST` service built with Micronaut, with `embedded neo4j` as database. It's a simple example without any kind of data validation, just shows how to register beans, a controller and a simlpe test. 
+Example of `REST` service built with Micronaut, with `embedded neo4j` as database. It's a simple example without any kind of data validation, just shows how to register beans, a controller and a simple test. 
 
 Hope it helps!

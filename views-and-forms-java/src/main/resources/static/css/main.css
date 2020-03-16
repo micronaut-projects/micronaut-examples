@@ -1,0 +1,81 @@
+    * {
+      box-sizing: border-box;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: #255aa8;
+    }
+
+    .title-welcome {
+      padding: 2vh 2vw;
+      font-size: 3.5vw;
+      font-family: 'Roboto', Verdana, sans-serif;
+      font-weight: 600;
+      color: #ffffff;
+      align-self: center;
+      justify-content: center;
+    }
+
+    .final-thank-you {
+      padding: 6vh 2vw;
+      font-size: 2vw;
+      font-family: 'Roboto', Verdana, sans-serif;
+      font-weight: 200;
+      color: #ffffff;
+      align-self: center;
+      justify-content: center;
+    }
+
+    .subtitle {
+      padding: 1vh 2vw;
+      font-size: 2vw;
+      font-family: 'Roboto', Verdana, sans-serif;
+      font-weight: 300;
+      color: #ffffff;
+      align-self: center;
+    }
+
+    .questions {
+      padding-top: 0.5vh;
+      padding-bottom: 0.3vh;
+      padding-left: 0.5vh;
+      margin-bottom: 3vh;
+      font-size: 1.5vw;
+      font-family: 'Roboto', Verdana, sans-serif;
+      font-weight: 200;
+      color: #ffffff;
+      align-self: left;
+    }
+
+    .user-name {
+      margin: 2vh 5vw;
+      font-size: 1vw;
+      font-family: 'Roboto', Verdana, sans-serif;
+      font-weight: 200;
+      color: #000000;
+    }
+
+    .radio-buttons {
+      margin: 5vh 1vw;
+      font-size: 1.5vw;
+      font-family: 'Roboto', Verdana, sans-serif;
+      font-weight: 200;
+      color: #ffffff;
+    }
+
+    .submit-button {
+      margin: 4vh 1vw;
+      font-size: 1.5vw;
+      font-family: 'Roboto', Verdana, sans-serif;
+      font-weight: 200;
+      align-self: center;
+    }
+
+    .error {
+      font-size: 1.5vw;
+      font-weight: 100;
+      color:red;
+    }

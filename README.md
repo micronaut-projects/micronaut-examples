@@ -58,4 +58,22 @@ The `petstore` example is a Micronaut petstore implementation featuring multiple
 
 See the `README` in the root of the `petstore` example for usage instructions.
 
+### views-and-forms-java
 
+The views-and-forms-java example is a simple form display application written in Java.
+It uses simple html and css to read a form and display the response.
+
+To run the application with Gradle use:
+
+```bash
+$ cd views-and-forms-java
+$ ./gradlew run
+```
+
+For Windows users:
+```
+$ cd views-and-forms-java
+$ gradlew run
+```
+
+Then go to http://localhost:8080

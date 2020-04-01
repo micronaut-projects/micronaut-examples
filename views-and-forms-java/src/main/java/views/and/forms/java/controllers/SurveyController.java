@@ -5,16 +5,14 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Consumes;
 import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Error;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
-import io.micronaut.http.annotation.Error;
-import io.micronaut.validation.validator.Validator;
 import io.micronaut.views.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import views.and.forms.java.model.FormData;
 
-import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
@@ -24,9 +22,6 @@ import java.util.Set;
 public class SurveyController {
 
     private static final Logger LOG = LoggerFactory.getLogger(SurveyController.class);
-
-    @Inject
-    Validator validator;
 
     @Get
     @View("home")

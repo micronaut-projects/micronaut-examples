@@ -6,7 +6,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      background-color: #255aa8;
+      background-color: #b6b9bf;
     }
 
     .title-welcome {
@@ -14,7 +14,6 @@
       font-size: 3.5vw;
       font-family: 'Roboto', Verdana, sans-serif;
       font-weight: 600;
-      color: #ffffff;
       align-self: center;
       justify-content: center;
     }
@@ -24,7 +23,6 @@
       font-size: 2vw;
       font-family: 'Roboto', Verdana, sans-serif;
       font-weight: 200;
-      color: #ffffff;
       align-self: center;
       justify-content: center;
     }
@@ -34,7 +32,7 @@
       font-size: 2vw;
       font-family: 'Roboto', Verdana, sans-serif;
       font-weight: 300;
-      color: #ffffff;
+      color: #000000;
       align-self: center;
     }
 
@@ -46,7 +44,6 @@
       font-size: 1.5vw;
       font-family: 'Roboto', Verdana, sans-serif;
       font-weight: 200;
-      color: #ffffff;
       align-self: left;
     }
 
@@ -63,7 +60,7 @@
       font-size: 1.5vw;
       font-family: 'Roboto', Verdana, sans-serif;
       font-weight: 200;
-      color: #ffffff;
+      color: #000000;
     }
 
     .submit-button {

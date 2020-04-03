@@ -1,21 +1,21 @@
 package example
 
-import io.micronaut.test.annotation.MicronautTest
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
-import javax.inject.Inject
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
+import io.micronaut.context.ApplicationContext
+import io.micronaut.runtime.server.EmbeddedServer
 
-@MicronautTest
-class HelloControllerTest {
+class HelloControllerTest: StringSpec() {
 
-    @Inject
-    lateinit var helloClient: HelloClient
+    val embeddedServer = autoClose(
+            ApplicationContext.run(EmbeddedServer::class.java)
+    )
 
-    @Test
-    fun testGreetingService() {
-        assertEquals(
-                "Hello John",
-                helloClient.hello("John").blockingGet()
-        )
+    init {
+        "test greeting service" {
+            val helloClient =
+                    embeddedServer.applicationContext.getBean(HelloClient::class.java)
+                    helloClient.hello("John").blockingGet() shouldBe "Hello John"
+        }
     }
 }

@@ -1,5 +1,5 @@
 profile: service
 defaultPackage: views.and.forms.java
 ---
-testFramework: junit
+testFramework: spock
 sourceLanguage: java

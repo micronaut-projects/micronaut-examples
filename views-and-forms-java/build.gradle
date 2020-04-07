@@ -2,6 +2,7 @@ plugins {
     id "net.ltgt.apt-eclipse" version "0.21"
     id "com.github.johnrengelman.shadow" version "5.2.0"
     id "application"
+    id "groovy"
 }
 
 
@@ -34,9 +35,20 @@ dependencies {
     testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
-    testImplementation "org.junit.jupiter:junit-jupiter-api"
-    testImplementation "io.micronaut.test:micronaut-test-junit5"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+    testImplementation("org.spockframework:spock-core") {
+        exclude group: "org.codehaus.groovy", module: "groovy-all"
+    }
+    testImplementation ("org.gebish:geb-spock:$gebVersion") {
+        exclude group: "org.codehaus.groovy", module: "groovy-all"
+    }
+    testImplementation "io.micronaut:micronaut-inject-groovy"
+    testImplementation "io.micronaut.test:micronaut-test-spock"
+    testRuntime "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+    testRuntime "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
+    testImplementation "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+    testImplementation "org.seleniumhq.selenium:selenium-api:$seleniumVersion"
+//    testImplementation "io.micronaut.test:micronaut-test-junit5"
+//    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
 }
 
 test.classpath += configurations.developmentOnly
@@ -58,5 +70,10 @@ shadowJar {
     mergeServiceFiles()
 }
 
-run.classpath += configurations.developmentOnly
-run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
+tasks.withType(JavaExec) {
+    classpath += configurations.developmentOnly
+    jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
+}
+
+//run.classpath += configurations.developmentOnly
+//run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')

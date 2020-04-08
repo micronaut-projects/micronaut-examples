@@ -20,4 +20,5 @@ environments {
         }
     }
 }
-baseUrl = "http://gebish.org"
+//baseUrl = "http://gebish.org"
+baseUrl = "http://localhost:8080"

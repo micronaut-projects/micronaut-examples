@@ -1,7 +1,9 @@
+package views.and.forms.java
+
 import geb.Module
 import geb.Page
 
-class HomePage extends Module {
+class ManualsMenuModule extends Module {
     static content = {
         toggle { $("div.menu a.manuals") }
         linksContainer { $("#manuals-menu") }

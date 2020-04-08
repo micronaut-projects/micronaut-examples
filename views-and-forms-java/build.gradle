@@ -3,9 +3,8 @@ plugins {
     id "com.github.johnrengelman.shadow" version "5.2.0"
     id "application"
     id "groovy"
+    id "com.github.erdi.webdriver-binaries" version "2.1"
 }
-
-
 
 version "0.1"
 group "views.and.forms.java"
@@ -35,18 +34,18 @@ dependencies {
     testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
-    testImplementation("org.spockframework:spock-core") {
-        exclude group: "org.codehaus.groovy", module: "groovy-all"
-    }
     testImplementation ("org.gebish:geb-spock:$gebVersion") {
         exclude group: "org.codehaus.groovy", module: "groovy-all"
     }
-    testImplementation "io.micronaut:micronaut-inject-groovy"
-    testImplementation "io.micronaut.test:micronaut-test-spock"
     testRuntime "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
     testRuntime "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
     testImplementation "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
     testImplementation "org.seleniumhq.selenium:selenium-api:$seleniumVersion"
+    testImplementation("org.spockframework:spock-core") {
+        exclude group: "org.codehaus.groovy", module: "groovy-all"
+    }
+    testImplementation "io.micronaut:micronaut-inject-groovy"
+    testImplementation "io.micronaut.test:micronaut-test-spock"
 //    testImplementation "io.micronaut.test:micronaut-test-junit5"
 //    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
 }
@@ -56,9 +55,9 @@ test.classpath += configurations.developmentOnly
 mainClassName = "views.and.forms.java.Application"
 
 // use JUnit 5 platform
-test {
-    useJUnitPlatform()
-}
+//test {
+//    useJUnitPlatform()
+//}
 
 tasks.withType(JavaCompile){
     options.encoding = "UTF-8"
@@ -77,3 +76,28 @@ tasks.withType(JavaExec) {
 
 //run.classpath += configurations.developmentOnly
 //run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
+
+//try this later
+//OperatingSystem os = DefaultNativePlatform.currentOperatingSystem
+//if (os.isWindows())
+
+webdriverBinaries {
+    chromedriver {
+        version = chromeDriverVersion
+        architecture = 'X86'
+    }
+
+    geckodriver {
+        version = geckoDriverVersion
+    }
+}
+
+tasks.withType(Test) {
+    systemProperty "geb.env", System.getProperty('geb.env')
+//    systemProperty "download.folder", System.getProperty('download.folder')
+    beforeTest { descriptor -> logger.quiet " -- $descriptor" }
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat 'full'
+    }
+}

@@ -1,3 +1,5 @@
+package views.and.forms.java
+
 import geb.spock.GebSpec
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.test.annotation.MicronautTest
@@ -5,7 +7,7 @@ import io.micronaut.test.annotation.MicronautTest
 import javax.inject.Inject
 
 @MicronautTest
-class HomePageSpec extends GebSpec {
+class ManualsMenuModuleSpec extends GebSpec {
 
     @Inject
     EmbeddedServer embeddedServer
@@ -22,6 +24,19 @@ class HomePageSpec extends GebSpec {
         at TheBookOfGebPage
     }
 
+    def "verify home page" () {
+        given:
+        browser.baseUrl = "http://localhost:8080"
+  //      go "http://localhost:8080"
+
+        when:
+        to HomePage
+
+        then:
+        at HomePage
+
+    }
+
 //    def "verify session based authentication works"() {
 //        given:
 //        browser.baseUrl = "http://localhost:${embeddedServer.port}"
@@ -34,7 +49,7 @@ class HomePageSpec extends GebSpec {
 //        at Home
 //
 //        when:
-//        HomePage homePage = browser.page HomePage
+//        viewsAndForms.HomePage homePage = browser.page viewsAndForms.HomePage
 //
 //        then: 'As we are not logged in, there is no username'
 //        homePage.username() == null
@@ -65,10 +80,10 @@ class HomePageSpec extends GebSpec {
 //        loginPage.login('sherlock', 'password')
 //
 //        then: 'we get redirected to the home page'
-//        at HomePage
+//        at viewsAndForms.HomePage
 //
 //        when:
-//        homePage = browser.page HomePage
+//        homePage = browser.page viewsAndForms.HomePage
 //
 //        then: 'the username is populated'
 //        homePage.username() == 'sherlock'
@@ -77,10 +92,10 @@ class HomePageSpec extends GebSpec {
 //        homePage.logout()
 //
 //        then: 'we are in the home page'
-//        at HomePage
+//        at viewsAndForms.HomePage
 //
 //        when:
-//        homePage = browser.page HomePage
+//        homePage = browser.page viewsAndForms.HomePage
 //
 //        then: 'but we are no longer logged in'
 //        homePage.username() == null

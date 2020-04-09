@@ -1,3 +1,4 @@
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 plugins {
     id "net.ltgt.apt-eclipse" version "0.21"
     id "com.github.johnrengelman.shadow" version "5.2.0"
@@ -30,15 +31,15 @@ dependencies {
     implementation "io.micronaut:micronaut-http-server-netty"
     implementation "io.micronaut:micronaut-http-client"
     runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
-    compile 'io.micronaut:micronaut-views-handlebars'
+    implementation 'io.micronaut:micronaut-views-handlebars'
     testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
     testImplementation ("org.gebish:geb-spock:$gebVersion") {
         exclude group: "org.codehaus.groovy", module: "groovy-all"
     }
-    testRuntime "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
-    testRuntime "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
+    testRuntimeOnly "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
+    testRuntimeOnly "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
     testImplementation "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
     testImplementation "org.seleniumhq.selenium:selenium-api:$seleniumVersion"
     testImplementation("org.spockframework:spock-core") {
@@ -46,24 +47,16 @@ dependencies {
     }
     testImplementation "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut.test:micronaut-test-spock"
-//    testImplementation "io.micronaut.test:micronaut-test-junit5"
-//    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
 }
 
 test.classpath += configurations.developmentOnly
 
 mainClassName = "views.and.forms.java.Application"
 
-// use JUnit 5 platform
-//test {
-//    useJUnitPlatform()
-//}
-
 tasks.withType(JavaCompile){
     options.encoding = "UTF-8"
     options.compilerArgs.add('-parameters')
 }
-
 
 shadowJar {
     mergeServiceFiles()
@@ -74,17 +67,12 @@ tasks.withType(JavaExec) {
     jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
 }
 
-//run.classpath += configurations.developmentOnly
-//run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
-
-//try this later
-//OperatingSystem os = DefaultNativePlatform.currentOperatingSystem
-//if (os.isWindows())
-
 webdriverBinaries {
     chromedriver {
         version = chromeDriverVersion
-        architecture = 'X86'
+        if (DefaultNativePlatform.currentOperatingSystem.isWindows()) {
+            architecture = 'X86'
+        }
     }
 
     geckodriver {
@@ -94,10 +82,4 @@ webdriverBinaries {
 
 tasks.withType(Test) {
     systemProperty "geb.env", System.getProperty('geb.env')
-//    systemProperty "download.folder", System.getProperty('download.folder')
-    beforeTest { descriptor -> logger.quiet " -- $descriptor" }
-    testLogging {
-        events "passed", "skipped", "failed"
-        exceptionFormat 'full'
-    }
 }

@@ -4,7 +4,7 @@ import geb.Page
 
 class HomePage extends Page {
 
-    static at = { title == 'Survey' }
+    static at = { title.contains 'Survey' }
 
     static url = '/'
 

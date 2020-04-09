@@ -1,16 +1,20 @@
 package views.and.forms.java
 
 import geb.spock.GebSpec
+import io.micronaut.context.ApplicationContext
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.test.annotation.MicronautTest
+import spock.lang.AutoCleanup
+import spock.lang.Shared
 
 import javax.inject.Inject
 
 @MicronautTest
 class ManualsMenuModuleSpec extends GebSpec {
 
-    @Inject
-    EmbeddedServer embeddedServer
+    @AutoCleanup
+    @Shared
+    EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer)
 
     def "can access The Book of Geb via homepage"() {
         given:
@@ -26,8 +30,7 @@ class ManualsMenuModuleSpec extends GebSpec {
 
     def "verify home page" () {
         given:
-        browser.baseUrl = "http://localhost:8080"
-  //      go "http://localhost:8080"
+        browser.baseUrl = embeddedServer.URL.toString()
 
         when:
         to HomePage

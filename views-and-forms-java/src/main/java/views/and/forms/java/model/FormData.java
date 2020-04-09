@@ -1,4 +1,4 @@
-package views.and.forms.java.and.forms.java.model;
+package views.and.forms.java.model;
 
 import io.micronaut.core.annotation.Introspected;
 

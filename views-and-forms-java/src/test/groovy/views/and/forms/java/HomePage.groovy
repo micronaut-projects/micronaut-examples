@@ -9,20 +9,10 @@ class HomePage extends Page {
     static url = '/'
 
     static content = {
+        submitButton (to:ThankyouPage){
+          $("input", type: "submit")
+        }
 
     }
-
-//    static content = {
-//        inputField {
-//          $('input', text: '', 0)
-//        }
-//        submitButton {
-//          $('input', type: 'submit')
-//        }
-//    }
-
-//    static content = {
-//        excelLink { $('a', text: 'Excel', 0) }
-//    }
 
 }

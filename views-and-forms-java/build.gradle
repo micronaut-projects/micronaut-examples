@@ -4,7 +4,7 @@ plugins {
     id "com.github.johnrengelman.shadow" version "5.2.0"
     id "application"
     id "groovy"
-    id "com.github.erdi.webdriver-binaries" version "2.1"
+    id "com.github.erdi.webdriver-binaries" version "2.2"
 }
 
 version "0.1"

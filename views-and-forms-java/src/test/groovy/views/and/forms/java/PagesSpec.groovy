@@ -7,8 +7,6 @@ import io.micronaut.test.annotation.MicronautTest
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 
-import javax.inject.Inject
-
 @MicronautTest
 class PagesSpec extends GebSpec {
 
@@ -56,6 +54,21 @@ class PagesSpec extends GebSpec {
 
     }
 
+    def "verify error message for invalid name get to home page" () {
+        given:
+        browser.baseUrl = embeddedServer.URL.toString()
+
+        when:
+        to HomePage
+        $("input", name: "userName").value("B")
+        $("input[type=submit]").click()
+
+        then:
+        at HomePage
+        assert $("p.error").text().contains("Name must be at least 2 characters long.")
+
+    }
+
     def "verify select fruit go to thankyou page" () {
         given:
         browser.baseUrl = embeddedServer.URL.toString()
@@ -87,6 +100,24 @@ class PagesSpec extends GebSpec {
 
         then:
         at HomePage
+
+    }
+
+    def "verify error message for too many fruit" () {
+        given:
+        browser.baseUrl = embeddedServer.URL.toString()
+
+        when:
+        to HomePage
+        $("input", name: "userName").value("Bob")
+
+        $("form").fruitChosen = ["banana", "mango", "grapes", "star"]
+
+        $("input[type=submit]").click()
+
+        then:
+        at HomePage
+        assert $("p.error").text().contains("Please choose a maximum of 3 fruits")
 
     }
 

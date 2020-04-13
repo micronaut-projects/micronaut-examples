@@ -77,3 +77,36 @@ $ gradlew run
 ```
 
 Then go to http://localhost:8080
+
+To test with Gradle on Firefox:
+```bash
+$ cd views-and-forms-java
+$ ./gradlew test
+```
+For Windows users:
+```
+$ cd views-and-forms-java
+$ gradlew test
+```
+
+To test with Gradle on Chrome:
+```bash
+$ cd views-and-forms-java
+$ ./gradlew -Dgeb.env=chrome test
+```
+For Windows users:
+```
+$ cd views-and-forms-java
+$ gradlew -Dgeb.env=chrome test
+```
+
+To test with Gradle on Chrome headless:
+```bash
+$ cd views-and-forms-java
+$ ./gradlew -Dgeb.env=chromeHeadless test
+```
+For Windows users:
+```
+$ cd views-and-forms-java
+$ gradlew -Dgeb.env=chromeHeadless test
+```

@@ -21,7 +21,12 @@ dependencies {
     annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
     annotationProcessor "io.micronaut:micronaut-inject-java"
     annotationProcessor "io.micronaut:micronaut-validation"
+    annotationProcessor "io.micronaut:micronaut-graal"
     annotationProcessor "io.micronaut.configuration:micronaut-openapi"
+
+    compileOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
+    compileOnly "org.graalvm.nativeimage:svm"
+
     implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
     implementation "io.micronaut:micronaut-inject"
     implementation "io.swagger.core.v3:swagger-annotations"

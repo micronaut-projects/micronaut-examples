@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: micronaut.neo4j.example
+---
+testFramework: junit
+sourceLanguage: java

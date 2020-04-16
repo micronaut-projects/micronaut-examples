@@ -8,11 +8,11 @@ import java.util.List;
 
 @Introspected
 public class FormData {
+    private final String[] fruitChoices = {"banana", "mango", "apple", "orange", "grapes", "star"};
 
     @Size(min=2, message="Name must be at least 2 characters long.")
     private String userName;
     private String chocolate;
-    private String[] fruitChoices = {"banana", "mango", "apple", "orange", "grapes", "star"};
     @Size(max=3, message="Please choose a maximum of 3 fruits.")
     private List<String> fruitChosen = new ArrayList<String>();
     private List<String> errors = new ArrayList<String>();
@@ -46,10 +46,6 @@ public class FormData {
 
     public String[] getFruitChoices() {
         return fruitChoices;
-    }
-
-    public void setFruitChoices(String[] fruitChoices) {
-        this.fruitChoices = fruitChoices;
     }
 
     public List<String> getErrors() {

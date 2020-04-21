@@ -1,4 +1,4 @@
-import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+import org.apache.tools.ant.taskdefs.condition.Os
 plugins {
     id "net.ltgt.apt-eclipse" version "0.21"
     id "com.github.johnrengelman.shadow" version "5.2.0"
@@ -70,7 +70,7 @@ tasks.withType(JavaExec) {
 webdriverBinaries {
     chromedriver {
         version = chromeDriverVersion
-        if (DefaultNativePlatform.currentOperatingSystem.isWindows()) {
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
             architecture = 'X86'
         }
     }

@@ -62,3 +62,55 @@ See the `README` in the root of the `petstore` example for usage instructions.
 Example of `REST` service built with Micronaut, with `embedded neo4j` as database. It's a simple example without any kind of data validation, just shows how to register beans, a controller and a simple test. 
 
 Hope it helps!
+### views-and-forms-java
+
+The views-and-forms-java example is a simple form display application written in Java.
+It uses simple html and css to read a form and display the response.
+
+To run the application with Gradle use:
+
+```bash
+$ cd views-and-forms-java
+$ ./gradlew run
+```
+
+For Windows users:
+```
+$ cd views-and-forms-java
+$ gradlew run
+```
+
+Then go to http://localhost:8080
+
+To test with Gradle on Firefox:
+```bash
+$ cd views-and-forms-java
+$ ./gradlew test
+```
+For Windows users:
+```
+$ cd views-and-forms-java
+$ gradlew test
+```
+
+To test with Gradle on Chrome:
+```bash
+$ cd views-and-forms-java
+$ ./gradlew -Dgeb.env=chrome test
+```
+For Windows users:
+```
+$ cd views-and-forms-java
+$ gradlew -Dgeb.env=chrome test
+```
+
+To test with Gradle on Chrome headless:
+```bash
+$ cd views-and-forms-java
+$ ./gradlew -Dgeb.env=chromeHeadless test
+```
+For Windows users:
+```
+$ cd views-and-forms-java
+$ gradlew -Dgeb.env=chromeHeadless test
+```

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Thanks</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+    <link rel="icon" href="images/favicon.png" />
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div class="final-thank-you">{{userName}}, Thank you for replying to our survey.</div>
+        <div class="final-thank-you">I too {{chocolate}} chocolate</div>
+        <div class="final-thank-you">
+            Your choice of fruit:
+            {{#each fruitChosen}}
+                {{this}},
+            {{else}}
+                No fruits selected
+            {{/each}}
+            is spectacular!
+        </div>
+        <div class="final-thank-you">Enjoy the rest of your day.</div>
+    </div>
+
+</body>
+</html>

@@ -83,6 +83,5 @@ tasks.withType(JavaExec) {
 kapt {
     arguments {
         arg("micronaut.processing.incremental", true)
-        arg("micronaut.processing.annotations", "com.example.*,io.example.*")
     }
 }

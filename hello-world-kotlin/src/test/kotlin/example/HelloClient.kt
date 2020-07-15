@@ -16,6 +16,7 @@
 package example
 
 import io.micronaut.http.annotation.Get
+import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
 import io.reactivex.Single
 
@@ -26,7 +27,7 @@ import javax.validation.constraints.NotBlank
  * @since 1.0
  */
 @Client("/")
-interface HelloClient {
+interface HelloClient: HttpClient {
 
     @Get("/hello/{name}")
     fun hello(@NotBlank name: String): Single<String>

@@ -1,6 +1,6 @@
 plugins {
     id "groovy"
-    id "com.github.johnrengelman.shadow" version "5.0.0"
+    id "com.github.johnrengelman.shadow" version "5.2.0"
     id "application"
 }
 
@@ -18,7 +18,8 @@ configurations {
 }
 
 dependencies {
-    compileOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
+// next line is an add
+    annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
     compileOnly "io.micronaut:micronaut-inject-groovy"
     compileOnly "io.micronaut.configuration:micronaut-openapi"
     implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
@@ -29,13 +30,15 @@ dependencies {
     implementation "io.micronaut:micronaut-http-client"
     runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
     testCompileOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
+// next line is an add
+    testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
     testImplementation("org.spockframework:spock-core") {
         exclude group: "org.codehaus.groovy", module: "groovy-all"
     }
     testImplementation "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut.test:micronaut-test-spock"
     testImplementation "io.micronaut.test:micronaut-test-junit5"
-    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.5.0"
+//    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.5.0"
 }
 
 test.classpath += configurations.developmentOnly
@@ -49,5 +52,10 @@ shadowJar {
     mergeServiceFiles()
 }
 
-run.classpath += configurations.developmentOnly
-run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
+tasks.withType(JavaExec) {
+    classpath += configurations.developmentOnly
+    jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
+}
+
+//run.classpath += configurations.developmentOnly
+//run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')

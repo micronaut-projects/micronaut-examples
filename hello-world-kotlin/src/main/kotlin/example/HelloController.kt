@@ -28,7 +28,5 @@ class HelloController(
 ) {
 
     @Get("/hello/{name}")
-    fun hello(name: String): String {
-        return greetingService.greet(name)
-    }
+    fun hello(name: String) = greetingService.greet(name)
 }

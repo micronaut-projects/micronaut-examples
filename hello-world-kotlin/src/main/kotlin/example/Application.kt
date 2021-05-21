@@ -15,7 +15,7 @@
  */
 package example
 
-import io.micronaut.runtime.Micronaut
+import io.micronaut.runtime.Micronaut.build
 
 /**
  * The application is defined in this way so we can easily reference
@@ -24,15 +24,9 @@ import io.micronaut.runtime.Micronaut
  * @author James Kleeh
  * @since 1.0
  */
-object Application {
-
-    @JvmStatic
-    fun main(args: Array<String>) {
-        Micronaut.build()
-                 .packages("example")
-                 .mainClass(Application.javaClass)
-                 .start()
-    }
+fun main(args: Array<String>) {
+    build()
+        .args(*args)
+        .packages("example")
+        .start()
 }
-
-

@@ -1,0 +1,11 @@
+micronaut:
+    application:
+        name: demo
+---
+endpoints:
+    beans:
+        enabled: true
+        sensitive: false
+    refresh:
+        enabled: true
+        sensitive: false

@@ -1,0 +1,5 @@
+profile: cli
+defaultPackage: cli.app.modular.java
+---
+testFramework: junit
+sourceLanguage: java

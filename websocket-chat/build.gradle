@@ -1,10 +1,7 @@
 plugins {
-    id "io.spring.dependency-management" version "1.0.6.RELEASE"
-    id "java"
-    id "net.ltgt.apt-eclipse" version "0.21"
-    id "net.ltgt.apt-idea" version "0.21"
-    id "com.github.johnrengelman.shadow" version "4.0.2"
-    id "application"
+    id("groovy")
+    id("com.github.johnrengelman.shadow") version "7.1.0"
+    id("io.micronaut.application") version "2.0.8"
 }
 
 version "0.1"
@@ -12,50 +9,34 @@ group "websocket.chat"
 
 repositories {
     mavenCentral()
-    maven { url "https://jcenter.bintray.com" }
 }
 
-dependencyManagement {
-    imports {
-        mavenBom 'io.micronaut:micronaut-bom:1.1.0'
+micronaut {
+    runtime("netty")
+    testRuntime("spock2")
+    processing {
+        incremental(true)
+        annotations("websocket.chat.*")
     }
 }
 
-configurations {
-    // for dependencies that are needed for development only
-    developmentOnly
-}
-
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java"
-    annotationProcessor "io.micronaut:micronaut-validation"
-    compile "io.micronaut:micronaut-inject"
-    compile "io.micronaut:micronaut-validation"
-    compile "io.micronaut:micronaut-runtime"
-    compile "io.micronaut:micronaut-http-client"
-    compile "io.micronaut:micronaut-http-server-netty"
-    runtime "ch.qos.logback:logback-classic:1.2.3"
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java"
-    testCompile "org.junit.jupiter:junit-jupiter-api"
-    testCompile "io.micronaut.test:micronaut-test-junit5"
-    testRuntime "org.junit.jupiter:junit-jupiter-engine"
+    implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
+
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-runtime")
+    implementation("javax.annotation:javax.annotation-api")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    implementation("io.micronaut:micronaut-validation")
+
+    testImplementation("io.reactivex.rxjava3:rxjava:3.1.2")
 }
 
-test.classpath += configurations.developmentOnly
-
-mainClassName = "websocket.chat.Application"
-// use JUnit 5 platform
-test {
-    useJUnitPlatform()
+application {
+    mainClass.set("websocket.chat.Application")
 }
-tasks.withType(JavaCompile){
-    options.encoding = "UTF-8"
-    options.compilerArgs.add('-parameters')
+java {
+    sourceCompatibility = JavaVersion.toVersion("8")
+    targetCompatibility = JavaVersion.toVersion("8")
 }
-
-shadowJar {
-    mergeServiceFiles()
-}
-
-run.classpath += configurations.developmentOnly
-run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')

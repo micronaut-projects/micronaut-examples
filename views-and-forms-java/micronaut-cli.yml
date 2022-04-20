@@ -1,5 +1,0 @@
-profile: service
-defaultPackage: views.and.forms.java
----
-testFramework: spock
-sourceLanguage: java

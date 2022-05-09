@@ -18,10 +18,10 @@ package example.comments
 import grails.gorm.services.Service
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
+import grails.neo4j.Path
 import grails.neo4j.services.Cypher
-import org.neo4j.driver.v1.types.Path
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 

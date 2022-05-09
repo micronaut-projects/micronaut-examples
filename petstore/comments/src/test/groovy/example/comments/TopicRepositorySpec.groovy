@@ -15,14 +15,12 @@
  */
 package example.comments
 
-import grails.neo4j.Path
-import groovy.json.JsonOutput
-import org.grails.datastore.mapping.validation.ValidationException
-import io.micronaut.configuration.neo4j.bolt.Neo4jBoltSettings
+
 import io.micronaut.context.ApplicationContext
 import io.micronaut.core.io.socket.SocketUtils
 import io.micronaut.http.HttpStatus
 import io.micronaut.runtime.server.EmbeddedServer
+import org.grails.datastore.mapping.validation.ValidationException
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification

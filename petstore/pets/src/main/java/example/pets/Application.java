@@ -17,16 +17,11 @@ package example.pets;
 
 
 import io.micronaut.runtime.Micronaut;
-
-import javax.inject.Singleton;
-
-/**
- * @author graemerocher
- * @since 1.0
- */
-import io.swagger.v3.oas.annotations.*;
-import io.swagger.v3.oas.annotations.info.*;
-import io.swagger.v3.oas.annotations.tags.*;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.inject.Singleton;
 
 @OpenAPIDefinition(
     info = @Info(

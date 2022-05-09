@@ -1,7 +1,7 @@
 package example.api.v1;
 
-import io.reactivex.Single;
 import io.micronaut.http.annotation.Get;
+import io.reactivex.Single;
 
 public interface HealthStatusOperation {
     @Get("/health")

@@ -111,34 +111,34 @@ public class Email {
         }
 
         if ( getSubject() != null ) {
-            sb.append("Subject: ");
+            sb.append(" Subject: ");
             sb.append(getSubject());
         }
 
         if ( cc != null ) {
-            sb.append("ccs: ");
+            sb.append(" ccs: ");
             for ( String email : cc ) {
                 sb.append(email);
             }
         }
         if ( bcc != null ) {
-            sb.append("bccs: ");
+            sb.append(" bccs: ");
             for (String email : bcc) {
                 sb.append(email);
             }
         }
 
         if ( getReplyTo() != null ) {
-            sb.append("ReplyTo: ");
+            sb.append(" ReplyTo: ");
             sb.append(getReplyTo());
         }
 
         if ( getHtmlBody() != null ) {
-            sb.append("HTML Body: ");
+            sb.append(" HTML Body: ");
             sb.append(getHtmlBody());
         }
         if ( getTextBody() != null ) {
-            sb.append("Text Body: ");
+            sb.append(" Text Body: ");
             sb.append(getTextBody());
         }
         return sb.toString();

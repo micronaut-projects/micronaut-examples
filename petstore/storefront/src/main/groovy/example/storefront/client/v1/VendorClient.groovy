@@ -17,8 +17,8 @@ package example.storefront.client.v1
 
 import example.api.v1.Vendor
 import example.api.v1.VendorOperations
-import io.reactivex.Single
 import io.micronaut.http.client.annotation.Client
+import io.reactivex.Single
 
 /**
  * @author graemerocher

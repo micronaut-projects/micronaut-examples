@@ -17,15 +17,14 @@ package example.vendors
 
 import example.api.v1.Pet
 import example.vendors.client.v1.PetClient
-import io.reactivex.Flowable
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import io.micronaut.validation.Validated
+import io.reactivex.Flowable
+import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 
-import javax.inject.Singleton
 import javax.validation.constraints.NotBlank
 
 /**

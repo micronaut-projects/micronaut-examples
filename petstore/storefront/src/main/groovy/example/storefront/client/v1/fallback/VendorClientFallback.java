@@ -18,8 +18,8 @@ package example.storefront.client.v1.fallback;
 import example.api.v1.Vendor;
 import example.api.v1.VendorOperations;
 import groovy.transform.CompileStatic;
-import io.reactivex.Single;
 import io.micronaut.retry.annotation.Fallback;
+import io.reactivex.Single;
 
 import java.util.Collections;
 import java.util.List;

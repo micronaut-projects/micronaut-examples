@@ -1,22 +1,55 @@
-mainClassName = "example.mail.Application"
+plugins {
+    alias(libs.plugins.mnApp)
+}
 
-apply plugin: 'groovy'
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("example.*")
+    }
+}
+
+application {
+    mainClass.set("example.mail.Application")
+}
 
 dependencies {
-    compileOnly "io.micronaut:micronaut-inject-java"
+    implementation projects.api
 
-    compile project(":api")
-    compile "io.micronaut:micronaut-http-server-netty"
-    compile "io.micronaut:micronaut-discovery-client"
+    implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut:micronaut-jackson-databind")
+    implementation("io.micronaut.discovery:micronaut-discovery-client")
+    implementation("io.micronaut.reactor:micronaut-reactor")
+    implementation("io.micronaut.reactor:micronaut-reactor-http-client")
+//    implementation("io.micronaut.email:micronaut-email-amazon-ses")
+//    implementation("io.micronaut.aws:micronaut-aws-sdk-v2")
+    implementation("io.micronaut.email:micronaut-email-sendgrid")
 
-    compile 'com.amazonaws:aws-java-sdk-ses:1.11.285'
-    compile 'com.sendgrid:sendgrid-java:4.1.2'
-
-    testCompile "junit:junit:4.12"
-
-    testCompile "io.micronaut:micronaut-inject-java"
-    testCompile "io.micronaut:micronaut-http-client"
+    testImplementation("io.micronaut:micronaut-http-client")
 }
-shadowJar {
-    mergeServiceFiles()
-}
+
+//mainClassName = "example.mail.Application"
+//
+//apply plugin: 'groovy'
+//
+//dependencies {
+//    compileOnly "io.micronaut:micronaut-inject-java"
+//
+//    compile project(":api")
+//    compile "io.micronaut:micronaut-http-server-netty"
+//    compile "io.micronaut:micronaut-discovery-client"
+//
+//    compile 'com.amazonaws:aws-java-sdk-ses:1.11.285'
+//    compile 'com.sendgrid:sendgrid-java:4.1.2'
+//
+//    testCompile "junit:junit:4.12"
+//
+//    testCompile "io.micronaut:micronaut-inject-java"
+//    testCompile "io.micronaut:micronaut-http-client"
+//}
+//shadowJar {
+//    mergeServiceFiles()
+//}

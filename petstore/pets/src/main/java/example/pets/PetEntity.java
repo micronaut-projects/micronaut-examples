@@ -17,10 +17,10 @@ package example.pets;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import example.api.v1.Pet;
 import example.api.v1.PetType;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import example.api.v1.Pet;
 
 /**
  * @author graemerocher

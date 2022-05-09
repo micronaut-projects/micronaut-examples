@@ -1,29 +1,71 @@
-mainClassName = "example.pets.Application"
+plugins {
+    alias(libs.plugins.mnApp)
+}
+
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("example.*")
+    }
+}
+
+application {
+    mainClass.set("example.pets.Application")
+}
 
 dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java"
-    annotationProcessor "io.micronaut.configuration:micronaut-openapi"
-    compile "io.micronaut.configuration:micronaut-openapi"
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
 
-    compileOnly "io.micronaut:micronaut-inject-java"
+    implementation projects.api
 
-    compile project(":api")
-    compile "io.micronaut.configuration:micronaut-hibernate-validator"
-    compile "io.micronaut:micronaut-http-server-netty"
-    compile "io.micronaut:micronaut-discovery-client"
+    implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")
+    implementation("io.micronaut.discovery:micronaut-discovery-client")
+    implementation("io.micronaut.netflix:micronaut-netflix-hystrix")
+    implementation("io.swagger.core.v3:swagger-annotations")
+    implementation("io.micronaut.mongodb:micronaut-mongo-reactive")
+    // TODO migrate to Project Reactor
+    implementation("io.micronaut.rxjava2:micronaut-rxjava2")
 
-    
-    compile "io.micronaut.configuration:micronaut-mongo-reactive"
+    testImplementation("io.micronaut:micronaut-http-client")
+    testImplementation("io.micronaut.mongodb:micronaut-mongo-reactive")
+    // TODO migrate flapdoodle to testcontainers
+//    testImplementation("org.testcontainers:junit-jupiter")
+//    testImplementation("org.testcontainers:mongodb")
+//    testImplementation("org.testcontainers:testcontainers")
+    testRuntimeOnly "de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1"
 
-    compile "io.micronaut:micronaut-runtime"
 
-    compile "io.micronaut.configuration:micronaut-netflix-hystrix"
-
-    testCompile "junit:junit:4.12"
-    testCompile "io.micronaut:micronaut-inject-java"
-    testCompile "io.micronaut:micronaut-http-client"
-    testRuntime "de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1"
 }
-shadowJar {
-    mergeServiceFiles()
-}
+//mainClassName = "example.pets.Application"
+//
+//dependencies {
+//    annotationProcessor "io.micronaut:micronaut-inject-java"
+//    annotationProcessor "io.micronaut.configuration:micronaut-openapi"
+//    compile "io.micronaut.configuration:micronaut-openapi"
+//
+//    compileOnly "io.micronaut:micronaut-inject-java"
+//
+//    compile project(":api")
+//    compile "io.micronaut.configuration:micronaut-hibernate-validator"
+//    compile "io.micronaut:micronaut-http-server-netty"
+//    compile "io.micronaut:micronaut-discovery-client"
+//
+//
+//    compile "io.micronaut.configuration:micronaut-mongo-reactive"
+//
+//    compile "io.micronaut:micronaut-runtime"
+//
+//    compile "io.micronaut.configuration:micronaut-netflix-hystrix"
+//
+//    testCompile "junit:junit:4.12"
+//    testCompile "io.micronaut:micronaut-inject-java"
+//    testCompile "io.micronaut:micronaut-http-client"
+//    testRuntime "de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1"
+//}
+//shadowJar {
+//    mergeServiceFiles()
+//}

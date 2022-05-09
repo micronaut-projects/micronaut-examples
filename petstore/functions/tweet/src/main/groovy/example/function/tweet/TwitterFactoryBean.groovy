@@ -19,11 +19,10 @@ import groovy.transform.CompileStatic
 import io.micronaut.context.annotation.Bean
 import io.micronaut.context.annotation.Factory
 import io.micronaut.context.exceptions.ConfigurationException
+import jakarta.inject.Singleton
 import twitter4j.Twitter
 import twitter4j.TwitterFactory
 import twitter4j.conf.Configuration
-
-import javax.inject.Singleton
 
 /**
  * @author graemerocher

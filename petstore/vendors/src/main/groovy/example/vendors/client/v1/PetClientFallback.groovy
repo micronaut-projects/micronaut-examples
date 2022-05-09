@@ -17,13 +17,12 @@ package example.vendors.client.v1
 
 import example.api.v1.Pet
 import example.api.v1.PetOperations
+import io.micronaut.http.annotation.Body
+import io.micronaut.retry.annotation.Fallback
 import io.reactivex.Maybe
 import io.reactivex.Single
-import io.micronaut.http.annotation.Body
-import io.micronaut.http.annotation.Get
-import io.micronaut.retry.annotation.Fallback
+import jakarta.inject.Singleton
 
-import javax.inject.Singleton
 import javax.validation.Valid
 
 /**

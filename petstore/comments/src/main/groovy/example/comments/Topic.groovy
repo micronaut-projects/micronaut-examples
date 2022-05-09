@@ -16,7 +16,6 @@
 package example.comments
 
 import grails.gorm.annotation.Entity
-import grails.neo4j.Neo4jEntity
 import grails.neo4j.Node
 import grails.neo4j.mapping.MappingBuilder
 

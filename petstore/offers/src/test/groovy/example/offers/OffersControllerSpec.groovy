@@ -20,17 +20,13 @@ import example.api.v1.Pet
 import io.micronaut.context.ApplicationContext
 import io.micronaut.core.io.socket.SocketUtils
 import io.micronaut.http.HttpRequest
-import io.micronaut.http.client.RxHttpClient
-import io.micronaut.http.client.RxStreamingHttpClient
 import io.micronaut.runtime.server.EmbeddedServer
-import org.reactivestreams.Subscriber
-import org.reactivestreams.Subscription
+import io.micronaut.rxjava2.http.client.RxStreamingHttpClient
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Stepwise
 import spock.lang.Unroll
-import spock.util.concurrent.PollingConditions
 
 import javax.validation.ConstraintViolationException
 import java.time.Duration

@@ -1,10 +1,33 @@
+//include "api"
+//include "comments"
+//include "offers"
+//include "storefront"
+//include "vendors"
+////include "people"
+//include "pets"
+//include "mail"
+//include "functions:tweet"
+//include "frontend:react"
+rootProject.name="petstore"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 include "api"
 include "comments"
+//include "frontend:react"
+include "functions:tweet"
+include "mail"
 include "offers"
+include "pets"
 include "storefront"
 include "vendors"
-//include "people"
-include "pets"
-include "mail"
-include "functions:tweet"
-include "frontend:react"
+
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            plugin('mnApp', 'io.micronaut.application').version(mnGradlePluginVersion)
+            plugin('mnLib', 'io.micronaut.library').version(mnGradlePluginVersion)
+            plugin('mnLibMin', 'io.micronaut.minimal.library').version(mnGradlePluginVersion)
+        }
+    }
+}

@@ -18,8 +18,7 @@ package example.vendors
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import io.micronaut.runtime.Micronaut
-
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 @CompileStatic
 @Singleton

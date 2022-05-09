@@ -24,11 +24,10 @@ import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import io.micronaut.runtime.Micronaut
 import io.micronaut.runtime.event.annotation.EventListener
+import io.micronaut.runtime.server.event.ServerStartupEvent
 import io.reactivex.Flowable
 import io.reactivex.Single
-import io.micronaut.runtime.server.event.ServerStartupEvent
-
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 @Singleton
 @Slf4j

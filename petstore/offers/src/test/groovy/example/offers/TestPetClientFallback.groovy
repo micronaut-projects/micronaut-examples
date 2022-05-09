@@ -17,11 +17,10 @@ package example.offers
 
 import example.api.v1.Pet
 import example.offers.client.v1.PetClient
+import io.micronaut.retry.annotation.Fallback
 import io.reactivex.Maybe
 import io.reactivex.Single
-import io.micronaut.retry.annotation.Fallback
-
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 /**
  * @author graemerocher

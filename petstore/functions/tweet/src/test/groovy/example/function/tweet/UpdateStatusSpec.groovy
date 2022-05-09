@@ -17,16 +17,12 @@ package example.function.tweet
 
 import io.micronaut.context.ApplicationContext
 import io.micronaut.http.HttpRequest
-import io.micronaut.http.MediaType
-import io.micronaut.http.client.RxHttpClient
 import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.rxjava2.http.client.RxHttpClient
 import spock.lang.AutoCleanup
 import spock.lang.IgnoreIf
 import spock.lang.Shared
 import spock.lang.Specification
-import twitter4j.Status
-
-import java.time.LocalDateTime
 
 /**
  * @author graemerocher

@@ -15,12 +15,12 @@
  */
 package example.api.v1;
 
-import io.reactivex.Maybe;
-import io.reactivex.Single;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.validation.Validated;
+import io.reactivex.Maybe;
+import io.reactivex.Single;
 
 import javax.validation.Valid;
 import java.util.List;

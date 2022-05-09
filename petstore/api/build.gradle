@@ -1,8 +1,17 @@
-dependencies {
-    compile "io.micronaut:micronaut-http:${projectVersion}"
-    compile "io.micronaut:micronaut-runtime:${projectVersion}"
-    compile "io.micronaut:micronaut-validation:${projectVersion}"
+plugins {
+    alias(libs.plugins.mnLibMin)
 }
-compileJava {
-    options.compilerArgs += ["-parameters"]
+
+micronaut {
+    processing {
+        incremental(true)
+        annotations("example.api.*")
+    }
+}
+
+dependencies {
+    implementation("io.micronaut:micronaut-validation")
+
+    // TODO migrate to Project Reactor
+    implementation("io.micronaut.rxjava2:micronaut-rxjava2")
 }

@@ -4,15 +4,13 @@ import example.api.v1.HealthStatus
 import example.storefront.client.v1.Comment
 import example.storefront.client.v1.CommentClient
 import groovy.transform.CompileStatic
-import io.reactivex.Single
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
-
-import javax.inject.Inject
-import javax.inject.Singleton
+import io.reactivex.Single
+import jakarta.inject.Singleton
 
 /**
  * @author zacharyklein

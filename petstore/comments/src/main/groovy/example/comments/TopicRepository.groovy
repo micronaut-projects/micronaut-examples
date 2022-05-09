@@ -16,12 +16,9 @@
 package example.comments
 
 import grails.gorm.services.Service
-import grails.gorm.transactions.Transactional
-import grails.neo4j.services.Cypher
 import groovy.transform.CompileStatic
 
 import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotNull
 
 /**
  * @author graemerocher

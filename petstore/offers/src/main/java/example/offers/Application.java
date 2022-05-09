@@ -20,9 +20,7 @@ import io.micronaut.runtime.event.annotation.EventListener;
 import io.micronaut.runtime.server.event.ServerStartupEvent;
 import io.micronaut.scheduling.TaskScheduler;
 import io.micronaut.scheduling.annotation.Async;
-
-import javax.inject.Singleton;
-import java.time.Duration;
+import jakarta.inject.Singleton;
 
 /**
  * @author graemerocher

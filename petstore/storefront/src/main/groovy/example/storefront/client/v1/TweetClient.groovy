@@ -15,8 +15,8 @@
  */
 package example.storefront.client.v1
 
-import io.reactivex.Single
 import io.micronaut.function.client.FunctionClient
+import io.reactivex.Single
 
 /**
  * @author graemerocher

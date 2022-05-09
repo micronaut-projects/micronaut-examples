@@ -19,14 +19,13 @@ import com.mongodb.client.model.Aggregates;
 import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoCollection;
 import example.api.v1.PetOperations;
-import io.reactivex.Flowable;
-import io.reactivex.Maybe;
-import io.reactivex.Single;
 import io.micronaut.configuration.hystrix.annotation.HystrixCommand;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.validation.Validated;
+import io.reactivex.Flowable;
+import io.reactivex.Maybe;
+import io.reactivex.Single;
 
-import javax.inject.Singleton;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;

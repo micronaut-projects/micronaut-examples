@@ -21,15 +21,15 @@ import example.offers.client.v1.PetClient;
 import io.lettuce.core.KeyValue;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.reactive.RedisReactiveCommands;
-import io.reactivex.Flowable;
 import io.micronaut.core.convert.value.ConvertibleValues;
 import io.micronaut.validation.Validated;
+import io.reactivex.Flowable;
+import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import javax.inject.Singleton;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.ZonedDateTime;

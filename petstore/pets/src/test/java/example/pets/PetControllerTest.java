@@ -18,32 +18,31 @@ package example.pets;
 import com.mongodb.reactivestreams.client.MongoClient;
 import example.api.v1.Pet;
 import example.api.v1.PetType;
-import io.reactivex.Flowable;
-import org.junit.*;
-import io.micronaut.configuration.mongo.reactive.MongoSettings;
+import io.micronaut.configuration.mongo.core.MongoSettings;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.core.io.socket.SocketUtils;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.runtime.server.EmbeddedServer;
-import org.junit.runners.MethodSorters;
+import io.reactivex.Flowable;
+import org.junit.jupiter.api.*;
 
-import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * @author graemerocher
  * @since 1.0
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class PetControllerTest {
 
 
     static EmbeddedServer embeddedServer;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() {
         embeddedServer = ApplicationContext.run(
                 EmbeddedServer.class,
@@ -54,14 +53,14 @@ public class PetControllerTest {
         );
     }
 
-    @AfterClass
+    @AfterAll
     public static void cleanup() {
         if (embeddedServer != null) {
             embeddedServer.stop();
         }
     }
 
-    @After
+    @AfterEach
     public void cleanupData() {
         ApplicationContext applicationContext = embeddedServer.getApplicationContext();
         MongoClient mongoClient = applicationContext.getBean(MongoClient.class);

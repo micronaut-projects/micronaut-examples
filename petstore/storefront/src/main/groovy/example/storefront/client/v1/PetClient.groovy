@@ -17,9 +17,9 @@ package example.storefront.client.v1
 
 import example.api.v1.Pet
 import example.api.v1.PetOperations
+import io.micronaut.http.client.annotation.Client
 import io.reactivex.Maybe
 import io.reactivex.Single
-import io.micronaut.http.client.annotation.Client
 
 /**
  * @author graemerocher

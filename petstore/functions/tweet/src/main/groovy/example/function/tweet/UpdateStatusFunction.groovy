@@ -17,11 +17,9 @@ package example.function.tweet
 
 import groovy.transform.CompileStatic
 import groovy.transform.Field
+import jakarta.inject.Inject
 import twitter4j.Status
 import twitter4j.Twitter
-
-import javax.inject.Inject
-
 
 @Field @Inject Twitter twitter
 

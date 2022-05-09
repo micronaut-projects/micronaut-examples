@@ -1,72 +1,97 @@
-import jp.classmethod.aws.gradle.lambda.*
-import com.amazonaws.services.lambda.model.*
-
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url "https://plugins.gradle.org/m2/" }
-        mavenLocal()
-
-    }
-    dependencies {
-        classpath "jp.classmethod.aws:gradle-aws-plugin:0.22"
-
-    }
-}
-
 plugins {
-    id 'nebula.provided-base' version '3.0.3' // if you want provided-base
+    alias(libs.plugins.mnLib)
 }
+apply plugin: "groovy"
 
-apply plugin:"groovy"
-apply plugin: 'jp.classmethod.aws.lambda'
-mainClassName = "example.function.tweet.UpdateStatusFunction"
-
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime("netty")
+    testRuntime("spock2")
+    processing {
+        incremental(true)
+        annotations("example.*")
+    }
+}
 
 dependencies {
-    compileOnly "io.micronaut:micronaut-inject-java"
-    compile 'org.twitter4j:twitter4j-core:4.0.6'
+    implementation projects.api
 
-    compile "io.micronaut:micronaut-inject-groovy"
-    compile "io.micronaut:micronaut-function-groovy"
+    implementation("io.micronaut.groovy:micronaut-runtime-groovy")
+    implementation("io.micronaut:micronaut-jackson-databind")
+    implementation 'org.twitter4j:twitter4j-core:4.0.7'
 
-
-    runtime "com.amazonaws:aws-lambda-java-log4j2:1.0.0"
-    runtime 'org.apache.logging.log4j:log4j-slf4j-impl:2.9.1'
-
-    testCompile "io.micronaut:micronaut-http-client"
-    testRuntime "io.micronaut:micronaut-discovery-client"
-    testRuntime "io.micronaut:micronaut-function-web"
-    testRuntime "io.micronaut:micronaut-http-server-netty"
-
-    testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {
-        exclude module:'groovy-all'
-    }
-
+    testImplementation("io.micronaut.rxjava2:micronaut-rxjava2-http-client")
 }
 
-// NOTE: the AWS gradle plugin does not support altering environment variables so after
-// deployment you have to go the console and set:
-// - TWITTER_OAUTH_CONSUMER_KEY
-// - TWITTER_OAUTH_CONSUMER_SECRET
-// - TWITTER_OAUTH_ACCESS_TOKEN
-// - TWITTER_OAUTH_ACCESS_TOKEN_SECRET
-task deploy(type: AWSLambdaMigrateFunctionTask, dependsOn: shadowJar) {
-    functionName = "twitter-update-status"
-    handler = "example.function.tweet.UpdateStatusFunction::updateStatus"
-    // ACTIVATE THIS FOR AWS Identity management
-    //role = "arn:aws:iam::${aws.accountId}:role/lambda_basic_execution"
-    runtime = Runtime.Java8
-    zipFile = shadowJar.archivePath
-    memorySize = 256
-    timeout = 60
-}
-
-task invoke(type: AWSLambdaInvokeTask) {
-    functionName = "twitter-update-status"
-    invocationType = InvocationType.RequestResponse
-    payload = '{"text":"Time is '+System.currentTimeMillis()+'"}'
-    doLast {
-        println "Lambda function result: " + new String(invokeResult.payload.array(), "UTF-8")
-    }
-}
+//import jp.classmethod.aws.gradle.lambda.*
+//import com.amazonaws.services.lambda.model.*
+//
+//buildscript {
+//    repositories {
+//        mavenCentral()
+//        maven { url "https://plugins.gradle.org/m2/" }
+//        mavenLocal()
+//
+//    }
+//    dependencies {
+//        classpath "jp.classmethod.aws:gradle-aws-plugin:0.22"
+//
+//    }
+//}
+//
+//plugins {
+//    id 'nebula.provided-base' version '3.0.3' // if you want provided-base
+//}
+//
+//apply plugin:"groovy"
+//apply plugin: 'jp.classmethod.aws.lambda'
+//mainClassName = "example.function.tweet.UpdateStatusFunction"
+//
+//
+//dependencies {
+//    compileOnly "io.micronaut:micronaut-inject-java"
+//    compile 'org.twitter4j:twitter4j-core:4.0.6'
+//
+//    compile "io.micronaut:micronaut-inject-groovy"
+//    compile "io.micronaut:micronaut-function-groovy"
+//
+//
+//    runtime "com.amazonaws:aws-lambda-java-log4j2:1.0.0"
+//    runtime 'org.apache.logging.log4j:log4j-slf4j-impl:2.9.1'
+//
+//    testCompile "io.micronaut:micronaut-http-client"
+//    testRuntime "io.micronaut:micronaut-discovery-client"
+//    testRuntime "io.micronaut:micronaut-function-web"
+//    testRuntime "io.micronaut:micronaut-http-server-netty"
+//
+//    testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {
+//        exclude module:'groovy-all'
+//    }
+//
+//}
+//
+//// NOTE: the AWS gradle plugin does not support altering environment variables so after
+//// deployment you have to go the console and set:
+//// - TWITTER_OAUTH_CONSUMER_KEY
+//// - TWITTER_OAUTH_CONSUMER_SECRET
+//// - TWITTER_OAUTH_ACCESS_TOKEN
+//// - TWITTER_OAUTH_ACCESS_TOKEN_SECRET
+//task deploy(type: AWSLambdaMigrateFunctionTask, dependsOn: shadowJar) {
+//    functionName = "twitter-update-status"
+//    handler = "example.function.tweet.UpdateStatusFunction::updateStatus"
+//    // ACTIVATE THIS FOR AWS Identity management
+//    //role = "arn:aws:iam::${aws.accountId}:role/lambda_basic_execution"
+//    runtime = Runtime.Java8
+//    zipFile = shadowJar.archivePath
+//    memorySize = 256
+//    timeout = 60
+//}
+//
+//task invoke(type: AWSLambdaInvokeTask) {
+//    functionName = "twitter-update-status"
+//    invocationType = InvocationType.RequestResponse
+//    payload = '{"text":"Time is '+System.currentTimeMillis()+'"}'
+//    doLast {
+//        println "Lambda function result: " + new String(invokeResult.payload.array(), "UTF-8")
+//    }
+//}

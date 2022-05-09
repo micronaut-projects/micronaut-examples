@@ -18,10 +18,10 @@ package example.storefront.client.v1.fallback
 import example.api.v1.Pet
 import example.api.v1.PetOperations
 import groovy.transform.CompileStatic
-import io.reactivex.Maybe
-import io.reactivex.Single
 import io.micronaut.http.annotation.Body
 import io.micronaut.retry.annotation.Fallback
+import io.reactivex.Maybe
+import io.reactivex.Single
 
 import javax.validation.Valid
 

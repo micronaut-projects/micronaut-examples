@@ -9,8 +9,7 @@ public class FriendlyUrlTest {
     @Test
     public void testSanitizeWithDashes() {
         expect:
-        assertEquals("harry-potter", new FriendlyUrl().sanitizeWithDashes("Harry Potter"));
-        assertEquals("harry", new FriendlyUrl().sanitizeWithDashes("Harry "));
+        assertEquals("harry-potter", FriendlyUrl.sanitizeWithDashes("Harry Potter"));
+        assertEquals("harry", FriendlyUrl.sanitizeWithDashes("Harry "));
     }
-
 }

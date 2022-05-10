@@ -15,18 +15,38 @@
  */
 package example.pets;
 
-import example.api.v1.PetOperations;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.http.annotation.Post;
 import io.micronaut.http.client.annotation.Client;
-import io.reactivex.Single;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author graemerocher
  * @since 1.0
  */
 @Client("/${pets.api.version}/pets")
-interface PetControllerTestClient extends PetOperations<PetEntity> {
-    @Override
-    Single<List<PetEntity>> byVendor(String name);
+interface PetControllerTestClient /*extends PetOperations<PetEntity>*/ {
+    @Get
+    List<PetEntity> list();
+
+    @Get("/{id}")
+    Optional<PetEntity> find(@PathVariable String id);
+
+    @Get("/random")
+    Optional<PetEntity> random();
+
+    @Post("/")
+    HttpResponse<PetEntity> save(@Valid @Body PetEntity pet);
+
+    @Get("/vendor/{name}")
+    List<PetEntity> findByVendor(String name);
+
+    @Get("/{slug}")
+    Optional<PetEntity> findBySlug(String slug);
 }

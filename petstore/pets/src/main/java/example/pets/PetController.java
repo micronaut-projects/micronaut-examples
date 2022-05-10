@@ -15,22 +15,16 @@
  */
 package example.pets;
 
-import com.mongodb.client.model.Aggregates;
-import com.mongodb.reactivestreams.client.MongoClient;
-import com.mongodb.reactivestreams.client.MongoCollection;
-import example.api.v1.PetOperations;
-import io.micronaut.configuration.hystrix.annotation.HystrixCommand;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Status;
 import io.micronaut.validation.Validated;
-import io.reactivex.Flowable;
-import io.reactivex.Maybe;
-import io.reactivex.Single;
+import org.reactivestreams.Publisher;
 
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.List;
-
-import static com.mongodb.client.model.Filters.eq;
 
 /**
  * @author graemerocher
@@ -38,67 +32,44 @@ import static com.mongodb.client.model.Filters.eq;
  */
 @Controller("/${pets.api.version}/pets")
 @Validated
-public class PetController implements PetOperations<PetEntity> {
+public class PetController /*implements PetOperations<PetEntity>*/ {
 
-    private final PetsConfiguration configuration;
-    private MongoClient mongoClient;
+    private final PetService petService;
 
-    public PetController(
-            PetsConfiguration configuration,
-            MongoClient mongoClient) {
-        this.configuration = configuration;
-        this.mongoClient = mongoClient;
+    public PetController(PetService petService) {
+        this.petService = petService;
     }
 
-    @Override
-    @HystrixCommand
-    public Single<List<PetEntity>> list() {
-        return Flowable.fromPublisher(
-                getCollection()
-                    .find()
-        ).toList();
+//    @Override
+//    @HystrixCommand
+    @Get("/")
+    Publisher<PetEntity> list() {
+        return petService.list();
     }
 
-    @Override
-    @HystrixCommand
-    public Maybe<PetEntity> random() {
-        return Flowable.fromPublisher(
-                getCollection()
-                        .aggregate(Collections.singletonList(Aggregates.sample(1)), PetEntity.class)
-        ).firstElement();
+//    @Override
+//    @HystrixCommand
+    @Get("/random")
+    Publisher<PetEntity> random() {
+        return petService.random();
     }
 
-    @Override
-    public Single<List<PetEntity>> byVendor(String name) {
-        return Flowable.fromPublisher(
-                getCollection()
-                    .find(eq("vendor", name))
-        ).toList();
+//    @Override
+    @Get("/vendor/{name}")
+    Publisher<PetEntity> findByVendor(@PathVariable String name) {
+        return petService.findByVendor(name);
     }
 
-    @Override
-    public Maybe<PetEntity> find(String slug) {
-        return Flowable.fromPublisher(
-                getCollection()
-                        .find(eq("slug", slug))
-                        .limit(1)
-        ).firstElement();
+//    @Override
+    @Get("/{slug}")
+    Publisher<PetEntity> findBySlug(@PathVariable String slug) {
+        return petService.findBySlug(slug);
     }
 
-    @Override
-    public Single<PetEntity> save(@Valid PetEntity pet) {
-        String slug = FriendlyUrl.sanitizeWithDashes(pet.getName());
-        pet.slug(slug);
-        return find(slug)
-                .switchIfEmpty(
-                        Single.fromPublisher(getCollection().insertOne(pet))
-                               .map(success -> pet)
-                );
-    }
-
-    private MongoCollection<PetEntity> getCollection() {
-        return mongoClient
-                .getDatabase(configuration.getDatabaseName())
-                .getCollection(configuration.getCollectionName(), PetEntity.class);
+    //    @Override
+    @Post("/")
+    @Status(HttpStatus.CREATED)
+    Publisher<PetEntity> save(@Valid PetEntity pet) {
+        return petService.save(pet);
     }
 }

@@ -15,106 +15,136 @@
  */
 package example.pets;
 
-import com.mongodb.reactivestreams.client.MongoClient;
-import example.api.v1.Pet;
 import example.api.v1.PetType;
-import io.micronaut.configuration.mongo.core.MongoSettings;
-import io.micronaut.context.ApplicationContext;
-import io.micronaut.core.io.socket.SocketUtils;
-import io.micronaut.core.util.CollectionUtils;
+import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
-import io.micronaut.http.client.exceptions.HttpClientResponseException;
-import io.micronaut.runtime.server.EmbeddedServer;
-import io.reactivex.Flowable;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
+import javax.validation.ConstraintViolationException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author graemerocher
+ * @author wetted
  * @since 1.0
  */
-@TestMethodOrder(MethodOrderer.MethodName.class)
-public class PetControllerTest {
+public class PetControllerTest extends BaseMongoDataTest {
 
-
-    static EmbeddedServer embeddedServer;
-
-    @BeforeAll
-    public static void setup() {
-        embeddedServer = ApplicationContext.run(
-                EmbeddedServer.class,
-                CollectionUtils.mapOf(
-                        MongoSettings.MONGODB_URI, "mongodb://localhost:" + SocketUtils.findAvailableTcpPort(),
-                        "consul.client.registration.enabled",false
-                )
-        );
-    }
-
-    @AfterAll
-    public static void cleanup() {
-        if (embeddedServer != null) {
-            embeddedServer.stop();
-        }
-    }
-
-    @AfterEach
-    public void cleanupData() {
-        ApplicationContext applicationContext = embeddedServer.getApplicationContext();
-        MongoClient mongoClient = applicationContext.getBean(MongoClient.class);
-        PetsConfiguration config = applicationContext.getBean(PetsConfiguration.class);
-        // drop the data
-        Flowable.fromPublisher(mongoClient.getDatabase(config.getDatabaseName())
-                    .drop()).blockingFirst();
+    @Test
+    void emptyDatabaseContainsNoPets() {
+        assertEquals(0, petClient.list().size());
     }
 
     @Test
-    public void testListPets() {
-        PetControllerTestClient client = embeddedServer.getApplicationContext().getBean(PetControllerTestClient.class);
+    void testInteractionWithTheController() {
+        List<PetEntity> pets = petClient.list();
+        assertThat(pets.size()).isEqualTo(0);
 
-        List<PetEntity> pets = client
-                            .list()
-                            .blockingGet();
-        assertEquals(0, pets.size());
-
-        try {
-            client.save(new PetEntity("", "", "")).blockingGet();
-            fail("Should have thrown a constraint violation");
-        } catch (HttpClientResponseException e) {
-            assertEquals(e.getStatus(), HttpStatus.BAD_REQUEST);
-        }
-
-        PetEntity entity = new PetEntity("Fred", "Harry","photo-1457914109735-ce8aba3b7a79.jpeg")
+        PetEntity expected = new PetEntity("Fred", "Harry","photo-1457914109735-ce8aba3b7a79.jpeg")
                 .type(PetType.CAT);
-        Pet harry = client.save(entity).blockingGet();
 
-        assertNotNull(harry);
+        HttpResponse<PetEntity> response = petClient.save(expected);
+        assertEquals(HttpStatus.CREATED,response.getStatus());
 
-        assertEquals(harry.getImage(), entity.getImage());
-        assertEquals(harry.getName(), entity.getName());
-        assertEquals(harry.getType(), entity.getType());
+        Optional<PetEntity> body = response.getBody();
+        assertThat(body.isPresent()).isTrue();
+        PetEntity harry = body.get();
+        assertAll(
+                () -> assertThat(harry.getImage()).isEqualTo(expected.getImage()),
+                () -> assertThat(harry.getName()).isEqualTo(expected.getName()),
+                () -> assertThat(harry.getType()).isEqualTo(expected.getType())
+        );
 
-        pets = client
-                .list()
-                .blockingGet();
-        assertEquals(pets.size(), 1);
-        assertEquals(pets.iterator().next().getName(), harry.getName());
-
+        pets.addAll(petClient.list());
+        assertAll(
+                () -> assertThat(pets.size()).isEqualTo(1),
+                () -> assertThat(pets.iterator().next()).isEqualTo(harry)
+        );
     }
 
     @Test
     public void testNextFindByVendor() {
-        PetControllerTestClient client = embeddedServer.getApplicationContext().getBean(PetControllerTestClient.class);
 
-        PetEntity entity = new PetEntity("Fred", "Ron", "photo-1442605527737-ed62b867591f.jpeg")
-                .type(PetType.DOG);
+        HttpResponse<PetEntity> response = petClient.save(
+                new PetEntity("Fred", "Ron","photo-1442605527737-ed62b867591f.jpeg")
+                        .type(PetType.DOG));
+        assertEquals(HttpStatus.CREATED,response.getStatus());
+        assertThat(response.getBody().isPresent()).isTrue();
+        PetEntity ron = response.getBody().get();
 
-        Pet ron = client.save(entity).blockingGet();
+        assertThat(petClient.findByVendor("Fred").size()).isEqualTo(1);
 
-        assertNotNull(ron);
+        response = petClient.save(new PetEntity("Fred", "Harry","photo-1457914109735-ce8aba3b7a79.jpeg")
+                .type(PetType.CAT));
+        PetEntity harry = response.getBody().get();
 
-        assertEquals(1, client.byVendor("Fred").blockingGet().size());
+        // this should not add another record
+        petClient.save(new PetEntity("Fred", "Harry","photo-1457914109735-ce8aba3b7a79.jpeg")
+                .type(PetType.CAT));
+        assertThat(petClient.findByVendor("Fred").size()).isEqualTo(2);
+
+        Optional<PetEntity> random = petClient.random();
+        assertThat(random.isPresent()).isTrue();
+        assertThat(random.get()).isIn(ron, harry);
+    }
+
+    @Test
+    public void testRandom() {
+        HttpResponse<PetEntity> response = petClient.save(
+                new PetEntity("Fred", "Ron","photo-1442605527737-ed62b867591f.jpeg")
+                        .type(PetType.DOG));
+        assertThat(response.getBody().isPresent()).isTrue();
+        PetEntity ron = response.getBody().get();
+
+        response = petClient.save(
+                new PetEntity("Fred", "Harry","photo-1457914109735-ce8aba3b7a79.jpeg")
+                        .type(PetType.CAT));
+        assertThat(response.getBody().isPresent()).isTrue();
+        PetEntity harry = response.getBody().get();
+
+        response = petClient.save(
+                new PetEntity("Dean", "Brahms","photo-1442605527737-ed62b867591f.jpeg")
+                        .type(PetType.DOG));
+        assertThat(response.getBody().isPresent()).isTrue();
+        PetEntity brahms = response.getBody().get();
+
+        Optional<PetEntity> random = petClient.random();
+        assertThat(random.isPresent()).isTrue();
+        assertThat(random.get()).isIn(ron, harry, brahms);
+    }
+
+
+    @Test
+    void testValidationFailsOnBadPet() {
+        Exception exception = assertThrows(ConstraintViolationException.class,
+                () -> petClient.save(new PetEntity("", "","")));
+        Arrays.asList(
+                "save.pet.name: must not be blank",
+                "save.pet.image: must not be blank",
+                "save.pet.vendor: must not be blank"
+        ).forEach(s -> assertThat(exception.getMessage()).contains(s));
+    }
+
+    @Test
+    void testSameSlugReturnsSamePet() {
+        HttpResponse<PetEntity> response = petClient.save(
+                new PetEntity("Fred", "Ron","photo-1442605527737-ed62b867591f.jpeg")
+                        .type(PetType.DOG));
+        assertThat(response.getBody().isPresent()).isTrue();
+        PetEntity ron = response.getBody().get();
+        assertThat(ron.getSlug()).isNotNull();
+
+        response = petClient.save(
+                new PetEntity("Fred", "Ron","photo-1442605527737-ed62b867591f.jpeg")
+                        .type(PetType.DOG));
+        assertThat(response.getBody().isPresent()).isTrue();
+        assertThat(response.getBody().get()).isEqualTo(ron);
     }
 }

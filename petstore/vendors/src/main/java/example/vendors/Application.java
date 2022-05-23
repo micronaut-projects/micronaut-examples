@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 original authors
+ * Copyright 2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.vendors.client.v1
+package example.vendors;
 
-import example.api.v1.Pet
-import example.api.v1.PetOperations
-import io.micronaut.http.client.annotation.Client
-import io.reactivex.Maybe
-import io.reactivex.Single
+import io.micronaut.runtime.Micronaut;
+import jakarta.inject.Singleton;
 
-/**
- * @author graemerocher
- * @since 1.0
- */
-@Client(id = 'pets', path = "/v1/pets")
-interface PetClient extends PetOperations<Pet> {
+@Singleton
+class Application {
 
-    @Override
-    Single<List<Pet>> byVendor(String name)
-
-    @Override
-    Maybe<Pet> find(String slug)
+    static void main(String...args) {
+        Micronaut.run(Application.class, args);
+    }
 }

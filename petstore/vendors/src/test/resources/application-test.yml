@@ -1,0 +1,4 @@
+datasources:
+  default:
+    url: jdbc:tc:mysql:oracle:///db
+    driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver

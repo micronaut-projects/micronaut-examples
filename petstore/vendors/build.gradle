@@ -18,19 +18,29 @@ application {
 }
 
 dependencies {
-
     implementation projects.api
 
-    implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")
+    implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-jackson-databind")
+
     implementation("io.micronaut.discovery:micronaut-discovery-client")
-    implementation("io.micronaut.groovy:micronaut-hibernate-gorm")
-    implementation("io.micronaut.sql:micronaut-jdbc-tomcat")
-    // TODO migrate to Project Reactor
-    implementation("io.micronaut.rxjava2:micronaut-rxjava2")
+    implementation("io.micronaut.reactor:micronaut-reactor")
+    implementation("io.micronaut.reactor:micronaut-reactor-http-client")
 
-    runtimeOnly("com.h2database:h2")
-    runtimeOnly("org.apache.tomcat:tomcat-jdbc")
+    implementation("io.micronaut.data:micronaut-data-jdbc")
+    implementation("io.micronaut.flyway:micronaut-flyway")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
 
+    implementation("jakarta.annotation:jakarta.annotation-api")
+
+    compileOnly("io.micronaut:micronaut-http-validation")
+    compileOnly("io.micronaut.data:micronaut-data-processor")
+
+    runtimeOnly("mysql:mysql-connector-java")
+    runtimeOnly("org.flywaydb:flyway-mysql")
+
+    testImplementation("org.testcontainers:mysql")
     testImplementation("org.testcontainers:spock")
     testImplementation("org.testcontainers:testcontainers")
 }

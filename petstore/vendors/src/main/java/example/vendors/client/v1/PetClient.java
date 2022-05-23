@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 original authors
+ * Copyright 2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.vendors
+package example.vendors.client.v1;
 
-import groovy.transform.CompileStatic
-import groovy.util.logging.Slf4j
-import io.micronaut.runtime.Micronaut
-import jakarta.inject.Singleton
+import example.api.v1.Pet;
+import example.api.v1.PetOperations;
+import io.micronaut.http.client.annotation.Client;
 
-@CompileStatic
-@Singleton
-@Slf4j
-class Application {
-    static void main(String...args) {
-        Micronaut.run(Application, args)
-    }
-
-}
+/**
+ * @author graemerocher
+ * @since 1.0
+ */
+@Client(id = "pets", path = "/v1/pets")
+public interface PetClient extends PetOperations<Pet> {}

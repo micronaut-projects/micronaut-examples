@@ -1,0 +1,26 @@
+micronaut:
+  application:
+    name: vendors
+  server:
+    port: -1
+consul:
+  client:
+    defaultZone: ${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}
+vendors:
+  api:
+    version: v1
+datasources:
+  default:
+    url: ${JDBC_URL:`jdbc:mysql://localhost:3306/db`}
+    username: ${JDBC_USER:root}
+    password: ${JDBC_PASSWORD:}
+    dialect: MYSQL
+    driverClassName: ${JDBC_DRIVER:com.mysql.cj.jdbc.Driver}
+flyway:
+  datasources:
+    default:
+      enabled: true
+netty:
+  default:
+    allocator:
+      max-order: 3

@@ -15,15 +15,17 @@
  */
 package example.api.v1;
 
+import io.micronaut.core.async.annotation.SingleResult;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Status;
 import io.micronaut.validation.Validated;
-import io.reactivex.Maybe;
-import io.reactivex.Single;
+import org.reactivestreams.Publisher;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author graemerocher
@@ -33,17 +35,21 @@ import java.util.List;
 public interface PetOperations<T extends Pet> {
 
     @Get("/")
-    Single<List<T>> list();
+    Publisher<T> list();
 
     @Get("/random")
-    Maybe<T> random();
+    @SingleResult
+    Publisher<T> random();
 
     @Get("/vendor/{name}")
-    Single<List<T>> byVendor(String name);
+    Publisher<T> findByVendor(@PathVariable String name);
 
     @Get("/{slug}")
-    Maybe<T> find(String slug);
+    @SingleResult
+    Publisher<T> findBySlug(@PathVariable String slug);
 
     @Post("/")
-    Single<T> save(@Valid @Body T pet);
+    @Status(HttpStatus.CREATED)
+    @SingleResult
+    Publisher<T> save(@Valid @Body T pet);
 }

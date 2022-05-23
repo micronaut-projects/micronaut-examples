@@ -15,24 +15,24 @@
  */
 package example.api.v1;
 
+import io.micronaut.core.async.annotation.SingleResult;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
-import io.reactivex.Single;
-
-import java.util.List;
+import org.reactivestreams.Publisher;
 
 /**
  * @author graemerocher
  * @since 1.0
  */
-public interface VendorOperations {
+public interface VendorOperations<T extends Vendor> {
 
     @Get("/")
-    Single<List<Vendor>> list();
+    Publisher<T> list();
 
     @Get("/names")
-    Single<List<String>> names();
+    Publisher<Name> names();
 
     @Post("/")
-    Single<Vendor> save(String name);
+    @SingleResult
+    Publisher<T> save(String name);
 }

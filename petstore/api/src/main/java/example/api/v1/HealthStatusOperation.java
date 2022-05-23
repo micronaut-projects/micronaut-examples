@@ -1,9 +1,11 @@
 package example.api.v1;
 
+import io.micronaut.core.async.annotation.SingleResult;
 import io.micronaut.http.annotation.Get;
-import io.reactivex.Single;
+import org.reactivestreams.Publisher;
 
 public interface HealthStatusOperation {
     @Get("/health")
-    Single<HealthStatus> health();
+    @SingleResult
+    Publisher<HealthStatus> health();
 }

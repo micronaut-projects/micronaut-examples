@@ -3,6 +3,7 @@ plugins {
 }
 
 micronaut {
+    runtime("netty")
     processing {
         incremental(true)
         annotations("example.api.*")
@@ -11,7 +12,6 @@ micronaut {
 
 dependencies {
     implementation("io.micronaut:micronaut-validation")
-
-    // TODO migrate to Project Reactor
-    implementation("io.micronaut.rxjava2:micronaut-rxjava2")
+    implementation("io.micronaut:micronaut-jackson-databind")
+    implementation("io.micronaut.reactor:micronaut-reactor")
 }

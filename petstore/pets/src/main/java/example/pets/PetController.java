@@ -15,12 +15,10 @@
  */
 package example.pets;
 
-import io.micronaut.http.HttpStatus;
+import example.api.v1.PetOperations;
+import io.micronaut.core.async.annotation.SingleResult;
 import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
-import io.micronaut.http.annotation.Post;
-import io.micronaut.http.annotation.Status;
 import io.micronaut.validation.Validated;
 import org.reactivestreams.Publisher;
 
@@ -32,7 +30,7 @@ import javax.validation.Valid;
  */
 @Controller("/${pets.api.version}/pets")
 @Validated
-public class PetController /*implements PetOperations<PetEntity>*/ {
+public class PetController implements PetOperations<PetEntity> {
 
     private final PetService petService;
 
@@ -40,36 +38,31 @@ public class PetController /*implements PetOperations<PetEntity>*/ {
         this.petService = petService;
     }
 
-//    @Override
-//    @HystrixCommand
-    @Get("/")
-    Publisher<PetEntity> list() {
+    @Override
+    public Publisher<PetEntity> list() {
         return petService.list();
     }
 
-//    @Override
-//    @HystrixCommand
-    @Get("/random")
-    Publisher<PetEntity> random() {
+    @Override
+    @SingleResult
+    public Publisher<PetEntity> random() {
         return petService.random();
     }
 
-//    @Override
-    @Get("/vendor/{name}")
-    Publisher<PetEntity> findByVendor(@PathVariable String name) {
+    @Override
+    public Publisher<PetEntity> findByVendor(@PathVariable String name) {
         return petService.findByVendor(name);
     }
 
-//    @Override
-    @Get("/{slug}")
-    Publisher<PetEntity> findBySlug(@PathVariable String slug) {
+    @Override
+    @SingleResult
+    public Publisher<PetEntity> findBySlug(@PathVariable String slug) {
         return petService.findBySlug(slug);
     }
 
-    //    @Override
-    @Post("/")
-    @Status(HttpStatus.CREATED)
-    Publisher<PetEntity> save(@Valid PetEntity pet) {
+    @Override
+    @SingleResult
+    public Publisher<PetEntity> save(@Valid PetEntity pet) {
         return petService.save(pet);
     }
 }

@@ -16,77 +16,25 @@ application {
     mainClass.set("example.pets.Application")
 }
 
-//configurations.all {
-//    resolutionStrategy.dependencySubstitution {
-//        substitute(module("io.micronaut:micronaut-jackson-databind"))
-//                .using(module("io.micronaut.serde:micronaut-serde-bson:1.0.1"))
-//        substitute(module("io.micronaut:micronaut-jackson-core"))
-//                .using(module("io.micronaut.serde:micronaut-serde-bson:1.0.1"))
-//    }
-//}
-
 dependencies {
     annotationProcessor("io.micronaut:micronaut-http-validation")
-//    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
-//    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
+    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
     annotationProcessor("io.micronaut.data:micronaut-data-document-processor")
 
     implementation projects.api
-
-//    implementation("io.micronaut.serde:micronaut-serde-bson")
-
 
     implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")
     implementation("io.micronaut.discovery:micronaut-discovery-client")
     implementation("io.micronaut.netflix:micronaut-netflix-hystrix")
     implementation("io.swagger.core.v3:swagger-annotations")
-
     implementation("io.micronaut.data:micronaut-data-mongodb")
     implementation("io.micronaut.reactor:micronaut-reactor")
     implementation("io.micronaut.reactor:micronaut-reactor-http-client")
 
-    runtimeOnly("org.mongodb:mongodb-driver-reactivestreams")
-
-//    // TODO migrate to Data-Mongo and Project Reactor
-    // the following go away
-    implementation("io.micronaut.mongodb:micronaut-mongo-reactive")
-    implementation("io.micronaut.rxjava2:micronaut-rxjava2")
-
     testImplementation("io.micronaut:micronaut-http-client")
     testImplementation("io.micronaut.mongodb:micronaut-mongo-reactive")
-
     testImplementation("org.assertj:assertj-core")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:mongodb")
     testImplementation("org.testcontainers:testcontainers")
-
-
 }
-
-//
-//dependencies {
-//    annotationProcessor "io.micronaut.configuration:micronaut-openapi"
-//    compile "io.micronaut.configuration:micronaut-openapi"
-//
-//    compileOnly "io.micronaut:micronaut-inject-java"
-//
-//    compile project(":api")
-//    compile "io.micronaut.configuration:micronaut-hibernate-validator"
-//    compile "io.micronaut:micronaut-http-server-netty"
-//    compile "io.micronaut:micronaut-discovery-client"
-//
-//
-//    compile "io.micronaut.configuration:micronaut-mongo-reactive"
-//
-//    compile "io.micronaut:micronaut-runtime"
-//
-//    compile "io.micronaut.configuration:micronaut-netflix-hystrix"
-//
-//    testCompile "junit:junit:4.12"
-//    testCompile "io.micronaut:micronaut-inject-java"
-//    testCompile "io.micronaut:micronaut-http-client"
-//    testRuntime "de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1"
-//}
-//shadowJar {
-//    mergeServiceFiles()
-//}

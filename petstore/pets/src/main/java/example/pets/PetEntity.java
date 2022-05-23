@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 original authors
+ * Copyright 2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,16 @@
  */
 package example.pets;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import example.api.v1.Pet;
 import example.api.v1.PetType;
 import io.micronaut.data.annotation.GeneratedValue;
 import io.micronaut.data.annotation.Id;
 import io.micronaut.data.annotation.MappedEntity;
+import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 
-import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 /**
@@ -29,50 +33,23 @@ import java.util.Objects;
  * @since 1.0
  */
 @MappedEntity
-public class PetEntity {
+public class PetEntity extends Pet {
 
     @Id
     @GeneratedValue
     private String id;
 
-    private String slug;
-
-    @NotBlank
-    private String image;
-
-    @NotBlank
-    private String name;
-    protected PetType type = PetType.DOG;
-
-    @NotBlank
-    private String vendor;
-
-//    @BsonCreator
+    @BsonCreator
+    @JsonCreator
     public PetEntity(
-//            @BsonProperty("vendor")
+            @JsonProperty("vendor") @BsonProperty("vendor")
             String vendor,
-//            @BsonProperty("name")
+            @JsonProperty("name") @BsonProperty("name")
             String name,
-//            @BsonProperty("image")
+            @JsonProperty("image") @BsonProperty("image")
             String image
     ) {
-        this.vendor = vendor;
-        this.name = name;
-        this.image = image;
-    }
-
-    public PetEntity type(PetType type) {
-        if(type != null) {
-            this.type = type;
-        }
-        return this;
-    }
-
-    public PetEntity slug(String slug) {
-        if(slug != null) {
-            this.slug = slug;
-        }
-        return this;
+        super(vendor, name, image);
     }
 
     public String getId() {
@@ -83,120 +60,41 @@ public class PetEntity {
         this.id = id;
     }
 
-    @NotBlank
-    public String getSlug() {
-        if(slug != null) {
-            return slug;
-        }
-        return vendor + "-" + name;
+    @Override
+    public PetEntity type(PetType type) {
+        return (PetEntity) super.type(type);
+    }
+
+    @Override
+    public PetEntity slug(String slug) {
+        return (PetEntity) super.slug(slug);
     }
 
     public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    public String getImage() {
-        return image;
+        super.setSlug(slug);
     }
 
     public void setImage(String image) {
-        this.image = image;
+        super.setImage(image);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public PetType getType() {
-        return type;
-    }
 
     public void setType(PetType type) {
-        this.type = type;
-    }
-
-    public String getVendor() {
-        return vendor;
-    }
-
-    public void setVendor(String vendor) {
-        this.vendor = vendor;
+        super.setType(type);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof PetEntity)) return false;
+
         PetEntity petEntity = (PetEntity) o;
-        return Objects.equals(id, petEntity.id)
-                && Objects.equals(slug, petEntity.slug)
-                && image.equals(petEntity.image)
-                && name.equals(petEntity.name)
-                && type == petEntity.type
-                && vendor.equals(petEntity.vendor);
+
+        return Objects.equals(id, petEntity.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, slug, image, name, type, vendor);
+        return id != null ? id.hashCode() : 0;
     }
-
-    @Override
-    public String toString() {
-        return "Pet{" +
-                "name='" + name + '\'' +
-                ", type=" + type +
-                ", vendor='" + vendor + '\'' +
-                ", slug='" + vendor + '\'' +
-                ", image='" + image + '\'' +
-                '}';
-    }
-
 }
-
-///**
-// * @author graemerocher
-// * @since 1.0
-// */
-//public class PetEntity extends Pet {
-//    @BsonCreator
-//    @JsonCreator
-//    public PetEntity(
-//            @JsonProperty("vendor")
-//            @BsonProperty("vendor") String vendor,
-//            @JsonProperty("name")
-//            @BsonProperty("name") String name,
-//            @JsonProperty("image")
-//            @BsonProperty("image") String image) {
-//        super(vendor, name, image);
-//    }
-//
-//    @Override
-//    public PetEntity type(PetType type) {
-//        return (PetEntity) super.type(type);
-//    }
-//
-//    @Override
-//    public PetEntity slug(String slug) {
-//        return (PetEntity) super.slug(slug);
-//    }
-//
-//    @Override
-//    public void setSlug(String image) {
-//        super.setSlug(image);
-//    }
-//
-//    @Override
-//    public void setImage(String image) {
-//        super.setImage(image);
-//    }
-//
-//    @Override
-//    public void setType(PetType type) {
-//        super.setType(type);
-//    }
-//}

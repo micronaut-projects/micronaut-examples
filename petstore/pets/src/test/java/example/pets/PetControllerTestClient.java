@@ -31,7 +31,7 @@ import java.util.Optional;
  * @since 1.0
  */
 @Client("/${pets.api.version}/pets")
-interface PetControllerTestClient /*extends PetOperations<PetEntity>*/ {
+interface PetControllerTestClient {
     @Get
     List<PetEntity> list();
 

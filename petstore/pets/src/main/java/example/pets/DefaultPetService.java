@@ -1,5 +1,6 @@
 package example.pets;
 
+import io.micronaut.core.async.annotation.SingleResult;
 import jakarta.inject.Singleton;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
@@ -19,6 +20,7 @@ class DefaultPetService implements PetService {
     }
 
     @Override
+    @SingleResult
     public Publisher<PetEntity> save(PetEntity pet) {
         String slug = FriendlyUrl.sanitizeWithDashes(pet.getName());
         pet.slug(slug);
@@ -26,6 +28,7 @@ class DefaultPetService implements PetService {
     }
 
     @Override
+    @SingleResult
     public Publisher<PetEntity> random() {
         return petRepository.random();
     }
@@ -36,6 +39,7 @@ class DefaultPetService implements PetService {
     }
 
     @Override
+    @SingleResult
     public Publisher<PetEntity> findBySlug(String slug) {
         return petRepository.findBySlug(slug);
     }

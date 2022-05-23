@@ -1,16 +1,5 @@
 package example.pets;
 
-import org.reactivestreams.Publisher;
+import example.api.v1.PetOperations;
 
-interface PetService {
-
-    Publisher<PetEntity> list();
-
-    Publisher<PetEntity> save(PetEntity pet);
-
-    Publisher<PetEntity> random();
-
-    Publisher<PetEntity> findByVendor(String name);
-
-    Publisher<PetEntity> findBySlug(String slug);
-}
+interface PetService extends PetOperations<PetEntity> { }

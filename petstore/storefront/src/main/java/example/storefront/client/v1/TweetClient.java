@@ -13,30 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.storefront.client.v1
+package example.storefront.client.v1;
 
-import example.api.v1.Pet
-import example.api.v1.PetOperations
-import io.micronaut.http.client.annotation.Client
-import io.reactivex.Maybe
-import io.reactivex.Single
+import io.micronaut.core.async.annotation.SingleResult;
+import io.micronaut.function.client.FunctionClient;
+import org.reactivestreams.Publisher;
+
+import java.net.URL;
 
 /**
  * @author graemerocher
  * @since 1.0
  */
-@Client(id = "pets", path = "/v1/pets")
-interface PetClient extends PetOperations<Pet> {
+@FunctionClient
+public interface TweetClient {
 
-    @Override
-    Single<List<Pet>> byVendor(String name)
+    @SingleResult
+    Publisher<Result> updateStatus(String text);
 
-    @Override
-    Maybe<Pet> random()
+    class Result {
+        URL url;
 
-    @Override
-    Maybe<Pet> find(String slug)
+        public URL getUrl() {
+            return url;
+        }
 
-    @Override
-    Single<List<Pet>> list()
+        public void setUrl(URL url) {
+            this.url = url;
+        }
+    }
 }

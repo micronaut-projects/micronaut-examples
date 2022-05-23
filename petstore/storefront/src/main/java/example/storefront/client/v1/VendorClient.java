@@ -13,25 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.vendors
+package example.storefront.client.v1;
 
-import example.api.v1.Pet
-import grails.gorm.annotation.Entity
+import example.api.v1.Vendor;
+import example.api.v1.VendorOperations;
+import io.micronaut.core.async.annotation.SingleResult;
+import io.micronaut.http.client.annotation.Client;
+import org.reactivestreams.Publisher;
 
 /**
  * @author graemerocher
  * @since 1.0
  */
-@Entity
-class Vendor extends example.api.v1.Vendor {
-
+@Client(id = "vendors", path = "/v1/vendors")
+public interface VendorClient extends VendorOperations<Vendor> {
     @Override
-    void setName(String name) {
-        super.setName(name)
-    }
-
-    Vendor pets(List<Pet> pets) {
-        setPets(pets)
-        return this
-    }
+    @SingleResult
+    Publisher<Vendor> save(String name);
 }

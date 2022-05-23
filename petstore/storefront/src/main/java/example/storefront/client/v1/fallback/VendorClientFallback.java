@@ -15,34 +15,36 @@
  */
 package example.storefront.client.v1.fallback;
 
+import example.api.v1.Name;
 import example.api.v1.Vendor;
 import example.api.v1.VendorOperations;
-import groovy.transform.CompileStatic;
+import io.micronaut.core.async.annotation.SingleResult;
 import io.micronaut.retry.annotation.Fallback;
-import io.reactivex.Single;
+import org.reactivestreams.Publisher;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.Collections;
-import java.util.List;
 
 /**
  * @author graemerocher
  * @since 1.0
  */
 @Fallback
-@CompileStatic
-public class VendorClientFallback implements VendorOperations {
+public class VendorClientFallback implements VendorOperations<Vendor> {
     @Override
-    public Single<List<Vendor>> list() {
-        return Single.just(Collections.emptyList());
+    public Publisher<Vendor> list() {
+        return Flux.fromIterable(Collections.emptyList());
     }
 
     @Override
-    public Single<List<String>> names() {
-        return Single.just(Collections.emptyList());
+    public Publisher<Name> names() {
+        return Flux.fromIterable(Collections.emptyList());
     }
 
     @Override
-    public Single<Vendor> save(String name) {
-        return Single.just(new Vendor(name));
+    @SingleResult
+    public Publisher<Vendor> save(String name) {
+        return Mono.just(new Vendor(name));
     }
 }

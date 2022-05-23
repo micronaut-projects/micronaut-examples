@@ -1,7 +1,6 @@
 plugins {
   alias(libs.plugins.mnApp)
 }
-apply plugin: "groovy"
 
 graalvmNative.toolchainDetection = false
 micronaut {
@@ -19,27 +18,8 @@ application {
 
 dependencies {
   implementation projects.api
-  // TODO migrate to Project Reactor
-  implementation("io.micronaut.rxjava2:micronaut-rxjava2")
-  implementation "io.micronaut:micronaut-function-client"
-  implementation("io.micronaut.rxjava2:micronaut-rxjava2-http-client")
-}
 
-//apply plugin: 'groovy'
-//
-//mainClassName = "example.storefront.Application"
-//
-//dependencies {
-//  compileOnly "io.micronaut:micronaut-inject-groovy"
-//  compileOnly "io.micronaut:micronaut-inject-java"
-//  compile "io.micronaut:micronaut-runtime-groovy"
-//  compile "io.micronaut:micronaut-http-server-netty"
-//  compile project(":api")
-//  compile "io.micronaut:micronaut-http-client"
-//  compile "io.micronaut:micronaut-function-client"
-//
-//
-//  testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {
-//        exclude module:'groovy-all'
-//  }
-//}
+  implementation "io.micronaut:micronaut-function-client"
+  implementation("io.micronaut.reactor:micronaut-reactor")
+  implementation("io.micronaut.reactor:micronaut-reactor-http-client")
+}

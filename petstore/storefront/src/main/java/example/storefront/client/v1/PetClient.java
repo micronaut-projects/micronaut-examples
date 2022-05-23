@@ -13,21 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.storefront.client.v1
+package example.storefront.client.v1;
 
-import io.micronaut.function.client.FunctionClient
-import io.reactivex.Single
+import example.api.v1.Pet;
+import example.api.v1.PetOperations;
+import io.micronaut.http.client.annotation.Client;
 
 /**
  * @author graemerocher
  * @since 1.0
  */
-@FunctionClient
-interface TweetClient {
-
-    Single<Result> updateStatus(String text)
-
-    static class Result {
-        URL url
-    }
-}
+@Client(id = "pets", path = "/v1/pets")
+public interface PetClient extends PetOperations<Pet> {}

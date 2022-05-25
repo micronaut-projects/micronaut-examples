@@ -1,12 +1,11 @@
 plugins {
     alias(libs.plugins.mnApp)
 }
-apply plugin: "groovy"
 
 graalvmNative.toolchainDetection = false
 micronaut {
     runtime("netty")
-    testRuntime("spock2")
+    testRuntime("junit5")
     processing {
         incremental(true)
         annotations("example.*")
@@ -18,50 +17,19 @@ application {
 }
 
 dependencies {
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+
     implementation projects.api
 
-    annotationProcessor("io.micronaut:micronaut-http-validation")
+    implementation("io.micronaut:micronaut-jackson-databind")
     implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")
     implementation("io.micronaut.discovery:micronaut-discovery-client")
     implementation("io.micronaut.redis:micronaut-redis-lettuce")
 
-    // TODO migrate to Project Reactor
-    implementation("io.micronaut.rxjava2:micronaut-rxjava2")
-
-    testImplementation("org.testcontainers:spock")
+    testImplementation("io.micronaut.reactor:micronaut-reactor-http-client")
+    testImplementation("org.junit.jupiter:junit-jupiter-params")
+    testImplementation("org.assertj:assertj-core")
+    testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:testcontainers")
-    // TODO migrate to Project Reactor
-    testImplementation("io.micronaut.rxjava2:micronaut-rxjava2")
-    testImplementation("io.micronaut.rxjava2:micronaut-rxjava2-http-client")
+
 }
-//mainClassName = "example.offers.Application"
-//
-//apply plugin: 'groovy'
-//
-//dependencies {
-//    compileOnly "io.micronaut:micronaut-inject-java"
-//
-//    compile project(":api")
-//    compile "io.micronaut.configuration:micronaut-hibernate-validator"
-//    compile "io.micronaut:micronaut-http-server-netty"
-//    compile "io.micronaut:micronaut-discovery-client"
-//
-//
-//    compile "io.micronaut.configuration:micronaut-redis-lettuce"
-//
-//    compile "io.micronaut:micronaut-runtime"
-//
-//    testCompile "junit:junit:4.12"
-//    testCompile "io.micronaut:micronaut-inject-groovy"
-//    testCompile "io.micronaut:micronaut-http-client"
-//
-//    testCompile "org.codehaus.groovy:groovy"
-//    testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {
-//        exclude module:'groovy-all'
-//    }
-//
-//    testRuntime "com.github.kstyrc:embedded-redis:0.6"
-//}
-//shadowJar {
-//    mergeServiceFiles()
-//}

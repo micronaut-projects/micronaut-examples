@@ -17,17 +17,17 @@ package example.offers;
 
 import example.api.v1.Offer;
 import io.micronaut.context.annotation.Value;
+import io.micronaut.core.async.annotation.SingleResult;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.validation.Validated;
+import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.List;
 
 /**
  * @author graemerocher
@@ -48,14 +48,13 @@ public class OffersController implements OffersOperations {
 
     /**
      * A non-blocking infinite JSON stream of offers that change every 10 seconds
-     * @return A {@link Flux} stream of JSON objects
+     * @return A {@link Publisher} stream of JSON objects
      */
     @Get(uri = "/", produces = MediaType.APPLICATION_JSON_STREAM)
-    public Flux<Offer> current() {
-        return offersRepository
-                    .random()
-                    .repeat(100)
-                    .delayElements(offerDelay);
+    public Publisher<Offer> current() {
+        return Flux.from(offersRepository.random())
+                .repeat(100)
+                .delayElements(offerDelay);
     }
 
     /**
@@ -63,7 +62,7 @@ public class OffersController implements OffersOperations {
      * @return A {@link Flux} stream of JSON objects
      */
     @Get(uri = "/all")
-    public Mono<List<Offer>> all() {
+    public Publisher<Offer> all() {
         return offersRepository.all();
     }
 
@@ -78,13 +77,8 @@ public class OffersController implements OffersOperations {
      */
     @Post("/")
     @Override
-    public Mono<Offer> save(
-            String slug,
-            BigDecimal price,
-            Duration duration,
-            String description) {
-        return offersRepository.save(
-                slug, price, duration, description
-        );
+    @SingleResult
+    public Publisher<Offer> save(String slug, BigDecimal price, Duration duration, String description) {
+        return offersRepository.save(slug, price, duration, description);
     }
 }

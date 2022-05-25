@@ -16,24 +16,24 @@
 package example.offers.client.v1;
 
 import example.api.v1.Pet;
+import io.micronaut.core.async.annotation.SingleResult;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.client.annotation.Client;
-import io.reactivex.Maybe;
-import io.reactivex.Single;
-
-import java.util.List;
+import io.micronaut.retry.annotation.Recoverable;
+import io.micronaut.retry.annotation.Retryable;
+import org.reactivestreams.Publisher;
 
 /**
  * @author graemerocher
  * @since 1.0
  */
 @Client(id = "pets", path = "/v1/pets")
+@Recoverable(api = PetClient.class)
 public interface PetClient {
-
     @Get("/{slug}")
-    Maybe<Pet> find(String slug);
+    @SingleResult
+    Publisher<Pet> findBySlug(String slug);
 
     @Get("/")
-    Single<List<Pet>> list();
-
+    Publisher<Pet> list();
 }

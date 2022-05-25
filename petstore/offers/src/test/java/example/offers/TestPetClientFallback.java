@@ -13,14 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.offers
+package example.offers;
 
-import example.api.v1.Pet
-import example.offers.client.v1.PetClient
-import io.micronaut.retry.annotation.Fallback
-import io.reactivex.Maybe
-import io.reactivex.Single
-import jakarta.inject.Singleton
+import example.api.v1.Pet;
+import example.offers.client.v1.PetClient;
+import io.micronaut.core.async.annotation.SingleResult;
+import io.micronaut.retry.annotation.Fallback;
+import jakarta.inject.Singleton;
+import org.reactivestreams.Publisher;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author graemerocher
@@ -30,23 +36,21 @@ import jakarta.inject.Singleton
 @Singleton
 class TestPetClientFallback implements PetClient {
 
-    private Map<String, Pet> pets = [:]
+    private final Map<String, Pet> pets = new HashMap<>();
 
     void addPet(Pet pet) {
-        pets.put(pet.getSlug(), pet)
+        pets.put(pet.getSlug(), pet);
     }
 
     @Override
-    Maybe<Pet> find(String slug) {
-        Pet pet = pets.get(slug)
-        if(pet != null) {
-            return Maybe.just(pet)
-        }
-        return Maybe.empty()
+    @SingleResult
+    public Publisher<Pet> findBySlug(String slug) {
+        Pet pet = pets.get(slug);
+        return Mono.justOrEmpty(pet);
     }
 
     @Override
-    Single<List<Pet>> list() {
-        return Single.just(Collections.emptyList())
+    public Publisher<Pet> list() {
+        return Flux.fromIterable(Collections.emptyList());
     }
 }

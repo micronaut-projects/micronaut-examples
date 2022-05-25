@@ -17,12 +17,13 @@ package example.offers;
 
 import example.api.v1.Offer;
 import io.micronaut.core.async.annotation.SingleResult;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.client.annotation.Client;
+import io.micronaut.validation.Validated;
 import org.reactivestreams.Publisher;
-import reactor.core.publisher.Mono;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.Duration;
 
@@ -30,20 +31,15 @@ import java.time.Duration;
  * @author graemerocher
  * @since 1.0
  */
-public interface OffersOperations {
-    /**
-     * Save an offer for the given pet, vendor etc.
-     *
-     * @param slug pet's slug
-     * @param price The price
-     * @param duration The duration of the offer
-     * @param description The description of the offer
-     * @return The offer if it was possible to save it as a {@link Mono} or a empty {@link Mono} if no pet exists to create the offer for
-     */
+@Client("/${offers.api.version}/offers")
+@Validated
+public interface TestOffersClient extends OffersOperations {
+    
+    @Get(consumes = MediaType.APPLICATION_JSON_STREAM)
+    Publisher<Offer> current();
+
+    @Override
+    @Post()
     @SingleResult
-    Publisher<Offer> save(
-            @NotBlank String slug,
-            @Digits(integer = 6, fraction = 2) BigDecimal price,
-            @NotNull Duration duration,
-            @NotBlank String description);
+    Publisher<Offer> save(String slug, BigDecimal price, Duration duration, String description);
 }

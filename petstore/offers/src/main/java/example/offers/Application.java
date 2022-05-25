@@ -43,8 +43,8 @@ public class Application {
         Micronaut.run(Application.class);
     }
 
-    @EventListener
-    @Async
+//    @EventListener
+//    @Async
     public void onStartup(ServerStartupEvent event) {
         offersRepository.createInitialOffers();
     }

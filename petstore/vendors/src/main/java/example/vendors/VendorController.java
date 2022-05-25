@@ -23,6 +23,7 @@ import io.micronaut.core.async.annotation.SingleResult;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Status;
@@ -102,5 +103,10 @@ class VendorController implements VendorOperations<Vendor> {
     @Get("/names")
     public Publisher<Name> names() {
         return vendorRepository.findAll().map(v -> new Name(v.getName()));
+    }
+
+    @Delete("/")
+    public Publisher<Long> deleteAll() {
+        return vendorRepository.deleteAll();
     }
 }

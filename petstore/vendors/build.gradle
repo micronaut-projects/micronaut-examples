@@ -1,12 +1,11 @@
 plugins {
     alias(libs.plugins.mnApp)
 }
-apply plugin: "groovy"
 
 graalvmNative.toolchainDetection = false
 micronaut {
     runtime("netty")
-    testRuntime("spock2")
+    testRuntime("junit5")
     processing {
         incremental(true)
         annotations("example.*")
@@ -40,31 +39,7 @@ dependencies {
     runtimeOnly("mysql:mysql-connector-java")
     runtimeOnly("org.flywaydb:flyway-mysql")
 
+    testImplementation("org.assertj:assertj-core")
     testImplementation("org.testcontainers:mysql")
-    testImplementation("org.testcontainers:spock")
     testImplementation("org.testcontainers:testcontainers")
 }
-
-//apply plugin: 'groovy'
-//mainClassName = "example.vendors.Application"
-//dependencies {
-//    compileOnly "io.micronaut:micronaut-inject-groovy"
-//
-//    compile "org.codehaus.groovy:groovy:2.5.1"
-//    compile project(":api")
-//
-//    compile "io.micronaut.configuration:micronaut-hibernate-validator"
-//    compile "io.micronaut.configuration:micronaut-hibernate-gorm"
-//
-//    compile "io.micronaut:micronaut-http-server-netty"
-//    compile "io.micronaut:micronaut-discovery-client"
-//
-//    compile "io.micronaut:micronaut-runtime-groovy"
-//    runtime 'org.apache.tomcat:tomcat-jdbc:8.0.44'
-//    runtime 'com.h2database:h2:1.4.196'
-//
-//    testCompile "io.micronaut:micronaut-inject-groovy"
-//    testCompile("org.spockframework:spock-core:1.1-groovy-2.4") {
-//        exclude module:'groovy-all'
-//    }
-//}

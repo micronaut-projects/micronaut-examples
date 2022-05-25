@@ -2,6 +2,7 @@ package example.mail;
 
 import com.sendgrid.Request;
 import com.sendgrid.Response;
+import io.micronaut.core.async.annotation.SingleResult;
 import io.micronaut.email.AsyncEmailSender;
 import io.micronaut.email.Email;
 import io.micronaut.http.HttpResponse;
@@ -26,6 +27,7 @@ public class MailController {
     }
 
     @Post("/send")
+    @SingleResult
     public Publisher<HttpResponse<?>> send(@Body example.api.v1.Email email) {
         log.info(email.toString());
 

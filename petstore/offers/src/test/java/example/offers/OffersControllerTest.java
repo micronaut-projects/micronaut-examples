@@ -73,7 +73,7 @@ public class OffersControllerTest extends BaseRedisOfferTest{
     @Test
     void receiveRandomGetsOffer() {
         Offer offer = streamingHttpClient.jsonStream(HttpRequest.GET("/v1/offers"), Offer.class)
-                .blockFirst();
+                .log().blockFirst();
 
         assertThat(offer).isNotNull();
         Pet offered = offer.getPet();

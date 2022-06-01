@@ -93,10 +93,6 @@ public class OffersRepository implements OffersOperations {
             String description) {
 
         Publisher<Pet> pet = petClient.findBySlug(slug);
-//        Pet pet = new Pet("Fred", "Harry",  "photo-1457914109735-ce8aba3b7a79.jpeg");
-//        pet.getSlug();
-
-//        return Mono.from(Mono.just(pet)).flatMap(petInstance -> {
         return Mono.from(pet).flatMap(petInstance -> {
             ZonedDateTime expiryDate = ZonedDateTime.now().plus(duration);
             Offer offer = new Offer(petInstance,description,price);
@@ -122,35 +118,12 @@ public class OffersRepository implements OffersOperations {
         LOG.info("Creating Initial Offers for Pets: {}",
                 Flux.from(petClient.list()).collectList().block());
 
-        saveAnOffer("harry", new BigDecimal("49.99"), Duration.of(2, ChronoUnit.HOURS), "Cute dog!");
-        saveAnOffer("malfoy", new BigDecimal("29.99"), Duration.of(2, ChronoUnit.HOURS), "Special Cat! Offer ends soon!");
-        saveAnOffer("goyle", new BigDecimal("39.99"), Duration.of(1, ChronoUnit.DAYS), "Carefree Cat! Low Maintenance! Looking for a Home!");
-
-//        Mono.from(petClient.findBySlug("harry"))
-//                .doOnError(throwable -> LOG.error("No pet found: " + throwable.getMessage(), throwable))
-//                .onErrorStop()
-//                .subscribe(pet -> Mono.from(save(pet.getSlug(), new BigDecimal("49.99"), Duration.of(2,
-//                                ChronoUnit.HOURS),"Cute dog!"))
-//                        .subscribe((offer) -> {}, throwable ->
-//                                LOG.error("Error occurred saving offer: {}", throwable.getMessage(), throwable)));
-//
-//        Mono.from(petClient.findBySlug("malfoy"))
-//                .doOnError(throwable -> LOG.error("No pet found: " + throwable.getMessage(), throwable))
-//                .onErrorStop()
-//                .subscribe(pet -> Mono.from(save(pet.getSlug(), new BigDecimal("29.99"), Duration.of(2,
-//                                ChronoUnit.HOURS), "Special Cat! Offer ends soon!"))
-//                        .subscribe((offer) -> {}, throwable ->
-//                                LOG.error("Error occurred saving offer: " + throwable.getMessage(), throwable))
-//                );
-//
-//        Mono.from(petClient.findBySlug("goyle"))
-//                .doOnError(throwable -> LOG.error("No pet found: " + throwable.getMessage(), throwable))
-//                .onErrorStop()
-//                .subscribe(pet -> Mono.from(save(pet.getSlug(),new BigDecimal("39.99"),Duration.of(1, ChronoUnit.DAYS),
-//                                    "Carefree Cat! Low Maintenance! Looking for a Home!"))
-//                        .subscribe((offer) -> { }, throwable ->
-//                                LOG.error("Error occurred saving offer: " + throwable.getMessage(), throwable))
-//                );
+        saveAnOffer("harry", new BigDecimal("49.99"),
+                Duration.of(2, ChronoUnit.HOURS), "Cute dog!");
+        saveAnOffer("malfoy", new BigDecimal("29.99"),
+                Duration.of(2, ChronoUnit.HOURS), "Special Cat! Offer ends soon!");
+        saveAnOffer("goyle", new BigDecimal("39.99"),
+                Duration.of(1, ChronoUnit.DAYS), "Carefree Cat! Low Maintenance! Looking for a Home!");
     }
 
     private void saveAnOffer(String slug, BigDecimal price, Duration duration, String description ) {
@@ -160,15 +133,14 @@ public class OffersRepository implements OffersOperations {
                 .subscribe(pet -> Mono.from(save(pet.getSlug(), price, duration,description))
                         .subscribe((offer) -> {}, throwable ->
                                 LOG.error("Error occurred saving offer: {}", throwable.getMessage(), throwable)));
-
     }
 
     private Map<String, String> dataOf(BigDecimal price, String description, Currency currency) {
-        Map<String, String> data = new LinkedHashMap<>(4);
-        data.put("currency", currency.getCurrencyCode());
-        data.put("price", price.toString());
-        data.put("description" ,description);
-        return data;
+        return Map.of(
+                "currency", currency.getCurrencyCode(),
+                "price", price.toString(),
+                "description", description
+        );
     }
 
     private Function<String, Mono<? extends Offer>> keyToOffer(RedisReactiveCommands<String, String> commands) {

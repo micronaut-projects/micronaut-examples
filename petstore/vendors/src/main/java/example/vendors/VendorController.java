@@ -16,6 +16,7 @@
 package example.vendors;
 
 import example.api.v1.Name;
+import example.api.v1.Pet;
 import example.api.v1.VendorOperations;
 import example.vendors.client.v1.PetClient;
 import io.micronaut.context.annotation.Value;
@@ -31,8 +32,11 @@ import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @ExecuteOn(TaskExecutors.IO)
 @Controller("/${vendors.api.version}/vendors")
@@ -57,23 +61,25 @@ class VendorController implements VendorOperations<Vendor> {
 
     @Get("/list")
     public Publisher<Vendor> list() {
+
+        // my feeble attempt to translate the old code
+        Mono.fromCallable(() -> vendorRepository.findAll())
+                .subscribeOn(Schedulers.boundedElastic())
+                .flux()
+                .flatMap(Flux::from)
+                .flatMap(vendor ->
+                        // <screaming face> this is wrong, I'm not sure how to translate from old code
+                        Flux.from(petClient.findByVendor(vendor.getName()))
+                                .map(pet -> {
+                                    List<Pet> pets = vendor.getPets();
+                                    pets.add(pet);
+                                    return pets;
+                                }).collectList());
+
         // TODO this needs to fetch the Pets via petClient.findByVendor(name) for each vendor
         //  see the old reactive code below
         return vendorRepository.findAll();
 
-//            .doOnNext(petClient.findByVendor(vendor.name))
-//                .flatMap(vendor -> petClient.findByVendor(vendor.name))
-
-        // maybe something along lines of this from tutorial at
-        // https://tech.io/playgrounds/929/reactive-programming-with-reactor-3/Flux
-        //        Flux.fromIterable(getSomeLongList())
-        //                .delayElements(Duration.ofMillis(100))
-        //                .doOnNext(serviceA::someObserver)
-        //                .map(d -> d * 2)
-        //                .take(3)
-        //                .onErrorResumeWith(errorHandler::fallback)
-        //                .doAfterTerminate(serviceM::incrementTerminate)
-        //                .subscribe(System.out::println);
 
             // original Pet Store impl
         //        @Get('/')
@@ -90,8 +96,6 @@ class VendorController implements VendorOperations<Vendor> {
         //            })
         //            .toList()
         //        }
-
-
     }
 
     @Post

@@ -13,16 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.function.tweet
+package example.function.tweet;
 
-import io.micronaut.runtime.Micronaut
 
 /**
  * @author graemerocher
  * @since 1.0
  */
-class Application {
-    static void main(String...args) {
-        Micronaut.run(Application, args)
+public class Message {
+    private String text;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

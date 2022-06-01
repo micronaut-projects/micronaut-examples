@@ -13,20 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.function.tweet
+package example.function.tweet;
 
-import groovy.transform.CompileStatic
-import io.micronaut.context.annotation.ConfigurationProperties
-import twitter4j.conf.ConfigurationBuilder
+import io.micronaut.runtime.Micronaut;
 
 /**
  * @author graemerocher
  * @since 1.0
  */
-@ConfigurationProperties("twitter")
-@CompileStatic
-class TwitterConfiguration {
-
-    @io.micronaut.context.annotation.ConfigurationBuilder
-    ConfigurationBuilder builder = new ConfigurationBuilder()
+class Application {
+    static void main(String...args) {
+        Micronaut.run(Application.class, args);
+    }
 }

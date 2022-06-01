@@ -13,24 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.function.tweet
+package example.function.tweet;
 
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.net.URL;
 
 /**
  * @author graemerocher
  * @since 1.0
  */
-class UpdateResult {
+public class UpdateResult {
 
-    final URL url
-    final long createdAt
+    private final URL url;
+    private final long createdAt;
 
     @JsonCreator
-    UpdateResult(@JsonProperty("url") URL url, @JsonProperty("createdAt") long createdAt) {
-        this.url = url
-        this.createdAt = createdAt
+    public UpdateResult(@JsonProperty("url") URL url, @JsonProperty("createdAt") long createdAt) {
+        this.url = url;
+        this.createdAt = createdAt;
     }
 
 }

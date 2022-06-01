@@ -1,12 +1,12 @@
 plugins {
     alias(libs.plugins.mnLib)
 }
-apply plugin: "groovy"
+//apply plugin: "groovy"
 
 graalvmNative.toolchainDetection = false
 micronaut {
     runtime("netty")
-    testRuntime("spock2")
+    testRuntime("junit5")
     processing {
         incremental(true)
         annotations("example.*")
@@ -20,7 +20,8 @@ dependencies {
     implementation("io.micronaut:micronaut-jackson-databind")
     implementation 'org.twitter4j:twitter4j-core:4.0.7'
 
-    testImplementation("io.micronaut.rxjava2:micronaut-rxjava2-http-client")
+    testImplementation("org.assertj:assertj-core")
+
 }
 
 //import jp.classmethod.aws.gradle.lambda.*

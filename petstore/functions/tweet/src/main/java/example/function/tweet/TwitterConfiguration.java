@@ -13,13 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.function.tweet
+package example.function.tweet;
 
+import io.micronaut.context.annotation.ConfigurationProperties;
+import twitter4j.conf.ConfigurationBuilder;
 
 /**
  * @author graemerocher
  * @since 1.0
  */
-class Message {
-    String text
+@ConfigurationProperties("twitter")
+public class TwitterConfiguration {
+
+    @io.micronaut.context.annotation.ConfigurationBuilder
+    public ConfigurationBuilder builder = new ConfigurationBuilder();
 }

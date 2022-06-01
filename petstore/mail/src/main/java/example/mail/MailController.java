@@ -31,11 +31,14 @@ public class MailController {
     public Publisher<HttpResponse<?>> send(@Body example.api.v1.Email email) {
         log.info(email.toString());
 
-        // TODO make this better, and more complete
+        // 'from' is micronaut.email.from.email application property
         Email.Builder builder = Email.builder()
                 .to(email.getRecipient())
                 .subject(email.getSubject())
-                .body(email.getHtmlBody(), email.getTextBody());
+                .body(email.getHtmlBody(), email.getTextBody())
+                .replyTo(email.getReplyTo());
+        email.getCc().forEach(builder::cc);
+        email.getBcc().forEach(builder::bcc);
 
         return Mono.from(emailSender.sendAsync(builder))
                 .doOnNext(rsp -> {

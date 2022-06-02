@@ -28,7 +28,9 @@ import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
+import java.awt.font.FontRenderContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,31 +48,26 @@ public class Application {
 
     @EventListener
     void onStartup(ServerStartupEvent event) {
+
         String[] names = {"Fred", "Arthur", "Joe"};
-        List<Publisher<Vendor>> saves = new ArrayList<>();
+        List<Flux<Vendor>> saves = new ArrayList<>();
         for (String name: names) {
-            Publisher<Vendor> vendorPub = Flux.from(vendorClient.save(name)).flatMap(vendor -> {
-                List<Publisher<Pet>> operations = new ArrayList<>();
-                String vendorName = vendor.getName();
-                if ("Fred".equals(vendorName)) {
-                    operations.add(petClient.save(
-                            new Pet(vendorName, "Harry", "photo-1457914109735-ce8aba3b7a79.jpeg").type(PetType.DOG)));
-                    operations.add(petClient.save(
-                            new Pet(vendorName, "Ron", "photo-1442605527737-ed62b867591f.jpeg").type(PetType.DOG)));
-                    operations.add(petClient.save(
-                            new Pet(vendorName, "Malfoy", "photo-1489911646836-b08d6ca60ffe.jpeg").type(PetType.CAT)));
-                } else if ("Arthur".equals(vendorName)) {
-                    operations.add(petClient.save(
-                            new Pet(vendorName, "Hermione", "photo-1446231855385-1d4b0f025248.jpeg").type(PetType.DOG)));
-                    operations.add(petClient.save(
-                            new Pet(vendorName, "Crabbe", "photo-1512616643169-0520ad604fc2.jpeg").type(PetType.CAT)));
-                    operations.add(petClient.save(
-                            new Pet(vendorName, "Goyle", "photo-1505481354248-2ba5d3b9338e.jpeg").type(PetType.CAT)));
-                }
-//                return Flux.merge(operations);
-                return null; //???
-            });
-            saves.add(vendorPub);
+            saves.add(
+                Flux.from(vendorClient.save(name)).flatMap(vendor -> {
+                    List<Publisher<Pet>> operations = new ArrayList<>(); // List<Single<Pet>> operations
+                    String vendorName = vendor.getName();
+                    if ("Fred".equals(vendorName)) {
+                        operations.add(petClient.save(new Pet(vendorName, "Harry", "photo-1457914109735-ce8aba3b7a79.jpeg").type(PetType.DOG)));
+                        operations.add(petClient.save(new Pet(vendorName, "Ron", "photo-1442605527737-ed62b867591f.jpeg").type(PetType.DOG)));
+                        operations.add(petClient.save(new Pet(vendorName, "Malfoy", "photo-1489911646836-b08d6ca60ffe.jpeg").type(PetType.CAT)));
+                    } else if ("Arthur".equals(vendorName)) {
+                        operations.add(petClient.save(new Pet(vendorName, "Hermione", "photo-1446231855385-1d4b0f025248.jpeg").type(PetType.DOG)));
+                        operations.add(petClient.save(new Pet(vendorName, "Crabbe", "photo-1512616643169-0520ad604fc2.jpeg").type(PetType.CAT)));
+                        operations.add(petClient.save(new Pet(vendorName, "Goyle", "photo-1505481354248-2ba5d3b9338e.jpeg").type(PetType.CAT)));
+                    }
+                    return null; // Single.merge(operations); //???
+                }) // as Flowable<Vendor>)
+            );
         }
         Flux.merge(saves).subscribe(
                 result -> {},
@@ -78,23 +75,22 @@ public class Application {
         );
 
 
-
 //        def names = ["Fred", "Arthur", "Joe"]
 //        List<Flowable<Vendor>> saves = []
 //        for (name in names) {
 //            saves.add(vendorClient.save(name).toFlowable().flatMap({ Vendor vendor ->
 //                    List<Single<Pet>> operations = []
-//            String vendorName = vendor.name
-//            if (vendorName == 'Fred') {
-//                operations.add(petClient.save(new Pet(vendorName, "Harry", "photo-1457914109735-ce8aba3b7a79.jpeg").type(PetType.DOG)))
-//                operations.add(petClient.save(new Pet(vendorName, "Ron", "photo-1442605527737-ed62b867591f.jpeg").type(PetType.DOG)))
-//                operations.add(petClient.save(new Pet(vendorName, "Malfoy", "photo-1489911646836-b08d6ca60ffe.jpeg").type(PetType.CAT)))
-//            } else if (vendorName == 'Arthur') {
-//                operations.add(petClient.save(new Pet(vendorName, "Hermione", "photo-1446231855385-1d4b0f025248.jpeg").type(PetType.DOG)))
-//                operations.add(petClient.save(new Pet(vendorName, "Crabbe", "photo-1512616643169-0520ad604fc2.jpeg").type(PetType.CAT)))
-//                operations.add(petClient.save(new Pet(vendorName, "Goyle", "photo-1505481354248-2ba5d3b9338e.jpeg").type(PetType.CAT)))
-//            }
-//            return Single.merge(operations)
+//                String vendorName = vendor.name
+//                if (vendorName == 'Fred') {
+//                    operations.add(petClient.save(new Pet(vendorName, "Harry", "photo-1457914109735-ce8aba3b7a79.jpeg").type(PetType.DOG)))
+//                    operations.add(petClient.save(new Pet(vendorName, "Ron", "photo-1442605527737-ed62b867591f.jpeg").type(PetType.DOG)))
+//                    operations.add(petClient.save(new Pet(vendorName, "Malfoy", "photo-1489911646836-b08d6ca60ffe.jpeg").type(PetType.CAT)))
+//                } else if (vendorName == 'Arthur') {
+//                    operations.add(petClient.save(new Pet(vendorName, "Hermione", "photo-1446231855385-1d4b0f025248.jpeg").type(PetType.DOG)))
+//                    operations.add(petClient.save(new Pet(vendorName, "Crabbe", "photo-1512616643169-0520ad604fc2.jpeg").type(PetType.CAT)))
+//                    operations.add(petClient.save(new Pet(vendorName, "Goyle", "photo-1505481354248-2ba5d3b9338e.jpeg").type(PetType.CAT)))
+//                }
+//                return Single.merge(operations)
 //            }) as Flowable<Vendor>)
 //        }
 //        Flowable.merge(saves).subscribe({}, { Throwable e ->

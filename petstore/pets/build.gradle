@@ -23,7 +23,7 @@ dependencies {
 
     implementation projects.api
 
-    implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")
+    implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut.discovery:micronaut-discovery-client")
     implementation("io.swagger.core.v3:swagger-annotations")
     implementation("io.micronaut.data:micronaut-data-mongodb")

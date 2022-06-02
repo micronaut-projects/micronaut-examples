@@ -17,6 +17,7 @@ package example.offers;
 
 import example.api.v1.Offer;
 import io.micronaut.core.async.annotation.SingleResult;
+import io.micronaut.validation.Validated;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Mono;
 
@@ -30,6 +31,7 @@ import java.time.Duration;
  * @author graemerocher
  * @since 1.0
  */
+@Validated
 public interface OffersOperations {
     /**
      * Save an offer for the given pet, vendor etc.

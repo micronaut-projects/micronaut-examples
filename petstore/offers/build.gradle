@@ -21,8 +21,8 @@ dependencies {
 
     implementation projects.api
 
+    implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut:micronaut-jackson-databind")
-    implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")
     implementation("io.micronaut.discovery:micronaut-discovery-client")
     implementation("io.micronaut.redis:micronaut-redis-lettuce")
 

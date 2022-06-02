@@ -79,10 +79,10 @@ public class StoreController {
     }
 
     @Get("/pets")
-    @SingleResult
     public Publisher<Pet> pets() {
-        // FIXME: not sure what this should be now.
+        // FIXME: not sure how to make this work. Flux.from(petClient.list()).onErrorReturn(p) takes a single Pet as arg
         // old: Single<List<Pet>> petClient.list().onErrorReturnItem(Collections.emptyList())
+//        return Flux.from(petClient.list()).onErrorReturn(Collections.emptyList());
         return petClient.list();
     }
 
@@ -100,17 +100,18 @@ public class StoreController {
 
 
     @Get("/pets/vendor/{vendor}")
-    @SingleResult
     public Publisher<Pet> petsForVendor(String vendor) {
-        // FIXME: not sure what this should be now.
+        // FIXME: not sure how to make this work. Flux.from(petClient.findByVendor(vendor)).onErrorReturn() takes a single Pet as arg
         // old: Single<List<Pet>> petClient.byVendor(vendor).onErrorReturnItem(Collections.emptyList());
+//        return Flux.from(petClient.findByVendor(vendor)).onErrorReturn(Collections.emptyList());
         return petClient.findByVendor(vendor);
     }
 
     @Get("/vendors")
     public Publisher<Vendor> vendors() {
-        // FIXME: not sure what this should be now.
+        // FIXME: not sure how to make this work. Flux.from(vendorClient.list()).onErrorReturn() takes a single Vendor as arg
         // old: Single<List<Vendor>> vendorClient.list().onErrorReturnItem(Collections.emptyList());
+//        return Flux.from(vendorClient.list()).onErrorReturn(Collections.emptyList());
         return vendorClient.list();
     }
 }

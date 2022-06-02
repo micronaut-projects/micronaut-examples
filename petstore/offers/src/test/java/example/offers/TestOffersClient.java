@@ -16,16 +16,11 @@
 package example.offers;
 
 import example.api.v1.Offer;
-import io.micronaut.core.async.annotation.SingleResult;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.Post;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.validation.Validated;
 import org.reactivestreams.Publisher;
-
-import java.math.BigDecimal;
-import java.time.Duration;
 
 /**
  * @author graemerocher
@@ -37,9 +32,4 @@ public interface TestOffersClient extends OffersOperations {
     
     @Get(consumes = MediaType.APPLICATION_JSON_STREAM)
     Publisher<Offer> current();
-
-    @Override
-    @Post()
-    @SingleResult
-    Publisher<Offer> save(String slug, BigDecimal price, Duration duration, String description);
 }

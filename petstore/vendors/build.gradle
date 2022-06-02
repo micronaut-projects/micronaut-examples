@@ -17,6 +17,8 @@ application {
 }
 
 dependencies {
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+
     implementation projects.api
 
     implementation("io.micronaut:micronaut-validation")

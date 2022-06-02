@@ -1,12 +1,12 @@
 plugins {
     alias(libs.plugins.mnApp)
 }
-apply plugin: "groovy"
+//apply plugin: "groovy"
 
 graalvmNative.toolchainDetection = false
 micronaut {
     runtime("netty")
-    testRuntime("spock2")
+    testRuntime("junit5")
     processing {
         incremental(true)
         annotations("example.*")
@@ -18,19 +18,28 @@ application {
 }
 
 dependencies {
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    annotationProcessor("org.projectlombok:lombok")
 
     implementation projects.api
 
+    implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut.discovery:micronaut-discovery-client")
-    implementation("io.micronaut.groovy:micronaut-neo4j-gorm")
+//    implementation("io.micronaut.groovy:micronaut-neo4j-gorm")
+//    implementation("io.micronaut.groovy:micronaut-hibernate-gorm")
+
     implementation("io.micronaut.neo4j:micronaut-neo4j-bolt")
+    implementation("org.neo4j:neo4j-ogm-core:3.2.33")
 
-    runtimeOnly "io.micronaut:micronaut-management"
-    runtimeOnly("ch.qos.logback:logback-classic")
+    compileOnly("org.projectlombok:lombok")
 
-    testImplementation("org.testcontainers:spock")
+    runtimeOnly 'org.neo4j:neo4j-ogm-embedded-driver:3.2.33'
+    runtimeOnly 'org.neo4j:neo4j:3.2.9'
+
+//    testRuntimeOnly("org.neo4j.test:neo4j-harness")
+
+    testImplementation("org.assertj:assertj-core")
+    testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:testcontainers")
-
-    testRuntimeOnly("org.neo4j.test:neo4j-harness")
-
+    testImplementation 'org.testcontainers:neo4j:1.17.1'
 }

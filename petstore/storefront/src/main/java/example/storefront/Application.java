@@ -49,6 +49,9 @@ public class Application {
     @EventListener
     void onStartup(ServerStartupEvent event) {
 
+        // I can't seem to get the translated from Rxjava2 to Project Reactor
+        // I am hung up with incompatable types at the end. The Groovy Rxjava2 version (see below) did a cast
+        // that I don't understand working
         String[] names = {"Fred", "Arthur", "Joe"};
         List<Flux<Vendor>> saves = new ArrayList<>();
         for (String name: names) {

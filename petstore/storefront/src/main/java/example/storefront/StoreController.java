@@ -81,8 +81,11 @@ public class StoreController {
     @Get("/pets")
     public Publisher<Pet> pets() {
         // FIXME: not sure how to make this work. Flux.from(petClient.list()).onErrorReturn(p) takes a single Pet as arg
+        //  we don't want to return a null or bogus Pet object.
         // old: Single<List<Pet>> petClient.list().onErrorReturnItem(Collections.emptyList())
 //        return Flux.from(petClient.list()).onErrorReturn(Collections.emptyList());
+
+        // maybe just leave it as is
         return petClient.list();
     }
 
@@ -102,16 +105,22 @@ public class StoreController {
     @Get("/pets/vendor/{vendor}")
     public Publisher<Pet> petsForVendor(String vendor) {
         // FIXME: not sure how to make this work. Flux.from(petClient.findByVendor(vendor)).onErrorReturn() takes a single Pet as arg
+        //  we don't want to return a null or bogus Pet object.
         // old: Single<List<Pet>> petClient.byVendor(vendor).onErrorReturnItem(Collections.emptyList());
 //        return Flux.from(petClient.findByVendor(vendor)).onErrorReturn(Collections.emptyList());
+
+        // maybe just leave it as is
         return petClient.findByVendor(vendor);
     }
 
     @Get("/vendors")
     public Publisher<Vendor> vendors() {
         // FIXME: not sure how to make this work. Flux.from(vendorClient.list()).onErrorReturn() takes a single Vendor as arg
-        // old: Single<List<Vendor>> vendorClient.list().onErrorReturnItem(Collections.emptyList());
+        //  we don't want to return a null or bogus Vendor object.
+// old: Single<List<Vendor>> vendorClient.list().onErrorReturnItem(Collections.emptyList());
 //        return Flux.from(vendorClient.list()).onErrorReturn(Collections.emptyList());
+
+        // maybe just leave it as is
         return vendorClient.list();
     }
 }

@@ -62,7 +62,7 @@ class VendorController implements VendorOperations<Vendor> {
     @Get("/list")
     public Publisher<Vendor> list() {
 
-        // my feeble attempt to translate the old code
+        // my feeble attempt to translate the old code (see original RxJava2 Groovy code below)
         Mono.fromCallable(() -> vendorRepository.findAll())
                 .subscribeOn(Schedulers.boundedElastic())
                 .flux()

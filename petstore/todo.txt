@@ -1,0 +1,89 @@
+Note: this uses Java 11, but I think the only 11-specific language features using Map.of() to create
+property maps in tests.
+
+[] Pet Store
+    - all the Dockerfile, docker-compose files are still original, needs review/revision
+
+[-] api
+    - CommentOperations: redefine when Comments service migrates to reactive neo4j
+    - otherwise complete
+
+[] Comments service: this service uses a tree of Comment objects rooted at a Topic
+            (topic -> comments -> replies -> replies to replies -> ...)
+    - I am basically blocked on this, unless I make a significant effort to dig into neo4j
+    - CommentRepository: I need help with Cypher queries/implementation
+    - CommentRepository.findComments(String topicTitle)
+        - I tried to translate the query from the Groovy neo4j-gorm version, but it doesn't work
+    - CommentRepository.findReplies(Long commentId)
+        - this is tied to how neo4j-gorm/Groovy Node/Path works
+    - figure out what to do about depth arg for session.load?
+    - I'm not sure if I even have everything wired up correctly. I have been unable to get tests to pass without
+       using the embedded driver. See build.gradle
+
+[ ] Frontend/react
+    - nothing has been done on this: I don't know anything about React js
+
+[ ] functions/tweet: needs to be worked
+    - I have only translated src/main to Java
+    - UpdateStatusFUnction.groovy? I don't know what this is (I need to learn about functions)
+
+[x] Mail service
+    - uses just SendGrid, but not Amazon SES (which was a choice in original)
+    - otherwise complete, needs review
+
+[ ] Offers service
+    - test for validation of BigDecimal on OffersOperations.save() isn't working (I commented out in test)
+        it's a bug in validation, see https://github.com/micronaut-projects/micronaut-core/issues/7543
+    - test for OffersControllerTest.receiveRandomGetsOffer() fails
+        this calls OffersRepository.current(), which calls random() but is returning null; however,
+        OffersRepositoryTest.saveOfferForExistentPet() also calls random() succeeds
+    - Perhaps look into https://github.com/redis-developer/testcontainers-redis - is this something we want to use?
+        currently using example at https://www.testcontainers.org/quickstart/junit_5_quickstart/
+        for Offers service
+
+[x] Pet service
+    - complete, needs review
+
+[ ] Storefront service
+    - will need to test the integration with other services
+    - Application.onStartup() - I'm not sure how to do last part (Groovy version did a cast)
+
+    - StoreController.vendors(), pets(), petsForVendor() - old version returns empty collection on error
+      but reactor API is different... but don't the client @Fallback take care of this anyway?
+      My feeling is to leave the endpoint implementation as I have it now.
+
+[ ] Vendors service
+    - VendorController.list() needs reactive impl that retrieves from Pet service - I'm not sure how to do this (I tried)
+    - add a test for the list() endpoint
+
+Other
+[ ] Use micronaut-serialization instead of jackson-databind
+[ ] Demonstrate different file formats for application configuration in services (properties, yaml, toml, etc)
+[ ] Migrate to micronaut-test-resources when that's ready
+[-] Migrate RxJava2 to Project reactor (much is done except some endpoints are just partially implemented)
+[x] Migrate to newer tech stacks offered my Micronaut (micronaut-data, micronaut-email, etc)
+[-] organize dependencies - this is essentially done, but need review/refinement. There may be unnecessary ones/cruft.
+
+
+------------------------------------------------------------------------------------------------------------------------
+[x] migrate from Micronaut 1.3.3 to latest 3.4.3
+[x] migrate from Gradle 4.8 to latest (7.4.2)
+[x] replace gradle build logic with micronaut-gradle plugins
+    note: I am using gradle catalog feature to expose the mn plugins. See settings.gradle
+[x] rewrite all groovy services in Java
+[x] integrate micronaut-test
+[x] rewrite all groovy Spock tests in Java JUnit5, with AssertJ library
+[x] cleanup imports
+[x] upgrade mail subproject to use `micronaut-email`
+[x] fix issue with MongoClient failures
+[x] Use testcontainers where applicable (instead of flapdoodle, for example)
+[x] Upgrade JUnit 4 to JUnit5
+[x] Integrate micronaut-test
+[x] Use testcontainers
+[x] Replace hibernate validator with micronaut-validation (unless unsupported features are used)
+
+NOTES
+- see storefront EmailService for subscribe on Mono
+- see storefront MailController for emitting onError from Mono
+
+[] MN Starter: add neo4j deps when adding testcontainers: see https://www.testcontainers.org/modules/databases/neo4j/

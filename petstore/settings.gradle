@@ -1,13 +1,3 @@
-//include "api"
-//include "comments"
-//include "offers"
-//include "storefront"
-//include "vendors"
-////include "people"
-//include "pets"
-//include "mail"
-//include "functions:tweet"
-//include "frontend:react"
 rootProject.name="petstore"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 

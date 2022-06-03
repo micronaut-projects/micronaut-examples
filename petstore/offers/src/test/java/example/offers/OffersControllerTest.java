@@ -73,6 +73,8 @@ public class OffersControllerTest extends BaseRedisOfferTest{
 
     @Test
     void receiveRandomGetsOffer() {
+        // this fails. It calls OffersController.current() which calls OffersRepository.random()
+        // I already know that random(0 works, and am not sure where I went wrong with this.
         Offer offer = streamingHttpClient.jsonStream(HttpRequest.GET("/v1/offers"), Offer.class)
                 .log().blockFirst();
 

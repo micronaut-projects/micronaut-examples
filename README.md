@@ -1,116 +1,21 @@
 ## Micronaut Examples
 
-This repository contains examples of [Micronaut](http://micronaut.io).
+This repository used to contain examples of using [Micronaut](http://micronaut.io), however these examples have since been migrated to our great [Micronaut Guides](https://guides.micronaut.io).
 
-The following examples are featured.
+For a Hello World guide see [Creating Your First Micronaut Application](https://guides.micronaut.io/latest/creating-your-first-micronaut-app.html) or the direct links to the sample code below:
 
-### hello-world-java
+### Hello World Java
 
-The hello-world-java example is a simple Hello World implementation written in Java.
+* [Maven Example](https://guides.micronaut.io/latest/creating-your-first-micronaut-app-maven-java.zip)
+* [Gradle Example](https://guides.micronaut.io/latest/creating-your-first-micronaut-app-gradle-java.zip)
 
-To run the application with Gradle use:
+### Hello World Kotlin
 
-```bash
-$ cd hello-world-java
-$ ./gradlew run
-```
+* [Maven Example](https://guides.micronaut.io/latest/creating-your-first-micronaut-app-maven-kotlin.zip)
+* [Gradle Example](https://guides.micronaut.io/latest/creating-your-first-micronaut-app-gradle-kotlin.zip)
 
-To run the application with Maven use:
+### Hello World Groovy
 
-```bash
-$ ./mvnw exec:exec
-```
+* [Maven Example](https://guides.micronaut.io/latest/creating-your-first-micronaut-app-maven-groovy.zip)
+* [Gradle Example](https://guides.micronaut.io/latest/creating-your-first-micronaut-app-gradle-groovy.zip)
 
-Then go to http://localhost:8080/hello/John
-
-To run the tests run `./gradlew test` or `/mvnw test`. 
-
-### hello-world-groovy
-
-The `hello-world-groovy` example is a simple Hello World implementation written in Groovy.
-
-To run the application with Gradle use:
-
-```bash
-$ cd hello-world-groovy
-$ ./gradlew run
-```
-
-Then go to http://localhost:8080/hello/John
-
-### hello-world-kotlin
-
-
-The `hello-world-kotlin` example is a simple Hello World implementation written in Kotlin.
-
-To run the application with Gradle use:
-
-```bash
-$ cd hello-world-kotlin
-$ ./gradlew run
-```
-
-Then go to http://localhost:8080/hello/John
-
-### petstore
-
-The `petstore` example is a Micronaut petstore implementation featuring multiple Microservices and a `docker-compose.yml` file for starting the application.
-
-See the `README` in the root of the `petstore` example for usage instructions.
-
-### neo4j-musicians
-Example of `REST` service built with Micronaut, with `embedded neo4j` as database. It's a simple example without any kind of data validation, just shows how to register beans, a controller and a simple test. 
-
-Hope it helps!
-### views-and-forms-java
-
-The views-and-forms-java example is a simple form display application written in Java.
-It uses simple html and css to read a form and display the response.
-
-To run the application with Gradle use:
-
-```bash
-$ cd views-and-forms-java
-$ ./gradlew run
-```
-
-For Windows users:
-```
-$ cd views-and-forms-java
-$ gradlew run
-```
-
-Then go to http://localhost:8080
-
-To test with Gradle on Firefox:
-```bash
-$ cd views-and-forms-java
-$ ./gradlew test
-```
-For Windows users:
-```
-$ cd views-and-forms-java
-$ gradlew test
-```
-
-To test with Gradle on Chrome:
-```bash
-$ cd views-and-forms-java
-$ ./gradlew -Dgeb.env=chrome test
-```
-For Windows users:
-```
-$ cd views-and-forms-java
-$ gradlew -Dgeb.env=chrome test
-```
-
-To test with Gradle on Chrome headless:
-```bash
-$ cd views-and-forms-java
-$ ./gradlew -Dgeb.env=chromeHeadless test
-```
-For Windows users:
-```
-$ cd views-and-forms-java
-$ gradlew -Dgeb.env=chromeHeadless test
-```
